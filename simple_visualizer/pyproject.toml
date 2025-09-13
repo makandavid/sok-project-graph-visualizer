@@ -1,0 +1,7 @@
+[project]
+name = "simple-visualizer"
+version = "0.1"
+description = "Simple Visualizer"
+dependencies = [
+    "graph_exploerer_api==0.1"
+]

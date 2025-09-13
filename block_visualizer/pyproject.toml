@@ -1,0 +1,7 @@
+[project]
+name = "block-visualizer"
+version = "0.1"
+description = "Block Visualizer"
+dependencies = [
+    "graph_exploerer_api==0.1"
+]
