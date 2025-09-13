@@ -11,6 +11,7 @@
 1. Clone the repository
 2. Run `pip install -r requirements.txt`
 3. Run `pip install ./api ./platform ./simple-visualizer ./block/visualizer`
-4. Run `python manage.py makemigrations`
-5. Run `python manage.py migrate`
-6. Run `python manage.py runserver`
+4. cd /graph_explorer
+5. Run `python manage.py makemigrations`
+6. Run `python manage.py migrate`
+7. Run `python manage.py runserver`
