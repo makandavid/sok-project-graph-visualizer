@@ -1,5 +1,5 @@
 [project]
-name = "simple-visualizer"
+name = "simple_visualizer"
 version = "0.1"
 description = "Simple Visualizer"
 dependencies = [
