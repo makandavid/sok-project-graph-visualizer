@@ -5,3 +5,9 @@ description = "Block Visualizer"
 dependencies = [
     "graph_exploerer_api==0.1"
 ]
+
+[project.entry-points."visualizer"]
+block_visualizer = "block_visualizer.block_visualizer:BlockVisualizerPlugin"
+
+[tool.setuptools.data-files]
+templates = ["block_visualizer/static/*"]

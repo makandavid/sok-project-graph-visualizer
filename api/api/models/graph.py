@@ -1,19 +1,19 @@
 import json
 
-from .edge import Edge
+from .link import Link
 from .node import Node
 
 
 class Graph(object):
-    def __init__(self, nodes: list=None, edges: list=None):            
+    def __init__(self, nodes: list=None, links: list=None):            
         self.nodes = nodes
-        self.edges = edges
+        self.links = links
 
         if self.nodes is None:
             self.nodes = []
 
-        if self.edges is None:
-            self.edges = []
+        if self.links is None:
+            self.links = []
 
     def _exists(self, node_id: int) -> bool:
         for node in self.nodes:
@@ -27,11 +27,14 @@ class Graph(object):
             return True
         return False
     
-    def add_edge(self, edge_id: int, source_id: int, target_id: int, attributes=None) -> bool:
+    def add_link(self, link_id: int, source_id: int, target_id: int) -> bool:
         if self._exists(source_id) and self._exists(target_id):
-            self.edges.append(Edge(edge_id, Node(source_id), Node(target_id), attributes))
+            self.links.append(Link(link_id, source_id, target_id))
             return True
         return False
-    
-    def to_json_string(self) -> str:
-        return json.dumps(self.__dict__, default=lambda o: o.__dict__, indent=4)
+        
+    def to_dict(self):
+        return {
+            "nodes": [n.to_dict() for n in self.nodes],
+            "links": [e.to_dict() for e in self.links]
+        }

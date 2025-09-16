@@ -14,22 +14,20 @@ def index(request: HttpRequest):
     g.add_node(3, {'a': 21, 'b': 21})
     g.add_node(4, {'a': 69, 'b': 56})
     g.add_node(5, {'a': 99, 'b': 96})
-    g.add_node(6, {'a': 100, 'b': 56})
-    g.add_edge(0, 1, 2, None)
-    g.add_edge(1, 1, 4, None)
-    g.add_edge(2, 1, 3, None)
-    g.add_edge(3, 2, 4, None)
-    g.add_edge(4, 3, 2, None)
-    g.add_edge(5, 3, 6, None)
-    g.add_edge(6, 3, 5, None)
-    g.add_edge(7, 4, 0, None)
+    g.add_node(6, {'a': 100, 'b': 56, 'c': 200})
+    g.add_link(0, 1, 2)
+    g.add_link(1, 1, 4)
+    g.add_link(2, 1, 3)
+    g.add_link(3, 2, 4)
+    g.add_link(4, 3, 2)
+    g.add_link(5, 3, 6)
+    g.add_link(6, 3, 5)
+    g.add_link(7, 4, 0)
     apps.get_app_config('graph_explorer').current_graph = g
-    return render(request, "index.html", {"visualization_plugins": visualization_plugins})
 
-
-@csrf_exempt
-def visualize(request: HttpRequest):
-    visualization_plugins = apps.get_app_config('graph_explorer').visualization_plugins
-    if request.method == 'POST':
-        print(request.POST)
-    return render(request, "index.html", {"visualization_plugins": visualization_plugins})
+    if visualization_plugins:
+        visualization_script = visualization_plugins[0].visualize(g)
+    else:
+        visualization_script = ""
+    return render(request, "index.html", {"visualization_plugins": visualization_plugins,
+                                          "visualization_script": visualization_script})

@@ -1,3 +1,5 @@
+import json
+import os
 from api.interfaces.visualizer_plugin import VisualizerPlugin
 
 class BlockVisualizerPlugin(VisualizerPlugin):
@@ -9,5 +11,8 @@ class BlockVisualizerPlugin(VisualizerPlugin):
         return "block_visualizer"
 
     def visualize(self, graph):
-        # Implement block visualization logic here
-        print(f"Visualizing graph with {len(graph.nodes)} nodes and {len(graph.edges)} edges using Block Visualizer.")
+        here = os.path.dirname(os.path.abspath(__file__))
+        content = open(os.path.join(here, 'static', 'visualize.js')).read()
+        print(json.dumps(graph.to_dict()))
+        pieces = content.split("GRAPH_JSON")
+        return pieces[0]+json.dumps(graph.to_dict())+pieces[1]

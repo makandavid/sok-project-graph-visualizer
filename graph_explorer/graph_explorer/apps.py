@@ -5,7 +5,6 @@ from api.models.graph import Graph
 
 
 class GraphExplorerConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
     name = 'graph_explorer'
     label = 'graph_explorer'
     visualization_plugins = []

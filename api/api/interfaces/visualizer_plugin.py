@@ -1,4 +1,4 @@
-from models.graph import Graph
+from ..models.graph import Graph
 from .base_plugin import BasePlugin
 
 
