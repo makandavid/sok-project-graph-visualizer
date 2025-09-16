@@ -1,8 +1,5 @@
-import json
-
 from .link import Link
 from .node import Node
-
 
 class Graph(object):
     def __init__(self, nodes: list=None, links: list=None):            
@@ -33,7 +30,7 @@ class Graph(object):
             return True
         return False
         
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "nodes": [n.to_dict() for n in self.nodes],
             "links": [e.to_dict() for e in self.links]

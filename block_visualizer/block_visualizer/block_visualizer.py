@@ -13,6 +13,5 @@ class BlockVisualizerPlugin(VisualizerPlugin):
     def visualize(self, graph):
         here = os.path.dirname(os.path.abspath(__file__))
         content = open(os.path.join(here, 'static', 'visualize.js')).read()
-        print(json.dumps(graph.to_dict()))
         pieces = content.split("GRAPH_JSON")
         return pieces[0]+json.dumps(graph.to_dict())+pieces[1]

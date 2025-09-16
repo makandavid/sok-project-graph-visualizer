@@ -1,10 +1,8 @@
-var colors = d3.scaleOrdinal(d3.schemeCategory10);
-
 var svg = d3.select("svg");
-
 var width = +svg.attr("width"),
-    height = +svg.attr("height"),
-    node, link;
+    height = +svg.attr("height");
+
+var node, link;
 
 var container = svg.append("g")
     .attr("transform", "translate(0,0)scale(1,1)");
@@ -64,57 +62,56 @@ function update(links, nodes) {
     var tempHeight = 0
     node.attr("dx", 5)
         .attr("dy", 13)
-        .each(function(d){
-            var obj = d3.select(this);
-            d3.keys(d).forEach(function(kljuc){
-                let i = 2;
-                for (const [key, value] of Object.entries(d.attributes)){
+        .each(
+            function(d) {
+                var obj = d3.select(this);
+                d3.keys(d).forEach(function(k) {
 
-                    if (i==2){
+                    let i = 2;
+
                     obj.append("text")
-                       .text(value)
-                       .attr('x', 0)
-                       .attr('y', -27)
-                       .attr("dy", (i++)+"em")
-                       .attr("opacity", 0)
-                    tempHeight++
-                       }
+                    .text(d.id)
+                    .attr('x', 0)
+                    .attr('y', -27)
+                    .attr("dy", (i++)+"em")
+                    .attr("opacity", 0)
+                    tempHeight += 2
 
-                    else{
-                    obj.append("text")
-                       .text("-"+key + " : " + value)
-                       .attr('x', 5)
-                       .attr('y', -17)
-                       .attr("dy", (i++)+"em")
+                    for (const [key, value] of Object.entries(d.attributes)) {
 
-                    if ( key && value){
-                        if (boxWidth < key.toString().length + value.toString().length)
-                            boxWidth = key.toString().length + value.toString().length;
+                        obj.append("text")
+                        .text("-"+key + " : " + value)
+                        .attr('x', 5)
+                        .attr('y', -17)
+                        .attr("dy", (i++)+"em")
+
+                        if (key && value){
+                            if (boxWidth < key.toString().length + value.toString().length)
+                                boxWidth = key.toString().length + value.toString().length
                         }
+                        tempHeight++
                     }
-                    tempHeight++
-                }
-                if (boxHeight < tempHeight){
-                    boxHeight = tempHeight
+                    if (boxHeight < tempHeight){
+                        boxHeight = tempHeight
                     }
-                tempHeight = 0
+                    tempHeight = 0
 
                 })
 
                 if(boxWidth<10)
                     boxWidth=10;
             })
-
-
         .append("line")
         .style("stroke", "black")
         .attr("x1", 0)
         .attr("y1", 11)
         .attr("x2", boxWidth*9+5)
         .attr("y2", 11)
+
     node.selectAll("rect")
         .attr("width", boxWidth*9+5)
         .attr("height", boxHeight*16)
+        
     node.select("text")
         .attr('x', boxWidth*4.5)
         .attr("opacity", 1)

@@ -1,6 +1,5 @@
 import json
 
-
 class Node(object):
     def __init__(self, id: int, attributes: dict | None = None):
         self.id = id
