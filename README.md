@@ -15,3 +15,6 @@
 5. Run `python manage.py makemigrations`
 6. Run `python manage.py migrate`
 7. Run `python manage.py runserver`
+
+Alternative:
+sh ./run.sh

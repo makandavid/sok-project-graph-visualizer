@@ -5,9 +5,15 @@ from .node import Node
 
 
 class Graph(object):
-    def __init__(self, nodes: list, edges: list):
+    def __init__(self, nodes: list=None, edges: list=None):            
         self.nodes = nodes
         self.edges = edges
+
+        if self.nodes is None:
+            self.nodes = []
+
+        if self.edges is None:
+            self.edges = []
 
     def _exists(self, node_id: int) -> bool:
         for node in self.nodes:
@@ -15,15 +21,15 @@ class Graph(object):
                 return True
         return False   
     
-    def add_node(self, node_id, attributes) -> bool:
+    def add_node(self, node_id, attributes=None) -> bool:
         if not self._exists(node_id):
             self.nodes.append(Node(node_id, attributes))
             return True
         return False
     
-    def add_edge(self, edge_id: int, source: Node, target: Node, attributes) -> bool:
-        if self._exists(source.id) and self._exists(target.id):
-            self.edges.append(Edge(edge_id, source, target, attributes))
+    def add_edge(self, edge_id: int, source_id: int, target_id: int, attributes=None) -> bool:
+        if self._exists(source_id) and self._exists(target_id):
+            self.edges.append(Edge(edge_id, Node(source_id), Node(target_id), attributes))
             return True
         return False
     
