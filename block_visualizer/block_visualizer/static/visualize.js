@@ -1,8 +1,10 @@
+var colors = d3.scaleOrdinal(d3.schemeCategory10);
 var svg = d3.select("svg");
+var svgBirdView = d3.select("svg#birdview");
 var width = +svg.attr("width"),
     height = +svg.attr("height");
 
-var node, link;
+var node, link, mini_node, mini_link;
 
 var container = svg.append("g")
     .attr("transform", "translate(0,0)scale(1,1)");
@@ -31,6 +33,7 @@ var simulation = d3.forceSimulation()
     .force("center", d3.forceCenter(width/2, height/2));
 
 var graph = GRAPH_JSON  // this will be replaced by the real json object
+
 update(graph.links, graph.nodes);
 
 function update(links, nodes) {
@@ -39,7 +42,13 @@ function update(links, nodes) {
         .enter()
         .append("line")
         .attr("class", "link")
-        .attr("marker-end", "url(#arrowhead)");
+        .attr("marker-end", "url(#arrowhead)")
+
+    mini_link = svgBirdView.selectAll(".link")
+        .data(links)
+        .enter()
+        .append("line")
+        .attr("class", "link")
 
     node = container.selectAll(".node")
         .data(nodes)
@@ -48,6 +57,13 @@ function update(links, nodes) {
         .attr("class", "node")
         .attr('id', d => d.id)
         .call(d3.drag().on("start", dragstarted).on("drag", dragged))
+
+    mini_node = svgBirdView.selectAll(".node")
+        .data(nodes)
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("id", d => d.id)
 
     node.append("rect")
         .style("fill", "lightblue")
@@ -118,6 +134,13 @@ function update(links, nodes) {
         .attr("font-weight","bold")
         .style("text-anchor", "middle")
 
+    mini_node.append("circle")
+        .attr("r", 3)
+        .style("fill", (d, i) => colors(i))
+
+    mini_node.append("title")
+        .text(d => d.id);
+
     simulation.nodes(nodes).on("tick", ticked);
     simulation.force("link").links(links);
 
@@ -132,6 +155,14 @@ function ticked() {
         .attr("y2", d => d.target.y);
     node
         .attr("transform", d => "translate(" + d.x + ", " + d.y + ")");
+    mini_link
+        .attr("x1", d => d.source.x/5)
+        .attr("y1", d => d.source.y/5)
+        .attr("x2", d => d.target.x/5)
+        .attr("y2", d => d.target.y/5);
+    mini_node
+        .attr("transform", d => "translate(" + d.x/5 + ", " + d.y/5 + ")");
+    
 }
 
 function dragstarted(d) {
