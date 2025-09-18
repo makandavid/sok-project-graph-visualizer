@@ -6,6 +6,12 @@ var width = +svg.attr("width"),
 
 var node, link, mini_node, mini_link;
 
+var viewport = svgBirdView.append("rect")
+    .attr("id", "viewport")
+    .attr("fill", "none")
+    .attr("stroke", "red")
+    .attr("stroke-width", 2);
+
 var container = svg.append("g")
     .attr("transform", "translate(0,0)scale(1,1)");
 
@@ -13,6 +19,7 @@ svg.call(d3.zoom()
     .scaleExtent([1, 10])
     .on("zoom", function() {
         container.attr("transform", d3.event.transform)
+        updateViewport(d3.event.transform)
     }))
 
 container.append('defs').append('marker')
@@ -35,6 +42,29 @@ var simulation = d3.forceSimulation()
 var graph = GRAPH_JSON  // this will be replaced by the real json object
 
 update(graph.links, graph.nodes);
+
+function updateViewport(transform) {
+    var mainWidth = width;
+    var mainHeight = height;
+
+    var birdWidth = +svgBirdView.attr("width");
+    var birdHeight = +svgBirdView.attr("height");
+    
+    var scaleX = birdWidth / mainWidth;
+    var scaleY = birdHeight / mainHeight;
+    
+    var viewWidth = birdWidth / transform.k;
+    var viewHeight = birdHeight / transform.k;
+
+    var viewX = -transform.x * scaleX / transform.k;
+    var viewY = -transform.y * scaleY / transform.k;
+    
+    viewport
+        .attr("x", viewX)
+        .attr("y", viewY)
+        .attr("width", viewWidth)
+        .attr("height", viewHeight);
+}
 
 function update(links, nodes) {
     link = container.selectAll(".link")
