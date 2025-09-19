@@ -15,6 +15,7 @@ def index(request: HttpRequest):
     g.add_node(4, {'a': 69, 'b': 56})
     g.add_node(5, {'a': 99, 'b': 96, 'c': 23})
     g.add_node(6, {'a': 100, 'b': 56, 'c': 200, 'd': 300, 'e': 267})
+    g.add_node(7, {'a': 3})
     g.add_link(0, 1, 2)
     g.add_link(1, 1, 4)
     g.add_link(2, 1, 3)

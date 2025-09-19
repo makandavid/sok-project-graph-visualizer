@@ -1,16 +1,12 @@
 var sources = graph.links.map(link => link.source)
-                        .filter(function (value, index, self) {
-                            return self.indexOf(value) === index;
-                        });
+                        .filter((value, index, self) => self.indexOf(value) === index);
 var targets = graph.links.map(link => link.target);
 var roots = sources.filter(x => !targets.includes(x));
 var freeNodes = graph.nodes.filter(x => !targets.includes(x) && !sources.includes(x));
 
 if (roots.length == 0)
     trees_list = graph.links.map(link => link.source)
-                        .filter(function (value, index, self) {
-                            return self.indexOf(value) === index;
-                        });
+                        .filter((value, index, self) => self.indexOf(value) === index);
 else
     trees_list = roots;
 

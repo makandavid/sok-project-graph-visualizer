@@ -1,8 +1,8 @@
 var colors = d3.scaleOrdinal(d3.schemeCategory10);
 var svg = d3.select("svg#mainview");
 var svgBirdView = d3.select("svg#birdview");
-var width = +svg.attr("width"),
-    height = +svg.attr("height");
+var width = +svg.node().getBoundingClientRect().width;
+var height = +svg.node().getBoundingClientRect().height;
 
 var node, link, mini_node, mini_link;
 
