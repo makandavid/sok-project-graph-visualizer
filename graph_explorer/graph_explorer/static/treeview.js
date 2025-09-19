@@ -27,10 +27,11 @@ function addChildren(ul, list) {
 
 function updateTree(parent) {
     children = graph.links.filter(link => "tree"+link.source.id === parent.id).map(link => link.target);
-    if (children.length !== 0) {
+    if (children.length !== 0 || hasAttributes(parent)) {
         let ul = document.createElement("ul");
         ul.setAttribute("class", "nested");
         addChildren(ul, children);
+        addAttributes(ul, parent.id.substring(4));
         parent.appendChild(ul);
     }
 }
@@ -46,4 +47,22 @@ function listener() {
         this.parentElement.querySelector(".nested").classList.toggle("active");
         this.classList.toggle("arrow-down");
     } else this.classList.remove("arrow");
+}
+
+function hasAttributes(parent) {
+    let nodeId = parent.id.substring(4);
+    let node = graph.nodes.find(n => n.id == nodeId);
+    return node && node.attributes && Object.keys(node.attributes).length > 0;
+}
+
+function addAttributes(ul, nodeId) {
+    let node = graph.nodes.find(n => n.id == nodeId);
+    if (!node || !node.attributes) return;
+
+    Object.entries(node.attributes).forEach(([key, value]) => {
+        let li = document.createElement("li");
+        li.setAttribute("class", "attribute");
+        li.textContent = key + ": " + value;
+        ul.appendChild(li);
+    });
 }
