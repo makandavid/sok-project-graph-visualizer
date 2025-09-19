@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" href="{% static 'treeview-style.css' %}"/>
     <title>Graph Explorer</title>
   </head>
   <body>
@@ -53,7 +54,7 @@
     <div class="container">
       <div class="sidebar">
         <div class="treeview">
-          <svg id="treeview"></svg>
+          <ul id="treeview"></ul>
         </div>
 
         <div class="birdview">
@@ -71,5 +72,6 @@
     <script type="text/javascript">
       {{visualization_script | safe}}
     </script>
+    <script type="text/javascript" src="{% static 'treeview.js' %}"></script>
   </body>
 </html>
