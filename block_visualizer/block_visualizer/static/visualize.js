@@ -1,5 +1,5 @@
 var colors = d3.scaleOrdinal(d3.schemeCategory10);
-var svg = d3.select("svg");
+var svg = d3.select("svg#mainview");
 var svgBirdView = d3.select("svg#birdview");
 var width = +svg.attr("width"),
     height = +svg.attr("height");
@@ -42,6 +42,8 @@ var simulation = d3.forceSimulation()
 var graph = GRAPH_JSON  // this will be replaced by the real json object
 
 update(graph.links, graph.nodes);
+updateViewport(d3.zoomIdentity);
+
 
 function updateViewport(transform) {
     var mainWidth = width;
