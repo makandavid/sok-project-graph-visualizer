@@ -1,77 +1,236 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-    <link rel="stylesheet" href="{% static 'treeview-style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'treeview-style.css' %}" />
     <title>Graph Explorer</title>
-  </head>
-  <body>
-    <div class="header" id="header">
-      <h1>Graph<br />Visualizer</h1>
+</head>
 
-      <div class="controls">
-        <div class="source-controls">
-          <label
-            >Source:
-            <select class="source-select" id="source-select"></select>
-            <button>New</button>
-          </label>
+<body>
+    <div class="header" id="header">
+        <h1>Graph<br />Visualizer</h1>
+
+        <div class="controls">
+            <div class="source-controls">
+                <label>Source:
+                    <select class="source-select" id="source-select"></select>
+                    <button id="new-source-button">New</button>
+                </label>
+            </div>
+            
+            <!-- File Upload Section -->
+            <div class="upload-controls">
+                <form id="upload-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="json-file">Upload JSON:
+                        <input type="file" id="json-file" name="json_file" accept=".json" />
+                    </label>
+                    <button type="submit" id="upload-button">Upload & Visualize</button>
+                </form>
+            </div>
+            
+            <div class="filter-controls">
+                <form>
+                    <input type="text" name="search" placeholder="Search..." size="24" />
+                    <button type="button">Search</button>
+                </form>
+                <form>
+                    <input type="text" name="attr" placeholder="attr" size="5" />
+                    <select name="op">
+                        <option value="eq">==</option>
+                        <option value="le">&le;</option>
+                        <option value="ge">&ge;</option>
+                        <option value="lt">&lt;</option>
+                        <option value="gt">&gt;</option>
+                        <option value="ne">!=</option>
+                    </select>
+                    <input type="text" name="val" placeholder="val" size="5" />
+                    <button type="button">Filter</button>
+                </form>
+            </div>
+            <div class="view-buttons">
+                <button id="simple-view-button">Simple View</button>
+                <button id="block-view-button">Block View</button>
+            </div>
         </div>
-        <div class="filter-controls">
-          <form>
-            <input
-              type="text"
-              name="search"
-              placeholder="Search..."
-              size="24"
-            />
-            <button>Search</button>
-          </form>
-          <form>
-            <input type="text" name="attr" placeholder="attr" size="5" />
-            <select name="op">
-              <option value="eq">==</option>
-              <option value="le">&le;</option>
-              <option value="ge">&ge;</option>
-              <option value="lt">&lt;</option>
-              <option value="gt">&gt;</option>
-              <option value="ne">!=</option>
-            </select>
-            <input type="text" name="val" placeholder="val" size="5" />
-            <button>Filter</button>
-          </form>
-        </div>
-        <div class="view-buttons">
-          <button id="simple-view-button">Simple View</button>
-          <button id="block-view-button">Block View</button>
-        </div>
-      </div>
     </div>
 
     <div class="container">
-      <div class="sidebar">
-        <div class="treeview">
-          <ul id="treeview"></ul>
+        <div class="sidebar">
+            <div class="treeview">
+                <ul id="treeview"></ul>
+            </div>
+
+            <div class="birdview">
+                <svg id="birdview" width="300" height="120">
+                    <rect width="100%" height="100%" fill="white" stroke="gray"></rect>
+                </svg>
+            </div>
         </div>
 
-        <div class="birdview">
-          <svg id="birdview" width="300" height="120">
-            <rect width="100%" height="100%" fill="white" stroke="gray"></rect>
-          </svg>
+        <div class="mainview">
+            <svg id="mainview"></svg>
         </div>
-      </div>
-
-      <div class="mainview">
-        <svg id="mainview"></svg>
-      </div>
     </div>
 
+    <!-- prettier-ignore -->
     <script type="text/javascript">
-      {{visualization_script | safe}}
+        {{ visualization_script | safe }}
     </script>
     <script type="text/javascript" src="{% static 'treeview.js' %}"></script>
-  </body>
+    
+
+    <script type="text/javascript">
+    // Wait for DOM and all scripts to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add a small delay to ensure everything is loaded
+            setTimeout(function() {
+                console.log('Checking for initial treeview initialization...');
+                console.log('initializeTreeview type:', typeof window.initializeTreeview);
+                console.log('graph available:', typeof graph !== 'undefined');
+                
+                if (typeof window.initializeTreeview === "function" && typeof graph !== 'undefined') {
+                    console.log('Initializing treeview with graph:', graph);
+                    window.initializeTreeview(graph);
+                } else {
+                    console.warn('Cannot initialize treeview - missing function or graph data');
+                }
+            }, 200);
+        });
+    </script>
+
+    <script type="text/javascript">
+        // Handle file upload form submission
+        document.getElementById('upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('json-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a JSON file to upload.');
+                return;
+            }
+            
+            if (!file.name.toLowerCase().endsWith('.json')) {
+                alert('Please select a valid JSON file.');
+                return;
+            }
+            
+            // Show loading state
+            const uploadButton = document.getElementById('upload-button');
+            const originalText = uploadButton.textContent;
+            uploadButton.textContent = 'Processing...';
+            uploadButton.disabled = true;
+            
+            // Read file and process client-side
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const jsonData = JSON.parse(event.target.result);
+                    
+                    // Send JSON data to server for processing
+                    fetch('/upload-graph/', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            json_data: jsonData,
+                            filename: file.name
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update the visualization without reloading
+                            if (data.visualization_script) {
+                                // Clear existing visualization
+                                const mainview = document.getElementById('mainview');
+                                const treeview = document.getElementById('treeview');
+                                const birdview = document.getElementById('birdview');
+                                mainview.innerHTML = '';
+                                treeview.innerHTML = '';
+                                birdview.innerHTML = '';
+                                
+                                // Execute new visualization script
+                                eval(data.visualization_script);
+
+                            setTimeout(() => {
+                                if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
+                                    window.initializeTreeview(graph);
+                                } else {
+                                    console.error('Graph or initializeTreeview not available');
+                                }
+                            }, 100);
+
+                                showMessage('success', `Successfully loaded graph with ${data.node_count} nodes and ${data.link_count} links from ${file.name}`);
+                            } else {
+                                showMessage('error', 'No visualization script received');
+                            }
+                        } else {
+                            showMessage('error', data.error || 'Upload failed');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Upload error:', error);
+                        showMessage('error', 'Error uploading file. Please check the JSON format and try again.');
+                    })
+                    .finally(() => {
+                        // Restore button state
+                        uploadButton.textContent = originalText;
+                        uploadButton.disabled = false;
+                        // Clear file input
+                        fileInput.value = '';
+                    });
+                    
+                } catch (error) {
+                    showMessage('error', 'Invalid JSON format: ' + error.message);
+                    uploadButton.textContent = originalText;
+                    uploadButton.disabled = false;
+                }
+            };
+            
+            reader.onerror = function() {
+                showMessage('error', 'Error reading file');
+                uploadButton.textContent = originalText;
+                uploadButton.disabled = false;
+            };
+            
+            reader.readAsText(file);
+        });
+        
+        // Function to show messages
+        function showMessage(type, message) {
+            const messagesContainer = document.getElementById('upload-messages');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.style.cssText = `
+                padding: 10px; 
+                margin: 5px 0; 
+                border-radius: 4px; 
+                background-color: ${type === 'success' ? '#d4edda' : '#f8d7da'}; 
+                border: 1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'};
+                color: ${type === 'success' ? '#155724' : '#721c24'};
+            `;
+            alertDiv.textContent = message;
+                        
+        }
+        
+        // Auto-hide messages after 5 seconds
+        setTimeout(function() {
+            const messages = document.getElementById('upload-messages');
+            if (messages) {
+                messages.style.display = 'none';
+            }
+        }, 5000);
+    </script>
+
+</body>
+
 </html>
