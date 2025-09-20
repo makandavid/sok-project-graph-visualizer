@@ -1,0 +1,13 @@
+[project]
+name = "json_data_source"
+version = "0.1"
+description = "JSON Data Source Plugin"
+dependencies = [
+    "graph_exploerer_api==0.1"
+]
+
+[project.entry-points."data_source"]
+json_data_source = "json_data_source:JsonDataSourcePlugin"
+
+[tool.setuptools]
+py-modules = ["json_data_source"]
