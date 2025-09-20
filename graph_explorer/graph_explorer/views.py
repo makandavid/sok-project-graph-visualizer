@@ -23,7 +23,7 @@ def index(request: HttpRequest):
     if json_data_source:
         try:
             # Load data from sample JSON file
-            g = json_data_source.load_data("../sample_data.json")
+            g = json_data_source.load_data("../json_data_source/data/large_dataset.json")
             print(f"Loaded graph with {len(g.nodes)} nodes and {len(g.links)} links")
         except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
             print(f"Error loading JSON data: {e}")
