@@ -17,7 +17,11 @@
         <div class="controls">
             <div class="source-controls">
                 <label>Source:
-                    <select class="source-select" id="source-select"></select>
+                    <select class="source-select" id="source-select">
+                        {% for plugin in data_source_plugins %}
+                            <option value="{{ plugin.id }}">{{ plugin.name }}</option>
+                        {% endfor %}
+                    </select>                  
                     <button id="new-source-button">New</button>
                 </label>
             </div>
@@ -230,6 +234,35 @@
             }
         }, 5000);
     </script>
+
+    <script type="text/javascript">
+    document.getElementById('source-select').addEventListener('change', function() {
+        const selectedId = this.value;
+        console.log('Selected data source:', selectedId);
+
+        // Optionally, reload default graph for this data source
+        fetch(`/load-data-source/?plugin_id=${selectedId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Clear existing views
+                    document.getElementById('mainview').innerHTML = '';
+                    document.getElementById('treeview').innerHTML = '';
+                    document.getElementById('birdview').innerHTML = '';
+
+                    // Execute visualization script for this plugin
+                    eval(data.visualization_script);
+
+                    if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
+                        window.initializeTreeview(graph);
+                    }
+                } else {
+                    console.error('Failed to load data source:', data.error);
+                }
+            });
+    });
+    </script>
+
 
 </body>
 

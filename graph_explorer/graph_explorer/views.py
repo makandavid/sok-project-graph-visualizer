@@ -104,7 +104,8 @@ def index(request: HttpRequest):
     
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
-        "visualization_script": visualization_script
+        "visualization_script": visualization_script,
+        "data_source_plugins": data_source_plugins
     })
     
 
@@ -152,6 +153,28 @@ def upload_graph(request):
             return JsonResponse({"success": False, "error": str(e)})
 
     return JsonResponse({"success": False, "error": "Invalid request"})
+
+def load_data_source(request):
+    plugin_id = request.GET.get('plugin_id')
+    app_config = apps.get_app_config('graph_explorer')
+    plugin = next((p for p in app_config.data_source_plugins if p.id() == plugin_id), None)
+
+    if plugin:
+        try:
+            # Load a default graph from this plugin
+            g = plugin.load_default_graph()  # adjust depending on your plugin API
+            visualization_script = app_config.visualization_plugins[0].visualize(g)
+            return JsonResponse({
+                'success': True,
+                'visualization_script': visualization_script,
+                'node_count': len(g.nodes),
+                'link_count': len(g.links),
+            })
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    else:
+        return JsonResponse({'success': False, 'error': 'Plugin not found'})
+
 
 def create_fallback_graph():
     """Create fallback graph data when no data source plugins are available"""
