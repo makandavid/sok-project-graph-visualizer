@@ -152,9 +152,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            // Update the visualization without reloading
                             if (data.visualization_script) {
-                                // Clear existing visualization
                                 const mainview = document.getElementById('mainview');
                                 const treeview = document.getElementById('treeview');
                                 const birdview = document.getElementById('birdview');
@@ -162,7 +160,6 @@
                                 treeview.innerHTML = '';
                                 birdview.innerHTML = '';
                                 
-                                // Execute new visualization script
                                 eval(data.visualization_script);
 
                             setTimeout(() => {
@@ -172,24 +169,15 @@
                                     console.error('Graph or initializeTreeview not available');
                                 }
                             }, 100);
-
-                                showMessage('success', `Successfully loaded graph with ${data.node_count} nodes and ${data.link_count} links from ${file.name}`);
-                            } else {
-                                showMessage('error', 'No visualization script received');
                             }
-                        } else {
-                            showMessage('error', data.error || 'Upload failed');
                         }
                     })
                     .catch(error => {
                         console.error('Upload error:', error);
-                        showMessage('error', 'Error uploading file. Please check the JSON format and try again.');
                     })
                     .finally(() => {
-                        // Restore button state
                         uploadButton.textContent = originalText;
                         uploadButton.disabled = false;
-                        // Clear file input
                         fileInput.value = '';
                     });
                     
@@ -201,68 +189,14 @@
             };
             
             reader.onerror = function() {
-                showMessage('error', 'Error reading file');
                 uploadButton.textContent = originalText;
                 uploadButton.disabled = false;
             };
             
             reader.readAsText(file);
         });
-        
-        // Function to show messages
-        function showMessage(type, message) {
-            const messagesContainer = document.getElementById('upload-messages');
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type}`;
-            alertDiv.style.cssText = `
-                padding: 10px; 
-                margin: 5px 0; 
-                border-radius: 4px; 
-                background-color: ${type === 'success' ? '#d4edda' : '#f8d7da'}; 
-                border: 1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'};
-                color: ${type === 'success' ? '#155724' : '#721c24'};
-            `;
-            alertDiv.textContent = message;
-                        
-        }
-        
-        // Auto-hide messages after 5 seconds
-        setTimeout(function() {
-            const messages = document.getElementById('upload-messages');
-            if (messages) {
-                messages.style.display = 'none';
-            }
-        }, 5000);
+
     </script>
-
-    <script type="text/javascript">
-    document.getElementById('source-select').addEventListener('change', function() {
-        const selectedId = this.value;
-        console.log('Selected data source:', selectedId);
-
-        // Optionally, reload default graph for this data source
-        fetch(`/load-data-source/?plugin_id=${selectedId}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    // Clear existing views
-                    document.getElementById('mainview').innerHTML = '';
-                    document.getElementById('treeview').innerHTML = '';
-                    document.getElementById('birdview').innerHTML = '';
-
-                    // Execute visualization script for this plugin
-                    eval(data.visualization_script);
-
-                    if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
-                        window.initializeTreeview(graph);
-                    }
-                } else {
-                    console.error('Failed to load data source:', data.error);
-                }
-            });
-    });
-    </script>
-
 
 </body>
 

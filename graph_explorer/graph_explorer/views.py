@@ -16,87 +16,27 @@ def index(request: HttpRequest):
     visualization_plugins = app_config.visualization_plugins
     data_source_plugins = app_config.data_source_plugins
     
-    # Initialize graph
     g = Graph([], [])
     json_data_source = None
     
-    # Find JSON data source plugin
     for plugin in data_source_plugins:
         if plugin.id() == "json_data_source":
             json_data_source = plugin
             break
     
-    # Handle file upload
-    if request.method == 'POST' and 'json_file' in request.FILES:
-        uploaded_file = request.FILES['json_file']
-        
-        # Validate file type
-        if not uploaded_file.name.lower().endswith('.json'):
-            return redirect('index')
-        
+    if json_data_source:
         try:
-            # Read and parse the uploaded JSON file
-            file_content = uploaded_file.read().decode('utf-8')
-            json_data = json.loads(file_content)
-            
-            # Save the uploaded file temporarily or permanently
-            # Option 1: Use temporary file
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
-                temp_file.write(file_content)
-                temp_file_path = temp_file.name
-            
-            if json_data_source:
-                try:
-                    # Load data using the JSON data source plugin
-                    g = json_data_source.load_data(temp_file_path)
-                    print(request, f'Successfully loaded graph with {len(g.nodes)} nodes and {len(g.links)} links from {uploaded_file.name}')
-                    
-                    # Clean up temporary file
-                    os.unlink(temp_file_path)
-                    
-                except Exception as e:
-                    messages.error(request, f'Error parsing graph data: {str(e)}')
-                    # Clean up temporary file
-                    if os.path.exists(temp_file_path):
-                        os.unlink(temp_file_path)
-                    g = create_fallback_graph()
-            else:
-                messages.error(request, 'JSON data source plugin not available')
-                # Clean up temporary file
-                if os.path.exists(temp_file_path):
-                    os.unlink(temp_file_path)
-                g = create_fallback_graph()
-                
-        except json.JSONDecodeError as e:
-            messages.error(request, f'Invalid JSON format: {str(e)}')
+            g = json_data_source.load_data("../json_data_source/data/test.json")
+            print(f"Loaded graph with {len(g.nodes)} nodes and {len(g.links)} links")
+        except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+            print(f"Error loading JSON data: {e}")
             g = create_fallback_graph()
-        except UnicodeDecodeError as e:
-            messages.error(request, f'File encoding error: {str(e)}')
-            g = create_fallback_graph()
-        except Exception as e:
-            messages.error(request, f'Unexpected error: {str(e)}')
-            g = create_fallback_graph()
-    
-    # Handle GET request or fallback after failed upload
     else:
-        print("Went into this shit")
-        if json_data_source:
-            try:
-                # Try to load data from default sample JSON file
-                g = json_data_source.load_data("../json_data_source/data/test.json")
-                print(f"Loaded graph with {len(g.nodes)} nodes and {len(g.links)} links")
-            except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-                print(f"Error loading JSON data: {e}")
-                # Fallback to hardcoded data
-                g = create_fallback_graph()
-        else:
-            print("No JSON data source plugin found, using fallback data")
-            g = create_fallback_graph()
+        print("No JSON data source plugin found, using fallback data")
+        g = create_fallback_graph()
     
-    # Store current graph in app config
     app_config.current_graph = g
     
-    # Generate visualization script
     if visualization_plugins:
         visualization_script = visualization_plugins[0].visualize(g)
     else:
@@ -115,14 +55,11 @@ def upload_graph(request):
         try:
             data = json.loads(request.body)
             json_data = data.get('json_data')
-            filename = data.get('filename', 'uploaded.json')
             
-            # Save temporarily
             with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
                 temp_file.write(json.dumps(json_data))
                 temp_file_path = temp_file.name
             
-            # Load using JSON data source
             app_config = apps.get_app_config('graph_explorer')
             json_data_source = None
             for plugin in app_config.data_source_plugins:
@@ -134,7 +71,6 @@ def upload_graph(request):
                 g = json_data_source.load_data(temp_file_path)
                 app_config.current_graph = g
 
-                # Generate visualization script
                 vis_script = app_config.visualization_plugins[0].visualize(g) if app_config.visualization_plugins else ""
                 
                 # Clean up
@@ -153,28 +89,6 @@ def upload_graph(request):
             return JsonResponse({"success": False, "error": str(e)})
 
     return JsonResponse({"success": False, "error": "Invalid request"})
-
-def load_data_source(request):
-    plugin_id = request.GET.get('plugin_id')
-    app_config = apps.get_app_config('graph_explorer')
-    plugin = next((p for p in app_config.data_source_plugins if p.id() == plugin_id), None)
-
-    if plugin:
-        try:
-            # Load a default graph from this plugin
-            g = plugin.load_default_graph()  # adjust depending on your plugin API
-            visualization_script = app_config.visualization_plugins[0].visualize(g)
-            return JsonResponse({
-                'success': True,
-                'visualization_script': visualization_script,
-                'node_count': len(g.nodes),
-                'link_count': len(g.links),
-            })
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
-    else:
-        return JsonResponse({'success': False, 'error': 'Plugin not found'})
-
 
 def create_fallback_graph():
     """Create fallback graph data when no data source plugins are available"""
