@@ -1,31 +1,77 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" href="{% static 'treeview-style.css' %}"/>
     <title>Graph Explorer</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header" id="header">
-        <button class="openbtn">☰</button>
-        <h1>Graph Visualizer</h1>
+      <h1>Graph<br />Visualizer</h1>
+
+      <div class="controls">
+        <div class="source-controls">
+          <label
+            >Source:
+            <select class="source-select" id="source-select"></select>
+            <button>New</button>
+          </label>
+        </div>
+        <div class="filter-controls">
+          <form>
+            <input
+              type="text"
+              name="search"
+              placeholder="Search..."
+              size="24"
+            />
+            <button>Search</button>
+          </form>
+          <form>
+            <input type="text" name="attr" placeholder="attr" size="5" />
+            <select name="op">
+              <option value="eq">==</option>
+              <option value="le">&le;</option>
+              <option value="ge">&ge;</option>
+              <option value="lt">&lt;</option>
+              <option value="gt">&gt;</option>
+              <option value="ne">!=</option>
+            </select>
+            <input type="text" name="val" placeholder="val" size="5" />
+            <button>Filter</button>
+          </form>
+        </div>
+        <div class="view-buttons">
+          <button id="simple-view-button">Simple View</button>
+          <button id="block-view-button">Block View</button>
+        </div>
+      </div>
     </div>
 
-    <div class="sidebar" id="menu">
+    <div class="container">
+      <div class="sidebar">
+        <div class="treeview">
+          <ul id="treeview"></ul>
+        </div>
 
+        <div class="birdview">
+          <svg id="birdview" width="300" height="120">
+            <rect width="100%" height="100%" fill="white" stroke="gray"></rect>
+          </svg>
+        </div>
+      </div>
+
+      <div class="mainview">
+        <svg id="mainview"></svg>
+      </div>
     </div>
 
-    <div class="main" id="main">
-        <svg width="1500" height="600">
-
-        </svg>
-        <script type="text/javascript">
-            {{ visualization_script|safe }}
-        </script>
-
-    </div>
-
-</body>
+    <script type="text/javascript">
+      {{visualization_script | safe}}
+    </script>
+    <script type="text/javascript" src="{% static 'treeview.js' %}"></script>
+  </body>
 </html>

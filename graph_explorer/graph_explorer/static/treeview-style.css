@@ -1,0 +1,41 @@
+ul, #treeview {
+  list-style-type: none;
+}
+
+div.treeview{
+    background-color: white;
+    margin-top: 20px;
+    padding: 10px;
+    height: 300px;
+    width: 250px;
+    overflow: scroll;
+}
+
+#treeview {
+  margin: 0;
+  padding: 0;
+}
+
+.arrow {
+  cursor: pointer;
+  user-select: none;
+}
+
+.arrow::before {
+  content: "\25B6";
+  color: #3182bd;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.arrow-down::before {
+  transform: rotate(90deg);
+}
+
+.nested {
+  display: none;
+}
+
+.active {
+  display: block;
+}
