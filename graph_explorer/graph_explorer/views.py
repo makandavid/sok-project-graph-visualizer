@@ -10,6 +10,7 @@ from django.http import JsonResponse
 
 
 from api.models.graph import Graph
+from api.services.search_filter import search
 
 def index(request: HttpRequest):
     app_config = apps.get_app_config('graph_explorer')
@@ -36,6 +37,7 @@ def index(request: HttpRequest):
         g = create_fallback_graph()
     
     app_config.current_graph = g
+    app_config.filtered_graph = g
     
     if visualization_plugins:
         visualization_script = visualization_plugins[0].visualize(g)
@@ -70,6 +72,7 @@ def upload_graph(request):
             if json_data_source:
                 g = json_data_source.load_data(temp_file_path)
                 app_config.current_graph = g
+                app_config.filtered_graph = g
 
                 vis_script = app_config.visualization_plugins[0].visualize(g) if app_config.visualization_plugins else ""
                 
@@ -110,3 +113,43 @@ def create_fallback_graph():
     g.add_link(6, 3, 5)
     g.add_link(7, 4, 0)
     return g
+
+def search_filter(request: HttpRequest):
+    app_config = apps.get_app_config('graph_explorer')
+    visualization_plugins = app_config.visualization_plugins
+    data_source_plugins = app_config.data_source_plugins
+
+    visualization_script = ""
+    
+    if request.method == 'GET':
+        print(request.GET)
+        if "search" in request.GET.keys():
+            g = search(app_config.filtered_graph, request.GET["search"])
+        else:
+            g = app_config.filtered_graph
+
+        if visualization_plugins:
+            visualization_script = visualization_plugins[0].visualize(g)
+            app_config.filtered_graph = g
+           
+    return render(request, "index.html", {
+        "visualization_plugins": visualization_plugins,
+        "visualization_script": visualization_script,
+        "data_source_plugins": data_source_plugins
+    })  
+
+def reset_filter(request: HttpRequest):
+    app_config = apps.get_app_config('graph_explorer')
+    visualization_plugins = app_config.visualization_plugins
+    data_source_plugins = app_config.data_source_plugins
+
+    visualization_script = ""
+    if visualization_plugins:
+        visualization_script = visualization_plugins[0].visualize(app_config.current_graph)
+        app_config.filtered_graph = app_config.current_graph
+           
+    return render(request, "index.html", {
+        "visualization_plugins": visualization_plugins,
+        "visualization_script": visualization_script,
+        "data_source_plugins": data_source_plugins
+    })   

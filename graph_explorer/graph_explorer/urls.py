@@ -22,5 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     path('upload-graph/', views.upload_graph, name='upload_graph'),
+    path('search/', views.search_filter, name="search"),
+    path('reset/', views.reset_filter, name="reset")
 
 ]
