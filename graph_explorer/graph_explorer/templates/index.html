@@ -96,7 +96,18 @@
         <div class="mainview">
             <svg id="mainview"></svg>
         </div>
+
+        <div class="terminal-container">
+            <h3>Graph CLI</h3>
+            <div id="terminal-output"
+                style="border:1px solid #ccc; height:200px; width: 300px; overflow:auto; background:#111; color:#0f0; padding:5px; font-family:monospace;"></div>
+            <input id="terminal-input"
+                type="text"
+                placeholder="Enter command..."
+                style="width:100%; padding:5px; font-family:monospace;" />
+        </div>  
     </div>
+
 
     <!-- prettier-ignore -->
     <script type="text/javascript">
@@ -227,6 +238,50 @@
     <script>
         document.getElementById("block-view-button").addEventListener("click", function() {
             window.location.href = "/change_visualization_plugin?id=block_visualizer";
+        });
+    </script>
+
+    <script>
+        document.getElementById("terminal-input").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                const command = this.value;
+                this.value = "";
+                fetch("/cli/execute/", {
+                    method: "POST",
+                    body: JSON.stringify({ command }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    const outputDiv = document.getElementById("terminal-output");
+                    if (data.success) {
+                        outputDiv.innerHTML += `> ${command}<br>${data.result}<br>`;
+                        if (data.visualization_script) {
+                            const mainview = document.getElementById('mainview');
+                            const treeview = document.getElementById('treeview');
+                            const birdview = document.getElementById('birdview');
+                            mainview.innerHTML = '';
+                            treeview.innerHTML = '';
+                            birdview.innerHTML = '';
+                            eval(data.visualization_script);
+
+                            setTimeout(() => {
+                                if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
+                                    window.initializeTreeview(graph);
+                                } else {
+                                    console.error('Graph or initializeTreeview not available');
+                                }
+                            }, 100);
+                        }
+                    } else {
+                        outputDiv.innerHTML += `> ${command}<br><span style="color:red">${data.error}</span><br>`;
+                    }
+                    outputDiv.scrollTop = outputDiv.scrollHeight;
+                });
+            }
         });
     </script>
 
