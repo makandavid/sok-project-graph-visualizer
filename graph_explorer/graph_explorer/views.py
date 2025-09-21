@@ -10,7 +10,7 @@ from django.http import JsonResponse
 
 
 from api.models.graph import Graph
-from api.services.search_filter import search
+from api.services.search_filter import search, filter
 
 def index(request: HttpRequest):
     app_config = apps.get_app_config('graph_explorer')
@@ -120,22 +120,29 @@ def search_filter(request: HttpRequest):
     data_source_plugins = app_config.data_source_plugins
 
     visualization_script = ""
+    error_message = None
     
     if request.method == 'GET':
-        print(request.GET)
-        if "search" in request.GET.keys():
-            g = search(app_config.filtered_graph, request.GET["search"])
-        else:
-            g = app_config.filtered_graph
+        try:
+            print(request.GET)
+            if "search" in request.GET.keys():
+                g = search(app_config.filtered_graph, request.GET["search"])
+            else:
+                ops = {'eq': '==', 'le': '<=', 'ge': '>=', 'lt': '<', 'gt': '>', 'ne': '!='}
+                g = filter(app_config.filtered_graph, request.GET["attr"], ops[request.GET["op"]], request.GET["val"])
 
-        if visualization_plugins:
-            visualization_script = visualization_plugins[0].visualize(g)
-            app_config.filtered_graph = g
+            if visualization_plugins:
+                visualization_script = visualization_plugins[0].visualize(g)
+                app_config.filtered_graph = g
+        
+        except Exception:
+            error_message = "Filter error: Can't compare different types!"
            
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
-        "data_source_plugins": data_source_plugins
+        "data_source_plugins": data_source_plugins,
+        "error_message": error_message
     })  
 
 def reset_filter(request: HttpRequest):

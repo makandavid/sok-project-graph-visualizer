@@ -42,7 +42,7 @@
                     <input type="text" name="search" placeholder="Search..." size="24" />
                     <button type="submit">Search</button>
                 </form>
-                <form>
+                <form action="/search">
                     <input type="text" name="attr" placeholder="attr" size="5" />
                     <select name="op">
                         <option value="eq">==</option>
@@ -53,7 +53,7 @@
                         <option value="ne">!=</option>
                     </select>
                     <input type="text" name="val" placeholder="val" size="5" />
-                    <button type="button">Filter</button>
+                    <button type="submit">Filter</button>
                 </form>
             </div>
             <form action="/reset">
@@ -200,6 +200,15 @@
         });
 
     </script>
+
+    {% if error_message %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            alert("Filter error: {{ error_message|escapejs }}");
+        });
+    </script>
+    {% endif %}
+
 
 </body>
 
