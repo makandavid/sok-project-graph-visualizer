@@ -1,0 +1,24 @@
+<node id="1">
+    <name>Parent Node XML</name>
+    <value>4</value>
+    <weight>3.5</weight>
+    <children>
+        <node id="2">
+            <name>First Child XML</name>
+            <value>42</value>
+            <weight>8</weight>
+        </node>
+        <node id="3">
+            <name>Second Child XML</name>
+            <value>17.2</value>
+            <weight>5</weight>
+            <children>
+                <node id="4">
+                    <name>Grandchild Node XML</name>
+                    <value>99</value>
+                    <weight>10</weight>
+                </node>
+            </children>
+        </node>
+    </children>
+</node>

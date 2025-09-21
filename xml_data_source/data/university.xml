@@ -1,0 +1,334 @@
+<university id="U1" name="Generated University">
+
+  <faculty id="F1" name="Engineering">
+    <department id="D1" name="Computer Engineering">
+      <professor id="P1" name="Dr. Adams"/>
+      <professor id="P2" name="Dr. Baker"/>
+      <course id="C1" name="Networks" ref="P1">
+        <student id="S1" name="Alice" age="20"/>
+        <student id="S2" name="Bob" age="21"/>
+        <student id="S3" name="Charlie" age="22"/>
+        <student id="S4" name="David" age="23"/>
+        <student id="S5" name="Eva" age="24"/>
+        <student id="S6" name="Frank" age="20"/>
+        <student id="S7" name="Grace" age="21"/>
+        <student id="S8" name="Hank" age="22"/>
+        <student id="S9" name="Ivy" age="23"/>
+        <student id="S10" name="Jack" age="24"/>
+        <student id="S11" name="Kevin" age="20"/>
+      </course>
+      <course id="C2" name="Operating Systems" ref="P2">
+        <student id="S12" name="Lily" age="21"/>
+        <student id="S13" name="Mona" age="22"/>
+        <student id="S14" name="Nick" age="23"/>
+        <student id="S15" name="Olivia" age="24"/>
+        <student id="S16" name="Paul" age="20"/>
+        <student id="S17" name="Quinn" age="21"/>
+        <student id="S18" name="Rose" age="22"/>
+        <student id="S19" name="Steve" age="23"/>
+        <student id="S20" name="Tina" age="24"/>
+        <student id="S21" name="Uma" age="20"/>
+        <student id="S22" name="Victor" age="21"/>
+      </course>
+    </department>
+
+    <!-- Department 2 -->
+    <department id="D2" name="Electrical Engineering">
+      <professor id="P3" name="Dr. Clark"/>
+      <professor id="P4" name="Dr. Davis"/>
+      <course id="C3" name="Circuits" ref="P3">
+        <student id="S23" name="Wendy" age="22"/>
+        <student id="S24" name="Xander" age="23"/>
+        <student id="S25" name="Yara" age="24"/>
+        <student id="S26" name="Zane" age="20"/>
+        <student id="S27" name="Alan" age="21"/>
+        <student id="S28" name="Bella" age="22"/>
+        <student id="S29" name="Carl" age="23"/>
+        <student id="S30" name="Diana" age="24"/>
+        <student id="S31" name="Evan" age="20"/>
+        <student id="S32" name="Fiona" age="21"/>
+      </course>
+      <course id="C4" name="Signals" ref="P4">
+        <student id="S33" name="George" age="22"/>
+        <student id="S34" name="Hannah" age="23"/>
+        <student id="S35" name="Ivan" age="24"/>
+        <student id="S36" name="Julia" age="20"/>
+        <student id="S37" name="Kevin" age="21"/>
+        <student id="S38" name="Laura" age="22"/>
+        <student id="S39" name="Mike" age="23"/>
+        <student id="S40" name="Nina" age="24"/>
+        <student id="S41" name="Oscar" age="20"/>
+        <student id="S42" name="Paula" age="21"/>
+      </course>
+    </department>
+
+    <!-- Department 3 -->
+    <department id="D3" name="Mechanical Engineering">
+      <professor id="P5" name="Dr. Evans"/>
+      <professor id="P6" name="Dr. Foster"/>
+      <course id="C5" name="Thermodynamics" ref="P5">
+        <student id="S43" name="Quinn" age="22"/>
+        <student id="S44" name="Ralph" age="23"/>
+        <student id="S45" name="Steve" age="24"/>
+        <student id="S46" name="Tina" age="20"/>
+        <student id="S47" name="Uma" age="21"/>
+        <student id="S48" name="Victor" age="22"/>
+        <student id="S49" name="Wendy" age="23"/>
+        <student id="S50" name="Xander" age="24"/>
+        <student id="S51" name="Yara" age="20"/>
+        <student id="S52" name="Zane" age="21"/>
+      </course>
+      <course id="C6" name="Dynamics" ref="P6">
+        <student id="S53" name="Alan" age="22"/>
+        <student id="S54" name="Bella" age="23"/>
+        <student id="S55" name="Carl" age="24"/>
+        <student id="S56" name="Diana" age="20"/>
+        <student id="S57" name="Evan" age="21"/>
+        <student id="S58" name="Fiona" age="22"/>
+        <student id="S59" name="George" age="23"/>
+        <student id="S60" name="Hannah" age="24"/>
+        <student id="S61" name="Ivan" age="20"/>
+        <student id="S62" name="Julia" age="21"/>
+      </course>
+    </department>
+  </faculty>
+
+  <!-- Faculty 2 -->
+  <faculty id="F2" name="Science">
+    <department id="D4" name="Physics">
+      <professor id="P7" name="Dr. Green"/>
+      <professor id="P8" name="Dr. Hall"/>
+      <course id="C7" name="Mechanics" ref="P7">
+        <student id="S63" name="Kevin" age="22"/>
+        <student id="S64" name="Laura" age="23"/>
+        <student id="S65" name="Mike" age="24"/>
+        <student id="S66" name="Nina" age="20"/>
+        <student id="S67" name="Oscar" age="21"/>
+        <student id="S68" name="Paula" age="22"/>
+        <student id="S69" name="Quinn" age="23"/>
+        <student id="S70" name="Ralph" age="24"/>
+        <student id="S71" name="Steve" age="20"/>
+        <student id="S72" name="Tina" age="21"/>
+      </course>
+      <course id="C8" name="Optics" ref="P8">
+        <student id="S73" name="Uma" age="22"/>
+        <student id="S74" name="Victor" age="23"/>
+        <student id="S75" name="Wendy" age="24"/>
+        <student id="S76" name="Xander" age="20"/>
+        <student id="S77" name="Yara" age="21"/>
+        <student id="S78" name="Zane" age="22"/>
+        <student id="S79" name="Alan" age="23"/>
+        <student id="S80" name="Bella" age="24"/>
+        <student id="S81" name="Carl" age="20"/>
+        <student id="S82" name="Diana" age="21"/>
+      </course>
+    </department>
+
+    <department id="D5" name="Chemistry">
+      <professor id="P9" name="Dr. Ian"/>
+      <professor id="P10" name="Dr. Jane"/>
+      <course id="C9" name="Organic Chemistry" ref="P9">
+        <student id="S83" name="Evan" age="22"/>
+        <student id="S84" name="Fiona" age="23"/>
+        <student id="S85" name="George" age="24"/>
+        <student id="S86" name="Hannah" age="20"/>
+        <student id="S87" name="Ivan" age="21"/>
+        <student id="S88" name="Julia" age="22"/>
+        <student id="S89" name="Kevin" age="23"/>
+        <student id="S90" name="Laura" age="24"/>
+        <student id="S91" name="Mike" age="20"/>
+        <student id="S92" name="Nina" age="21"/>
+      </course>
+      <course id="C10" name="Inorganic Chemistry" ref="P10">
+        <student id="S93" name="Oscar" age="22"/>
+        <student id="S94" name="Paula" age="23"/>
+        <student id="S95" name="Quinn" age="24"/>
+        <student id="S96" name="Ralph" age="20"/>
+        <student id="S97" name="Steve" age="21"/>
+        <student id="S98" name="Tina" age="22"/>
+        <student id="S99" name="Uma" age="23"/>
+        <student id="S100" name="Victor" age="24"/>
+        <student id="S101" name="Wendy" age="20"/>
+        <student id="S102" name="Xander" age="21"/>
+      </course>
+    </department>
+  </faculty>
+
+  <!-- Faculty 3 -->
+  <faculty id="F3" name="Arts">
+    <department id="D6" name="History">
+      <professor id="P11" name="Dr. King"/>
+      <professor id="P12" name="Dr. Lewis"/>
+      <course id="C11" name="Ancient History" ref="P11">
+        <student id="S103" name="Yara" age="22"/>
+        <student id="S104" name="Zane" age="23"/>
+        <student id="S105" name="Alan" age="24"/>
+        <student id="S106" name="Bella" age="20"/>
+        <student id="S107" name="Carl" age="21"/>
+        <student id="S108" name="Diana" age="22"/>
+        <student id="S109" name="Evan" age="23"/>
+        <student id="S110" name="Fiona" age="24"/>
+        <student id="S111" name="George" age="20"/>
+        <student id="S112" name="Hannah" age="21"/>
+      </course>
+      <course id="C12" name="Modern History" ref="P12">
+        <student id="S113" name="Ivan" age="22"/>
+        <student id="S114" name="Julia" age="23"/>
+        <student id="S115" name="Kevin" age="24"/>
+        <student id="S116" name="Laura" age="20"/>
+        <student id="S117" name="Mike" age="21"/>
+        <student id="S118" name="Nina" age="22"/>
+        <student id="S119" name="Oscar" age="23"/>
+        <student id="S120" name="Paula" age="24"/>
+        <student id="S121" name="Quinn" age="20"/>
+        <student id="S122" name="Ralph" age="21"/>
+      </course>
+    </department>
+
+    <department id="D7" name="Philosophy">
+      <professor id="P13" name="Dr. Lee"/>
+      <professor id="P14" name="Dr. Martin"/>
+      <course id="C13" name="Ethics" ref="P13">
+        <student id="S123" name="Steve" age="22"/>
+        <student id="S124" name="Tina" age="23"/>
+        <student id="S125" name="Uma" age="24"/>
+        <student id="S126" name="Victor" age="20"/>
+        <student id="S127" name="Wendy" age="21"/>
+        <student id="S128" name="Xander" age="22"/>
+        <student id="S129" name="Yara" age="23"/>
+        <student id="S130" name="Zane" age="24"/>
+        <student id="S131" name="Alan" age="20"/>
+        <student id="S132" name="Bella" age="21"/>
+      </course>
+      <course id="C14" name="Logic" ref="P14">
+        <student id="S133" name="Carl" age="22"/>
+        <student id="S134" name="Diana" age="23"/>
+        <student id="S135" name="Evan" age="24"/>
+        <student id="S136" name="Fiona" age="20"/>
+        <student id="S137" name="George" age="21"/>
+        <student id="S138" name="Hannah" age="22"/>
+        <student id="S139" name="Ivan" age="23"/>
+        <student id="S140" name="Julia" age="24"/>
+        <student id="S141" name="Kevin" age="20"/>
+        <student id="S142" name="Laura" age="21"/>
+      </course>
+    </department>
+  </faculty>
+
+  <!-- Faculty 4 -->
+  <faculty id="F4" name="Business">
+    <department id="D8" name="Management">
+      <professor id="P15" name="Dr. Nelson"/>
+      <professor id="P16" name="Dr. Owens"/>
+      <course id="C15" name="Marketing" ref="P15">
+        <student id="S143" name="Mike" age="22"/>
+        <student id="S144" name="Nina" age="23"/>
+        <student id="S145" name="Oscar" age="24"/>
+        <student id="S146" name="Paula" age="20"/>
+        <student id="S147" name="Quinn" age="21"/>
+        <student id="S148" name="Ralph" age="22"/>
+        <student id="S149" name="Steve" age="23"/>
+        <student id="S150" name="Tina" age="24"/>
+        <student id="S151" name="Uma" age="20"/>
+        <student id="S152" name="Victor" age="21"/>
+      </course>
+      <course id="C16" name="Finance" ref="P16">
+        <student id="S153" name="Wendy" age="22"/>
+        <student id="S154" name="Xander" age="23"/>
+        <student id="S155" name="Yara" age="24"/>
+        <student id="S156" name="Zane" age="20"/>
+        <student id="S157" name="Alan" age="21"/>
+        <student id="S158" name="Bella" age="22"/>
+        <student id="S159" name="Carl" age="23"/>
+        <student id="S160" name="Diana" age="24"/>
+        <student id="S161" name="Evan" age="20"/>
+        <student id="S162" name="Fiona" age="21"/>
+      </course>
+    </department>
+
+    <department id="D9" name="Economics">
+      <professor id="P17" name="Dr. Parker"/>
+      <professor id="P18" name="Dr. Quinn"/>
+      <course id="C17" name="Microeconomics" ref="P17">
+        <student id="S163" name="George" age="22"/>
+        <student id="S164" name="Hannah" age="23"/>
+        <student id="S165" name="Ivan" age="24"/>
+        <student id="S166" name="Julia" age="20"/>
+        <student id="S167" name="Kevin" age="21"/>
+        <student id="S168" name="Laura" age="22"/>
+        <student id="S169" name="Mike" age="23"/>
+        <student id="S170" name="Nina" age="24"/>
+        <student id="S171" name="Oscar" age="20"/>
+        <student id="S172" name="Paula" age="21"/>
+      </course>
+      <course id="C18" name="Macroeconomics" ref="P18">
+        <student id="S173" name="Quinn" age="22"/>
+        <student id="S174" name="Ralph" age="23"/>
+        <student id="S175" name="Steve" age="24"/>
+        <student id="S176" name="Tina" age="20"/>
+        <student id="S177" name="Uma" age="21"/>
+        <student id="S178" name="Victor" age="22"/>
+        <student id="S179" name="Wendy" age="23"/>
+        <student id="S180" name="Xander" age="24"/>
+        <student id="S181" name="Yara" age="20"/>
+        <student id="S182" name="Zane" age="21"/>
+      </course>
+    </department>
+
+    <department id="D10" name="Accounting">
+      <professor id="P19" name="Dr. Reed"/>
+      <professor id="P20" name="Dr. Scott"/>
+      <course id="C19" name="Auditing" ref="P19">
+        <student id="S183" name="Alan" age="22"/>
+        <student id="S184" name="Bella" age="23"/>
+        <student id="S185" name="Carl" age="24"/>
+        <student id="S186" name="Diana" age="20"/>
+        <student id="S187" name="Evan" age="21"/>
+        <student id="S188" name="Fiona" age="22"/>
+        <student id="S189" name="George" age="23"/>
+        <student id="S190" name="Hannah" age="24"/>
+        <student id="S191" name="Ivan" age="20"/>
+        <student id="S192" name="Julia" age="21"/>
+      </course>
+      <course id="C20" name="Taxation" ref="P20">
+        <student id="S193" name="Kevin" age="22"/>
+        <student id="S194" name="Laura" age="23"/>
+        <student id="S195" name="Mike" age="24"/>
+        <student id="S196" name="Nina" age="20"/>
+        <student id="S197" name="Oscar" age="21"/>
+        <student id="S198" name="Paula" age="22"/>
+        <student id="S199" name="Quinn" age="23"/>
+        <student id="S200" name="Ralph" age="24"/>
+        <student id="S201" name="Steve" age="20"/>
+        <student id="S202" name="Tina" age="21"/>
+      </course>
+    </department>
+
+    <department id="D11" name="Entrepreneurship">
+      <professor id="P21" name="Dr. Thomas"/>
+      <professor id="P22" name="Dr. Underwood"/>
+      <course id="C21" name="Startup Management" ref="P21">
+        <student id="S203" name="Uma" age="22"/>
+        <student id="S204" name="Victor" age="23"/>
+        <student id="S205" name="Wendy" age="24"/>
+        <student id="S206" name="Xander" age="20"/>
+        <student id="S207" name="Yara" age="21"/>
+        <student id="S208" name="Zane" age="22"/>
+        <student id="S209" name="Alan" age="23"/>
+        <student id="S210" name="Bella" age="24"/>
+        <student id="S211" name="Carl" age="20"/>
+        <student id="S212" name="Diana" age="21"/>
+      </course>
+      <course id="C22" name="Business Ethics" ref="P22">
+        <student id="S213" name="Evan" age="22"/>
+        <student id="S214" name="Fiona" age="23"/>
+        <student id="S215" name="George" age="24"/>
+        <student id="S216" name="Hannah" age="20"/>
+        <student id="S217" name="Ivan" age="21"/>
+        <student id="S218" name="Julia" age="22"/>
+        <student id="S219" name="Kevin" age="23"/>
+        <student id="S220" name="Laura" age="24"/>
+      </course>
+    </department>
+  </faculty>
+</university>

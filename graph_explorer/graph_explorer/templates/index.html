@@ -30,13 +30,13 @@
             <div class="upload-controls">
                 <form id="upload-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <label for="json-file">Upload JSON:
-                        <input type="file" id="json-file" name="json_file" accept=".json" />
+                    <label for="file-upload">Upload File:
+                        <input type="file" id="file-upload" name="file" accept=".json,.xml" />
                     </label>
                     <button type="submit" id="upload-button">Upload & Visualize</button>
                 </form>
             </div>
-            
+
             <div class="filter-controls">
                 <form>
                     <input type="text" name="search" placeholder="Search..." size="24" />
@@ -86,7 +86,7 @@
         {{ visualization_script | safe }}
     </script>
     <script type="text/javascript" src="{% static 'treeview.js' %}"></script>
-    
+
 
     <script type="text/javascript">
     // Wait for DOM and all scripts to be ready
@@ -96,7 +96,7 @@
                 console.log('Checking for initial treeview initialization...');
                 console.log('initializeTreeview type:', typeof window.initializeTreeview);
                 console.log('graph available:', typeof graph !== 'undefined');
-                
+
                 if (typeof window.initializeTreeview === "function" && typeof graph !== 'undefined') {
                     console.log('Initializing treeview with graph:', graph);
                     window.initializeTreeview(graph);
@@ -111,81 +111,90 @@
         // Handle file upload form submission
         document.getElementById('upload-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const fileInput = document.getElementById('json-file');
+
+            const fileInput = document.getElementById('file-upload');
             const file = fileInput.files[0];
-            
+
             if (!file) {
-                alert('Please select a JSON file to upload.');
+                alert('Please select a file to upload.');
                 return;
             }
-            
-            if (!file.name.toLowerCase().endsWith('.json')) {
-                alert('Please select a valid JSON file.');
+
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (ext !== 'json' && ext !== 'xml') {
+                alert('Please select a valid JSON or XML file.');
                 return;
             }
-            
+
             // Show loading state
             const uploadButton = document.getElementById('upload-button');
             const originalText = uploadButton.textContent;
             uploadButton.textContent = 'Processing...';
             uploadButton.disabled = true;
-            
+
             // Read file and process client-side
             const reader = new FileReader();
             reader.onload = function(event) {
-                try {
-                    const jsonData = JSON.parse(event.target.result);
-                    
-                    // Send JSON data to server for processing
-                    fetch('/upload-graph/', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            json_data: jsonData,
-                            filename: file.name
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            if (data.visualization_script) {
-                                const mainview = document.getElementById('mainview');
-                                const treeview = document.getElementById('treeview');
-                                const birdview = document.getElementById('birdview');
-                                mainview.innerHTML = '';
-                                treeview.innerHTML = '';
-                                birdview.innerHTML = '';
-                                
-                                eval(data.visualization_script);
 
-                            setTimeout(() => {
-                                if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
-                                    window.initializeTreeview(graph);
-                                } else {
-                                    console.error('Graph or initializeTreeview not available');
-                                }
-                            }, 100);
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Upload error:', error);
-                    })
-                    .finally(() => {
+                let payload = { filename: file.name };
+
+                if (ext === 'json') {
+                    try {
+                        payload.data = JSON.parse(event.target.result);
+                        payload.type = 'json';
+                    } catch (err) {
+                        alert('Invalid JSON format: ' + err.message);
                         uploadButton.textContent = originalText;
                         uploadButton.disabled = false;
-                        fileInput.value = '';
-                    });
-                    
-                } catch (error) {
-                    showMessage('error', 'Invalid JSON format: ' + error.message);
+                        return;
+                    }
+                }
+                else if (ext === 'xml') {
+                        payload.data = event.target.result;
+                        payload.type = 'xml';
+                }
+
+
+                // Send data to server for processing
+                fetch('/upload-graph/', {
+                    method: 'POST',
+                    body: JSON.stringify(payload),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (data.visualization_script) {
+                            const mainview = document.getElementById('mainview');
+                            const treeview = document.getElementById('treeview');
+                            const birdview = document.getElementById('birdview');
+                            mainview.innerHTML = '';
+                            treeview.innerHTML = '';
+                            birdview.innerHTML = '';
+
+                            eval(data.visualization_script);
+
+                        setTimeout(() => {
+                            if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
+                                window.initializeTreeview(graph);
+                            } else {
+                                console.error('Graph or initializeTreeview not available');
+                            }
+                        }, 100);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Upload error:', error);
+                })
+                .finally(() => {
                     uploadButton.textContent = originalText;
                     uploadButton.disabled = false;
-                }
+                    fileInput.value = '';
+                });
             };
             
             reader.onerror = function() {
