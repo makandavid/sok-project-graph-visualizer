@@ -1,4 +1,6 @@
 import shlex
+from api.services.search_filter import search, filter
+
 
 def handle_command(graph, command_str: str):
     tokens = shlex.split(command_str)
@@ -94,8 +96,22 @@ def handle_delete(graph, args):
         graph.links = [e for e in graph.links if e.id != edge_id]
         return f"Edge {edge_id} deleted"
 
-def handle_filter(graph, expr: str):
-    return f"Applied filter: {expr}"
 
 def handle_search(graph, expr: str):
+    # expr is the text to search for
+    new_graph = search(graph, expr)
+    graph.nodes = new_graph.nodes
+    graph.links = new_graph.links
     return f"Searched for: {expr}"
+
+def handle_filter(graph, expr: str):
+    # expr example: "Age>=30" or "Height<150"
+    import re
+    match = re.match(r"(\w+)\s*(==|!=|<=|>=|<|>)\s*(.+)", expr)
+    if not match:
+        return f"Invalid filter expression: {expr}"
+    attr, op, val = match.groups()
+    new_graph = filter(graph, attr, op, val)
+    graph.nodes = new_graph.nodes
+    graph.links = new_graph.links
+    return f"Applied filter: {expr}"
