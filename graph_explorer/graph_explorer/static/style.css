@@ -40,7 +40,7 @@ input, select {
   width: 15em;
 }
 
-.filter-controls, .source-controls, .view-buttons {
+.filter-controls, .source-controls, .view-buttons, .applied-filters {
   display: flex;
   flex-direction: column;
   justify-content: center;
