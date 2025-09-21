@@ -38,11 +38,11 @@
             </div>
             
             <div class="filter-controls">
-                <form>
+                <form action="/search">
                     <input type="text" name="search" placeholder="Search..." size="24" />
-                    <button type="button">Search</button>
+                    <button type="submit">Search</button>
                 </form>
-                <form>
+                <form action="/search">
                     <input type="text" name="attr" placeholder="attr" size="5" />
                     <select name="op">
                         <option value="eq">==</option>
@@ -53,7 +53,24 @@
                         <option value="ne">!=</option>
                     </select>
                     <input type="text" name="val" placeholder="val" size="5" />
-                    <button type="button">Filter</button>
+                    <button type="submit">Filter</button>
+                </form>
+            </div>
+            <div class="applied-filters">
+                <div>
+                    <select style="width: 200px;">
+                        <option>Applied Filters</option>
+                        {% if applied_filters %}
+                            {% for f in applied_filters %}
+                                <option disabled>{{ f }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option disabled>No filters applied</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <form action="/reset">
+                    <button type="submit">Reset Filters</button>
                 </form>
             </div>
             <div class="view-buttons">
@@ -197,6 +214,22 @@
         });
 
     </script>
+
+    {% if error_message %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            alert("Filter error: {{ error_message|escapejs }}");
+        });
+    </script>
+    {% endif %}
+
+    
+    <script>
+        document.getElementById("block-view-button").addEventListener("click", function() {
+            window.location.href = "/change_visualization_plugin?id=block_visualizer";
+        });
+    </script>
+
 
 </body>
 

@@ -6,7 +6,7 @@ class Node(object):
         self.attributes = attributes
 
     def __str__(self):
-        return "Node ID: {}\nAttributes:\n{}\n".format(self.id, json.dumps(self.attribute, indent=4))
+        return f"Node ID: {self.id}\nAttributes:\n{json.dumps(self.attributes, indent=4)}\n"
     
     def to_dict(self):
         return {"id": self.id, "attributes": self.attributes}
