@@ -42,7 +42,7 @@ def handle_create(graph, args):
                     raise ValueError(f"Invalid property format: {arg}. Use --property=Key=Value")
         if node_id is None:
             raise ValueError("Node requires --id")
-        print(graph.add_node(node_id, attributes))
+        graph.add_node(node_id, attributes)
         return f"Node {node_id} created with {attributes}"
 
     elif args[0] == "edge":
@@ -62,9 +62,7 @@ def handle_create(graph, args):
                 node_ids.append(int(arg))
         if len(node_ids) != 2:
             raise ValueError("Edge requires source and target node IDs")
-        for n in graph.nodes:
-            print(type(n.id))
-        print(graph.add_link(edge_id, str(node_ids[0]), str(node_ids[1])))
+        graph.add_link(edge_id, str(node_ids[0]), str(node_ids[1]))
         return f"Edge {edge_id} created between {node_ids} with {properties}"
 
 def handle_edit(graph, args):
@@ -91,8 +89,6 @@ def handle_delete(graph, args):
         return f"Node {node_id} deleted"
     elif args[0] == "edge":
         edge_id = args[1].split("=")[1]
-        for l in graph.links:
-            print(l.id)
         graph.links = [e for e in graph.links if e.id != edge_id]
         return f"Edge {edge_id} deleted"
 
