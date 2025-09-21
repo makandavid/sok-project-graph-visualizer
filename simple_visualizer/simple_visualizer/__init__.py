@@ -1,0 +1,1 @@
+from .simple_visualizer import SimpleVisualizerPlugin
