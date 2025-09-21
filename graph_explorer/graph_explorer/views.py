@@ -135,7 +135,7 @@ def search_filter(request: HttpRequest):
             else:
                 ops = {'eq': '==', 'le': '<=', 'ge': '>=', 'lt': '<', 'gt': '>', 'ne': '!='}
                 g = filter(app_config.filtered_graph, request.GET["attr"], ops[request.GET["op"]], request.GET["val"])
-                filter_str = f"{request.GET["attr"]} {ops[request.GET["op"]]} {request.GET["val"]}"
+                filter_str = f"{request.GET['attr']} {ops[request.GET['op']]} {request.GET['val']}"
 
             if visualization_plugins:
                 visualization_script = visualization_plugins[0].visualize(g)
