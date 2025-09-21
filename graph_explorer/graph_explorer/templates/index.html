@@ -38,9 +38,9 @@
             </div>
             
             <div class="filter-controls">
-                <form>
+                <form action="/search">
                     <input type="text" name="search" placeholder="Search..." size="24" />
-                    <button type="button">Search</button>
+                    <button type="submit">Search</button>
                 </form>
                 <form>
                     <input type="text" name="attr" placeholder="attr" size="5" />
@@ -56,6 +56,9 @@
                     <button type="button">Filter</button>
                 </form>
             </div>
+            <form action="/reset">
+                <button type="submit">Reset Filters</button>
+            </form>
             <div class="view-buttons">
                 <button id="simple-view-button">Simple View</button>
                 <button id="block-view-button">Block View</button>

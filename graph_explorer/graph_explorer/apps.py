@@ -10,6 +10,7 @@ class GraphExplorerConfig(AppConfig):
     visualization_plugins = []
     data_source_plugins = []
     current_graph = Graph([], [])
+    filtered_graph = Graph([], [])
 
     def ready(self):
         print("Visualizer plugins:")
