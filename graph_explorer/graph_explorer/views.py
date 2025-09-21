@@ -160,3 +160,22 @@ def reset_filter(request: HttpRequest):
         "visualization_script": visualization_script,
         "data_source_plugins": data_source_plugins
     })   
+
+def change_visualization_plugin(request: HttpRequest):
+    app_config = apps.get_app_config('graph_explorer')
+    visualization_plugins = app_config.visualization_plugins
+    data_source_plugins = app_config.data_source_plugins
+
+    visualization_script = ""
+
+    if request.method == 'GET':
+        print(request.GET)
+        viz_id = request.GET["id"]
+        for viz in visualization_plugins:
+            if viz.id() == viz_id and visualization_plugins:
+                visualization_script = visualization_plugins[0].visualize(app_config.current_graph)
+                break
+            
+    return render(request, "index.html", {"source_plugins": data_source_plugins,
+                                          "visualization_plugins": visualization_plugins,
+                                          "visualization_script": visualization_script})
