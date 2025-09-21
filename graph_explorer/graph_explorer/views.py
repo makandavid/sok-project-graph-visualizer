@@ -38,6 +38,7 @@ def index(request: HttpRequest):
     
     app_config.current_graph = g
     app_config.filtered_graph = g
+    app_config.applied_filters = []
     
     if visualization_plugins:
         visualization_script = visualization_plugins[0].visualize(g)
@@ -73,6 +74,7 @@ def upload_graph(request):
                 g = json_data_source.load_data(temp_file_path)
                 app_config.current_graph = g
                 app_config.filtered_graph = g
+                app_config.applied_filters = []
 
                 vis_script = app_config.visualization_plugins[0].visualize(g) if app_config.visualization_plugins else ""
                 
@@ -118,8 +120,10 @@ def search_filter(request: HttpRequest):
     app_config = apps.get_app_config('graph_explorer')
     visualization_plugins = app_config.visualization_plugins
     data_source_plugins = app_config.data_source_plugins
+    applied_filters = app_config.applied_filters
 
     visualization_script = ""
+    filter_str = ""
     error_message = None
     
     if request.method == 'GET':
@@ -127,13 +131,16 @@ def search_filter(request: HttpRequest):
             print(request.GET)
             if "search" in request.GET.keys():
                 g = search(app_config.filtered_graph, request.GET["search"])
+                filter_str = request.GET["search"]
             else:
                 ops = {'eq': '==', 'le': '<=', 'ge': '>=', 'lt': '<', 'gt': '>', 'ne': '!='}
                 g = filter(app_config.filtered_graph, request.GET["attr"], ops[request.GET["op"]], request.GET["val"])
+                filter_str = f"{request.GET["attr"]} {ops[request.GET["op"]]} {request.GET["val"]}"
 
             if visualization_plugins:
                 visualization_script = visualization_plugins[0].visualize(g)
                 app_config.filtered_graph = g
+                applied_filters.append(filter_str)
         
         except Exception:
             error_message = "Filter error: Can't compare different types!"
@@ -142,7 +149,8 @@ def search_filter(request: HttpRequest):
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
         "data_source_plugins": data_source_plugins,
-        "error_message": error_message
+        "error_message": error_message,
+        "applied_filters": applied_filters,
     })  
 
 def reset_filter(request: HttpRequest):
@@ -154,11 +162,13 @@ def reset_filter(request: HttpRequest):
     if visualization_plugins:
         visualization_script = visualization_plugins[0].visualize(app_config.current_graph)
         app_config.filtered_graph = app_config.current_graph
+        app_config.applied_filters = []
            
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
-        "data_source_plugins": data_source_plugins
+        "data_source_plugins": data_source_plugins,
+        "applied_filters": [],
     })   
 
 def change_visualization_plugin(request: HttpRequest):
@@ -175,7 +185,7 @@ def change_visualization_plugin(request: HttpRequest):
             if viz.id() == viz_id and visualization_plugins:
                 visualization_script = visualization_plugins[0].visualize(app_config.current_graph)
                 break
-            
-    return render(request, "index.html", {"source_plugins": data_source_plugins,
+
+    return render(request, "index.html", {"data_source_plugins": data_source_plugins,
                                           "visualization_plugins": visualization_plugins,
                                           "visualization_script": visualization_script})

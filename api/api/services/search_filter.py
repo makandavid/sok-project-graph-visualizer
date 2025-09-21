@@ -6,11 +6,11 @@ def search(g: Graph, text: str) -> Graph:
         return g
     result = Graph()
     for node in g.nodes:
-        if text.lower() in str(node.id).lower():
+        if text.strip().lower() in str(node.id).strip().lower():
             result.add_node(node.id, node.attributes)
             continue
         for val in node.attributes.values():
-            if text.lower() in str(val).lower():
+            if text.strip().lower() in str(val).strip().lower():
                 result.add_node(node.id, node.attributes)
                 break
     for link in g.links:
@@ -25,13 +25,13 @@ def filter(g: Graph, attr: str, op: str, val: str) -> Graph:
         return g
     result = Graph([], [])
     for node in g.nodes:
-        if attr not in node.attributes:
+        if attr.strip().lower() not in node.attributes:
             continue
 
         attr_val = node.attributes[attr]
-        value = val
+        value = val.strip()
         if not (isinstance(attr_val, float) or isinstance(attr_val, int)):
-            attr_val = f"'{str(node.attributes[attr]).lower()}'"
+            attr_val = f"'{str(node.attributes[attr]).strip().lower()}'"
             value = f"'{val.lower()}'"
         
         if eval(f"{str(attr_val)}{op}{value}"):

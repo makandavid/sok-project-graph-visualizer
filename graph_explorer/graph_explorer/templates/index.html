@@ -56,9 +56,23 @@
                     <button type="submit">Filter</button>
                 </form>
             </div>
-            <form action="/reset">
-                <button type="submit">Reset Filters</button>
-            </form>
+            <div class="applied-filters">
+                <div>
+                    <select style="width: 200px;">
+                        <option>Applied Filters</option>
+                        {% if applied_filters %}
+                            {% for f in applied_filters %}
+                                <option disabled>{{ f }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option disabled>No filters applied</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <form action="/reset">
+                    <button type="submit">Reset Filters</button>
+                </form>
+            </div>
             <div class="view-buttons">
                 <button id="simple-view-button">Simple View</button>
                 <button id="block-view-button">Block View</button>
