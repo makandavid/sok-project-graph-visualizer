@@ -23,6 +23,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('upload-graph/', views.upload_graph, name='upload_graph'),
     path('search/', views.search_filter, name="search"),
-    path('reset/', views.reset_filter, name="reset")
+    path('reset/', views.reset_filter, name="reset"),
+    path('change_visualization_plugin/', views.change_visualization_plugin, name='change_visualization_plugin')
 
 ]
