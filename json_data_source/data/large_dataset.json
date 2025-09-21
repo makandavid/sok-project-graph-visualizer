@@ -1,0 +1,289 @@
+{
+  "@id": "root_001",
+  "name": "Root Organization",
+  "type": "organization",
+  "children": [
+    {
+      "@id": "dept_001",
+      "name": "Engineering Department",
+      "type": "department",
+      "parent": "root_001",
+      "children": [
+        {
+          "@id": "team_001",
+          "name": "Frontend Team",
+          "type": "team",
+          "parent": "dept_001",
+          "children": [
+            {
+              "@id": "emp_001",
+              "name": "Alice Johnson",
+              "type": "employee",
+              "role": "Senior Frontend Developer",
+              "parent": "team_001",
+              "children": [
+                {
+                  "@id": "proj_001",
+                  "name": "E-commerce Platform",
+                  "type": "project",
+                  "parent": "emp_001",
+                  "children": [
+                    {
+                      "@id": "task_001",
+                      "name": "Implement Shopping Cart",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_001"
+                    },
+                    {
+                      "@id": "task_002",
+                      "name": "Payment Integration",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_002",
+                  "name": "Mobile App",
+                  "type": "project",
+                  "parent": "emp_001",
+                  "children": [
+                    {
+                      "@id": "task_003",
+                      "name": "React Native Setup",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_002",
+              "name": "Bob Smith",
+              "type": "employee",
+              "role": "Frontend Developer",
+              "parent": "team_001",
+              "children": [
+                {
+                  "@id": "proj_003",
+                  "name": "Admin Dashboard",
+                  "type": "project",
+                  "parent": "emp_002",
+                  "children": [
+                    {
+                      "@id": "task_004",
+                      "name": "User Management",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_003"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_002",
+          "name": "Backend Team",
+          "type": "team",
+          "parent": "dept_001",
+          "children": [
+            {
+              "@id": "emp_003",
+              "name": "Charlie Brown",
+              "type": "employee",
+              "role": "Backend Developer",
+              "parent": "team_002",
+              "children": [
+                {
+                  "@id": "proj_004",
+                  "name": "API Gateway",
+                  "type": "project",
+                  "parent": "emp_003",
+                  "children": [
+                    {
+                      "@id": "task_005",
+                      "name": "Authentication Service",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_004"
+                    },
+                    {
+                      "@id": "task_006",
+                      "name": "Rate Limiting",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_004"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_004",
+              "name": "Diana Prince",
+              "type": "employee",
+              "role": "Senior Backend Developer",
+              "parent": "team_002",
+              "children": [
+                {
+                  "@id": "proj_005",
+                  "name": "Microservices Architecture",
+                  "type": "project",
+                  "parent": "emp_004",
+                  "children": [
+                    {
+                      "@id": "task_007",
+                      "name": "Service Discovery",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_005"
+                    },
+                    {
+                      "@id": "task_008",
+                      "name": "Load Balancing",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_005"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_003",
+          "name": "DevOps Team",
+          "type": "team",
+          "parent": "dept_001",
+          "children": [
+            {
+              "@id": "emp_005",
+              "name": "Eve Wilson",
+              "type": "employee",
+              "role": "DevOps Engineer",
+              "parent": "team_003",
+              "children": [
+                {
+                  "@id": "proj_006",
+                  "name": "CI/CD Pipeline",
+                  "type": "project",
+                  "parent": "emp_005",
+                  "children": [
+                    {
+                      "@id": "task_009",
+                      "name": "Docker Configuration",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_006"
+                    },
+                    {
+                      "@id": "task_010",
+                      "name": "Kubernetes Deployment",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_006"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "dept_002",
+      "name": "Marketing Department",
+      "type": "department",
+      "parent": "root_001",
+      "children": [
+        {
+          "@id": "team_004",
+          "name": "Digital Marketing",
+          "type": "team",
+          "parent": "dept_002",
+          "children": [
+            {
+              "@id": "emp_006",
+              "name": "Frank Miller",
+              "type": "employee",
+              "role": "Marketing Manager",
+              "parent": "team_004",
+              "children": [
+                {
+                  "@id": "proj_007",
+                  "name": "Social Media Campaign",
+                  "type": "project",
+                  "parent": "emp_006",
+                  "children": [
+                    {
+                      "@id": "task_011",
+                      "name": "Content Strategy",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_007"
+                    },
+                    {
+                      "@id": "task_012",
+                      "name": "Analytics Setup",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_007"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "dept_003",
+      "name": "Sales Department",
+      "type": "department",
+      "parent": "root_001",
+      "children": [
+        {
+          "@id": "team_005",
+          "name": "Enterprise Sales",
+          "type": "team",
+          "parent": "dept_003",
+          "children": [
+            {
+              "@id": "emp_007",
+              "name": "Grace Lee",
+              "type": "employee",
+              "role": "Sales Director",
+              "parent": "team_005",
+              "children": [
+                {
+                  "@id": "proj_008",
+                  "name": "CRM Implementation",
+                  "type": "project",
+                  "parent": "emp_007",
+                  "children": [
+                    {
+                      "@id": "task_013",
+                      "name": "Lead Management",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_008"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

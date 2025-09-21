@@ -1,77 +1,203 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-    <link rel="stylesheet" href="{% static 'treeview-style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'treeview-style.css' %}" />
     <title>Graph Explorer</title>
-  </head>
-  <body>
-    <div class="header" id="header">
-      <h1>Graph<br />Visualizer</h1>
+</head>
 
-      <div class="controls">
-        <div class="source-controls">
-          <label
-            >Source:
-            <select class="source-select" id="source-select"></select>
-            <button>New</button>
-          </label>
+<body>
+    <div class="header" id="header">
+        <h1>Graph<br />Visualizer</h1>
+
+        <div class="controls">
+            <div class="source-controls">
+                <label>Source:
+                    <select class="source-select" id="source-select">
+                        {% for plugin in data_source_plugins %}
+                            <option value="{{ plugin.id }}">{{ plugin.name }}</option>
+                        {% endfor %}
+                    </select>                  
+                    <button id="new-source-button">New</button>
+                </label>
+            </div>
+            
+            <!-- File Upload Section -->
+            <div class="upload-controls">
+                <form id="upload-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="json-file">Upload JSON:
+                        <input type="file" id="json-file" name="json_file" accept=".json" />
+                    </label>
+                    <button type="submit" id="upload-button">Upload & Visualize</button>
+                </form>
+            </div>
+            
+            <div class="filter-controls">
+                <form>
+                    <input type="text" name="search" placeholder="Search..." size="24" />
+                    <button type="button">Search</button>
+                </form>
+                <form>
+                    <input type="text" name="attr" placeholder="attr" size="5" />
+                    <select name="op">
+                        <option value="eq">==</option>
+                        <option value="le">&le;</option>
+                        <option value="ge">&ge;</option>
+                        <option value="lt">&lt;</option>
+                        <option value="gt">&gt;</option>
+                        <option value="ne">!=</option>
+                    </select>
+                    <input type="text" name="val" placeholder="val" size="5" />
+                    <button type="button">Filter</button>
+                </form>
+            </div>
+            <div class="view-buttons">
+                <button id="simple-view-button">Simple View</button>
+                <button id="block-view-button">Block View</button>
+            </div>
         </div>
-        <div class="filter-controls">
-          <form>
-            <input
-              type="text"
-              name="search"
-              placeholder="Search..."
-              size="24"
-            />
-            <button>Search</button>
-          </form>
-          <form>
-            <input type="text" name="attr" placeholder="attr" size="5" />
-            <select name="op">
-              <option value="eq">==</option>
-              <option value="le">&le;</option>
-              <option value="ge">&ge;</option>
-              <option value="lt">&lt;</option>
-              <option value="gt">&gt;</option>
-              <option value="ne">!=</option>
-            </select>
-            <input type="text" name="val" placeholder="val" size="5" />
-            <button>Filter</button>
-          </form>
-        </div>
-        <div class="view-buttons">
-          <button id="simple-view-button">Simple View</button>
-          <button id="block-view-button">Block View</button>
-        </div>
-      </div>
     </div>
 
     <div class="container">
-      <div class="sidebar">
-        <div class="treeview">
-          <ul id="treeview"></ul>
+        <div class="sidebar">
+            <div class="treeview">
+                <ul id="treeview"></ul>
+            </div>
+
+            <div class="birdview">
+                <svg id="birdview" width="300" height="120">
+                    <rect width="100%" height="100%" fill="white" stroke="gray"></rect>
+                </svg>
+            </div>
         </div>
 
-        <div class="birdview">
-          <svg id="birdview" width="300" height="120">
-            <rect width="100%" height="100%" fill="white" stroke="gray"></rect>
-          </svg>
+        <div class="mainview">
+            <svg id="mainview"></svg>
         </div>
-      </div>
-
-      <div class="mainview">
-        <svg id="mainview"></svg>
-      </div>
     </div>
 
+    <!-- prettier-ignore -->
     <script type="text/javascript">
-      {{visualization_script | safe}}
+        {{ visualization_script | safe }}
     </script>
     <script type="text/javascript" src="{% static 'treeview.js' %}"></script>
-  </body>
+    
+
+    <script type="text/javascript">
+    // Wait for DOM and all scripts to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add a small delay to ensure everything is loaded
+            setTimeout(function() {
+                console.log('Checking for initial treeview initialization...');
+                console.log('initializeTreeview type:', typeof window.initializeTreeview);
+                console.log('graph available:', typeof graph !== 'undefined');
+                
+                if (typeof window.initializeTreeview === "function" && typeof graph !== 'undefined') {
+                    console.log('Initializing treeview with graph:', graph);
+                    window.initializeTreeview(graph);
+                } else {
+                    console.warn('Cannot initialize treeview - missing function or graph data');
+                }
+            }, 200);
+        });
+    </script>
+
+    <script type="text/javascript">
+        // Handle file upload form submission
+        document.getElementById('upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('json-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a JSON file to upload.');
+                return;
+            }
+            
+            if (!file.name.toLowerCase().endsWith('.json')) {
+                alert('Please select a valid JSON file.');
+                return;
+            }
+            
+            // Show loading state
+            const uploadButton = document.getElementById('upload-button');
+            const originalText = uploadButton.textContent;
+            uploadButton.textContent = 'Processing...';
+            uploadButton.disabled = true;
+            
+            // Read file and process client-side
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const jsonData = JSON.parse(event.target.result);
+                    
+                    // Send JSON data to server for processing
+                    fetch('/upload-graph/', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            json_data: jsonData,
+                            filename: file.name
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            if (data.visualization_script) {
+                                const mainview = document.getElementById('mainview');
+                                const treeview = document.getElementById('treeview');
+                                const birdview = document.getElementById('birdview');
+                                mainview.innerHTML = '';
+                                treeview.innerHTML = '';
+                                birdview.innerHTML = '';
+                                
+                                eval(data.visualization_script);
+
+                            setTimeout(() => {
+                                if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
+                                    window.initializeTreeview(graph);
+                                } else {
+                                    console.error('Graph or initializeTreeview not available');
+                                }
+                            }, 100);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Upload error:', error);
+                    })
+                    .finally(() => {
+                        uploadButton.textContent = originalText;
+                        uploadButton.disabled = false;
+                        fileInput.value = '';
+                    });
+                    
+                } catch (error) {
+                    showMessage('error', 'Invalid JSON format: ' + error.message);
+                    uploadButton.textContent = originalText;
+                    uploadButton.disabled = false;
+                }
+            };
+            
+            reader.onerror = function() {
+                uploadButton.textContent = originalText;
+                uploadButton.disabled = false;
+            };
+            
+            reader.readAsText(file);
+        });
+
+    </script>
+
+</body>
+
 </html>

@@ -1,12 +1,97 @@
+import json
 from django.apps.registry import apps
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
+import tempfile
+import os
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
 
 from api.models.graph import Graph
 
 def index(request: HttpRequest):
-    visualization_plugins = apps.get_app_config('graph_explorer').visualization_plugins
+    app_config = apps.get_app_config('graph_explorer')
+    visualization_plugins = app_config.visualization_plugins
+    data_source_plugins = app_config.data_source_plugins
+    
+    g = Graph([], [])
+    json_data_source = None
+    
+    for plugin in data_source_plugins:
+        if plugin.id() == "json_data_source":
+            json_data_source = plugin
+            break
+    
+    if json_data_source:
+        try:
+            g = json_data_source.load_data("../json_data_source/data/test.json")
+            print(f"Loaded graph with {len(g.nodes)} nodes and {len(g.links)} links")
+        except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+            print(f"Error loading JSON data: {e}")
+            g = create_fallback_graph()
+    else:
+        print("No JSON data source plugin found, using fallback data")
+        g = create_fallback_graph()
+    
+    app_config.current_graph = g
+    
+    if visualization_plugins:
+        visualization_script = visualization_plugins[0].visualize(g)
+    else:
+        visualization_script = ""
+    
+    return render(request, "index.html", {
+        "visualization_plugins": visualization_plugins,
+        "visualization_script": visualization_script,
+        "data_source_plugins": data_source_plugins
+    })
+    
+
+@csrf_exempt
+def upload_graph(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            json_data = data.get('json_data')
+            
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
+                temp_file.write(json.dumps(json_data))
+                temp_file_path = temp_file.name
+            
+            app_config = apps.get_app_config('graph_explorer')
+            json_data_source = None
+            for plugin in app_config.data_source_plugins:
+                if plugin.id() == "json_data_source":
+                    json_data_source = plugin
+                    break
+
+            if json_data_source:
+                g = json_data_source.load_data(temp_file_path)
+                app_config.current_graph = g
+
+                vis_script = app_config.visualization_plugins[0].visualize(g) if app_config.visualization_plugins else ""
+                
+                # Clean up
+                os.unlink(temp_file_path)
+                
+                return JsonResponse({
+                    "success": True,
+                    "visualization_script": vis_script,
+                    "node_count": len(g.nodes),
+                    "link_count": len(g.links)
+                })
+            else:
+                return JsonResponse({"success": False, "error": "JSON data source plugin not found"})
+            
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)})
+
+    return JsonResponse({"success": False, "error": "Invalid request"})
+
+def create_fallback_graph():
+    """Create fallback graph data when no data source plugins are available"""
     g = Graph([], [])
     g.add_node(0, {'a': 23, 'b': 56})
     g.add_node(1, {'a': 65, 'b': 47})
@@ -24,11 +109,4 @@ def index(request: HttpRequest):
     g.add_link(5, 3, 6)
     g.add_link(6, 3, 5)
     g.add_link(7, 4, 0)
-    apps.get_app_config('graph_explorer').current_graph = g
-
-    if visualization_plugins:
-        visualization_script = visualization_plugins[0].visualize(g)
-    else:
-        visualization_script = ""
-    return render(request, "index.html", {"visualization_plugins": visualization_plugins,
-                                          "visualization_script": visualization_script})
+    return g

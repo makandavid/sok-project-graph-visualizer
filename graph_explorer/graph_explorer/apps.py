@@ -8,6 +8,7 @@ class GraphExplorerConfig(AppConfig):
     name = 'graph_explorer'
     label = 'graph_explorer'
     visualization_plugins = []
+    data_source_plugins = []
     current_graph = Graph([], [])
 
     def ready(self):
@@ -17,3 +18,10 @@ class GraphExplorerConfig(AppConfig):
             print("{} {}".format(ep.name, p))
             plugin = p()
             self.visualization_plugins.append(plugin)
+        
+        print("Data source plugins:")
+        for ep in pkg_resources.iter_entry_points(group='data_source'):
+            p = ep.load()
+            print("{} {}".format(ep.name, p))
+            plugin = p()
+            self.data_source_plugins.append(plugin)
