@@ -5,7 +5,7 @@ class Link(object):
         self.target = target
 
     def __str__(self):
-        return "Link ID: {}\Link Source: {}\Link Target: {}\n".format(self.id, self.source, self.target)
+        return f"Link ID: {self.id}\Link Source: {self.source}\Link Target: {self.target}\n"
     
     def to_dict(self):
         return {"id": self.id, "source": self.source, "target": self.target}

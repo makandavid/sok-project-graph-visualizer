@@ -16,13 +16,13 @@ class GraphExplorerConfig(AppConfig):
         print("Visualizer plugins:")
         for ep in pkg_resources.iter_entry_points(group='visualizer'):
             p = ep.load()
-            print("{} {}".format(ep.name, p))
+            print(f"{ep.name} {p}")
             plugin = p()
             self.visualization_plugins.append(plugin)
         
         print("Data source plugins:")
         for ep in pkg_resources.iter_entry_points(group='data_source'):
             p = ep.load()
-            print("{} {}".format(ep.name, p))
+            print(f"{ep.name} {p}")
             plugin = p()
             self.data_source_plugins.append(plugin)
