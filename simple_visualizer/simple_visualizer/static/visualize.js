@@ -3,6 +3,7 @@ var svg = d3.select("svg#mainview");
 var svgBirdView = d3.select("svg#birdview");
 var width = +svg.node().getBoundingClientRect().width;
 var height = +svg.node().getBoundingClientRect().height;
+var tooltip = d3.select("#tooltip");
 
 var node, link, mini_node, mini_link;
 
@@ -25,7 +26,7 @@ svg.call(d3.zoom()
 container.append('defs').append('marker')
     .attr('id', 'arrowhead')
     .attr('viewBox', [0, -5, 10, 10])
-    .attr('refX', 12)
+    .attr('refX', 30)
     .attr('refY', 0)
     .attr('markerWidth', 6)
     .attr('markerHeight', 6)
@@ -75,6 +76,15 @@ function update(links, nodes) {
         .append("line")
         .attr("class", "link")
         .attr("marker-end", "url(#arrowhead)")
+        .on("mouseover", function(d) {
+            tooltip.style("opacity", 1)
+                   .html(`<b>Source:</b> ${d.source.id}<br/><b>Target:</b> ${d.target.id}`)
+                   .style("left", (d3.event.pageX + 10) + "px")
+                   .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            tooltip.style("opacity", 0);
+        });
 
     mini_link = svgBirdView.selectAll(".link")
         .data(links)
@@ -89,6 +99,16 @@ function update(links, nodes) {
         .attr("class", "node")
         .attr('id', d => d.id)
         .call(d3.drag().on("start", dragstarted).on("drag", dragged))
+        .on("mouseover", function(d) {
+            let attributesHTML = Object.entries(d.attributes || {}).map(([key, value]) => `<b>${key}:</b> ${value}`).join('<br/>');
+            tooltip.style("opacity", 1)
+                   .html(`<b>ID:</b> ${d.id}<br/>${attributesHTML}<br/>`)
+                   .style("left", (d3.event.pageX + 10) + "px")
+                   .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            tooltip.style("opacity", 0);
+        });
 
     mini_node = svgBirdView.selectAll(".node")
         .data(nodes)
