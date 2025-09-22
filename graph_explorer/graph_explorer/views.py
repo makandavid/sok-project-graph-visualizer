@@ -1,98 +1,117 @@
 import json
-from django.apps.registry import apps
-from django.http import HttpRequest
-from django.shortcuts import render, redirect
-from django.contrib import messages
-import tempfile
 import os
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from .cli import handle_command
-
+import tempfile
 
 from api.models.graph import Graph
 from api.services.search_filter import search, filter
+from django.apps.registry import apps
+from django.http import HttpRequest
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
+from .cli import handle_command
+from core.use_cases.const import VISUALIZER_GROUP, DATASOURCE_GROUP
+from graph_explorer.apps import GraphExplorerConfig
+
+
+def get_config() -> GraphExplorerConfig:
+    return apps.get_app_config('graph_explorer')
 
 def index(request: HttpRequest):
-    app_config = apps.get_app_config('graph_explorer')
-    visualization_plugins = app_config.visualization_plugins
-    data_source_plugins = app_config.data_source_plugins
-    
-    g = Graph([], [])
-    json_data_source = None
-    
-    for plugin in data_source_plugins:
-        if plugin.id() == "json_data_source":
-            json_data_source = plugin
-            break
-    
-    if json_data_source:
-        try:
-            g = json_data_source.load_data("../json_data_source/data/test.json")
-            print(f"Loaded graph with {len(g.nodes)} nodes and {len(g.links)} links")
-        except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-            print(f"Error loading JSON data: {e}")
-            g = create_fallback_graph()
-    else:
-        print("No JSON data source plugin found, using fallback data")
-        g = create_fallback_graph()
-    
+    app_config = get_config()
+
+    # get lists using constants (more general)
+    data_source_plugins = app_config.plugin_service.plugins.get(DATASOURCE_GROUP, [])
+    visualization_plugins = app_config.plugin_service.plugins.get(VISUALIZER_GROUP, [])
+
+    print(f"Found {len(data_source_plugins)} data source plugins")
+    print(f"Found {len(visualization_plugins)} visualization plugins")
+
+    # Build map of plugin id -> supported extensions so the client can update file accept attribute
+    plugin_extensions = {plugin.id(): plugin.get_supported_extensions() for plugin in data_source_plugins}
+
+    # Determine selected data source plugin
+    selected_plugin_id = request.GET.get('data_source') if request.GET.get('data_source') else (
+        data_source_plugins[0].id() if data_source_plugins else None)
+
+    # Use inital sample graph if no data source plugins are available.
+    g = create_fallback_graph()
+
     app_config.current_graph = g
     app_config.filtered_graph = g
     app_config.applied_filters = []
-    
+
     if visualization_plugins:
         visualization_script = visualization_plugins[0].visualize(g) # in this case block visualier is the default
         app_config.current_visualization_plugin = visualization_plugins[0]
     else:
         visualization_script = ""
-    
+
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
-        "data_source_plugins": data_source_plugins
+        "data_source_plugins": data_source_plugins,
+        "plugin_extensions_json": json.dumps(plugin_extensions),  # JSON for the client
+        "selected_data_plugin": selected_plugin_id,
     })
-    
 
 @csrf_exempt
 def upload_graph(request):
+    app_config = get_config()
+    visualization_plugins = app_config.plugin_service.plugins.get(VISUALIZER_GROUP, [])
+    data_source_plugins = app_config.plugin_service.plugins.get(DATASOURCE_GROUP, [])
+
     if request.method == 'POST':
+        temp_file_path = None
+        plugin_id = None
         try:
-            data = json.loads(request.body)
-            json_data = data.get('json_data')
-            
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
-                temp_file.write(json.dumps(json_data))
-                temp_file_path = temp_file.name
-            
-            app_config = apps.get_app_config('graph_explorer')
-            json_data_source = None
-            for plugin in app_config.data_source_plugins:
-                if plugin.id() == "json_data_source":
-                    json_data_source = plugin
-                    break
+            if request.FILES:
+                # accept 'file' (FormData key)
+                upload = request.FILES.get('file') or list(request.FILES.values())[0]
+                plugin_id = request.POST.get('plugin_id')
+                # write uploaded bytes to a temp file
+                ext = os.path.splitext(upload.name)[1] or '.tmp'
+                with tempfile.NamedTemporaryFile(mode='wb', suffix=ext, delete=False) as tf:
+                    for chunk in upload.chunks():
+                        tf.write(chunk)
+                    temp_file_path = tf.name
 
-            if json_data_source:
-                g = json_data_source.load_data(temp_file_path)
-                app_config.current_graph = g
-                app_config.filtered_graph = g
-                app_config.applied_filters = []
+            if not plugin_id:
+                raise ValueError("Missing plugin_id")
 
-                vis_script = app_config.current_visualization_plugin.visualize(g) if app_config.visualization_plugins else ""
-                
-                # Clean up
+            selected_plugin = next((p for p in data_source_plugins if p.id() == plugin_id), None)
+            if not selected_plugin:
+                raise ValueError(f"Data source plugin '{plugin_id}' not found")
+
+            # plugin.load_data should know how to parse the file by extension/content
+            graph = selected_plugin.load_data(temp_file_path)
+            print("Total nodes:", len(graph.nodes), " Total links:", len(graph.links))
+
+            app_config.current_graph = graph
+            app_config.filtered_graph = graph
+            app_config.applied_filters = []
+
+            vis_script = app_config.current_visualization_plugin.visualize(graph) if visualization_plugins else ""
+
+            try:
                 os.unlink(temp_file_path)
-                
-                return JsonResponse({
-                    "success": True,
-                    "visualization_script": vis_script,
-                    "node_count": len(g.nodes),
-                    "link_count": len(g.links)
-                })
-            else:
-                return JsonResponse({"success": False, "error": "JSON data source plugin not found"})
-            
+            except Exception:
+                pass
+
+            return JsonResponse({
+                "success": True,
+                "visualization_script": vis_script,
+                "node_count": len(graph.nodes),
+                "link_count": len(graph.links)
+            })
+
         except Exception as e:
+            if temp_file_path:
+                try:
+                    os.unlink(temp_file_path)
+                except Exception:
+                    pass
             return JsonResponse({"success": False, "error": str(e)})
 
     return JsonResponse({"success": False, "error": "Invalid request"})
@@ -144,15 +163,15 @@ def create_fallback_graph():
     return g
 
 def search_filter(request: HttpRequest):
-    app_config = apps.get_app_config('graph_explorer')
-    visualization_plugins = app_config.visualization_plugins
-    data_source_plugins = app_config.data_source_plugins
+    app_config = get_config()
+    visualization_plugins = app_config.plugin_service.plugins[VISUALIZER_GROUP]
+    data_source_plugins = app_config.plugin_service.plugins[DATASOURCE_GROUP]
     applied_filters = app_config.applied_filters
 
     visualization_script = ""
     filter_str = ""
     error_message = None
-    
+
     if request.method == 'GET':
         try:
             print(request.GET)
@@ -168,40 +187,54 @@ def search_filter(request: HttpRequest):
                 visualization_script = app_config.current_visualization_plugin.visualize(g)
                 app_config.filtered_graph = g
                 applied_filters.append(filter_str)
-        
+
         except Exception:
             error_message = "Filter error: Can't compare different types!"
-           
+
+    plugin_extensions = {p.id(): p.get_supported_extensions() for p in data_source_plugins}
+    selected_plugin_id = request.GET.get('data_source') if request.GET.get('data_source') else (
+        data_source_plugins[0].id() if data_source_plugins else None)
+
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
         "data_source_plugins": data_source_plugins,
         "error_message": error_message,
         "applied_filters": applied_filters,
-    })  
+        "plugin_extensions_json": json.dumps(plugin_extensions),
+        "selected_data_plugin": selected_plugin_id,
+    })
+
 
 def reset_filter(request: HttpRequest):
-    app_config = apps.get_app_config('graph_explorer')
-    visualization_plugins = app_config.visualization_plugins
-    data_source_plugins = app_config.data_source_plugins
+    app_config = get_config()
+    visualization_plugins = app_config.plugin_service.plugins[VISUALIZER_GROUP]
+    data_source_plugins = app_config.plugin_service.plugins[DATASOURCE_GROUP]
 
     visualization_script = ""
     if visualization_plugins:
         visualization_script = app_config.current_visualization_plugin.visualize(app_config.current_graph)
         app_config.filtered_graph = app_config.current_graph
         app_config.applied_filters = []
-           
+
+    plugin_extensions = {p.id(): p.get_supported_extensions() for p in data_source_plugins}
+    selected_plugin_id = request.GET.get('data_source') if request.GET.get('data_source') else (
+        data_source_plugins[0].id() if data_source_plugins else None)
+
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
         "data_source_plugins": data_source_plugins,
         "applied_filters": [],
-    })   
+        "plugin_extensions_json": json.dumps(plugin_extensions),
+        "selected_data_plugin": selected_plugin_id,
+    })
+
 
 def change_visualization_plugin(request: HttpRequest):
-    app_config = apps.get_app_config('graph_explorer')
-    visualization_plugins = app_config.visualization_plugins
-    data_source_plugins = app_config.data_source_plugins
+    app_config = get_config()
+    visualization_plugins = app_config.plugin_service.plugins[VISUALIZER_GROUP]
+    data_source_plugins = app_config.plugin_service.plugins[DATASOURCE_GROUP]
     applied_filters = app_config.applied_filters
 
     visualization_script = ""
@@ -215,7 +248,13 @@ def change_visualization_plugin(request: HttpRequest):
                 visualization_script = viz.visualize(app_config.filtered_graph)
                 break
 
+    plugin_extensions = {p.id(): p.get_supported_extensions() for p in data_source_plugins}
+    selected_plugin_id = request.GET.get('data_source') if request.GET.get('data_source') else (
+        data_source_plugins[0].id() if data_source_plugins else None)
+
     return render(request, "index.html", {"data_source_plugins": data_source_plugins,
                                           "visualization_plugins": visualization_plugins,
                                           "visualization_script": visualization_script,
-                                          "applied_filters": applied_filters,})
+                                          "applied_filters": applied_filters,
+                                          "plugin_extensions_json": json.dumps(plugin_extensions),
+                                          "selected_data_plugin": selected_plugin_id})
