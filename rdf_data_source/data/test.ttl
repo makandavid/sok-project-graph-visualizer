@@ -1,0 +1,142 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:student000 a ex:Student ;
+    ex:name "Alone Johnson" ;
+    ex:age 35 ;
+    ex:birthdate "1990-07-01"^^xsd:date ;
+    ex:enrolledIn ex:course000 .
+
+ex:course000 a ex:Course ;
+    ex:name "Useless course" ;
+    ex:courseCode "CS101" .
+
+ex:departmentUn a ex:Department ;
+    ex:name "Unknown" ;
+    ex:offers ex:course000 .
+
+ex:departmentEm a ex:Department ;
+    ex:name "Empty".
+
+ex:student001 a ex:Student ;
+    ex:name "Alice Johnson" ;
+    ex:age 22 ;
+    ex:enrolledIn ex:course101, ex:course102 .
+
+ex:student002 a ex:Student ;
+    ex:name "Bob Smith" ;
+    ex:age 23 ;
+    ex:enrolledIn ex:course102, ex:course103 .
+
+ex:student003 a ex:Student ;
+    ex:name "Charlie Lee" ;
+    ex:age 21 ;
+    ex:enrolledIn ex:course101, ex:course104 .
+
+ex:student004 a ex:Student ;
+    ex:name "Diana Kim" ;
+    ex:age 24 ;
+    ex:enrolledIn ex:course104, ex:course105 .
+
+ex:professor001 a ex:Professor ;
+    ex:name "Dr. Sarah White" ;
+    ex:teaches ex:course101, ex:course102 ;
+    ex:worksIn ex:departmentCS .
+
+ex:professor002 a ex:Professor ;
+    ex:name "Dr. John Black" ;
+    ex:teaches ex:course103, ex:course104 ;
+    ex:worksIn ex:departmentMath .
+
+ex:professor003 a ex:Professor ;
+    ex:name "Dr. Emily Green" ;
+    ex:teaches ex:course105 ;
+    ex:worksIn ex:departmentBiology .
+
+ex:course101 a ex:Course ;
+    ex:name "Introduction to Computer Science" ;
+    ex:courseCode "CS101" ;
+    ex:hasProfessor ex:professor001 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:course102 a ex:Course ;
+    ex:name "Data Structures" ;
+    ex:courseCode "CS102" ;
+    ex:hasProfessor ex:professor001 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:course103 a ex:Course ;
+    ex:name "Calculus I" ;
+    ex:courseCode "MATH101" ;
+    ex:hasProfessor ex:professor002 ;
+    ex:offeredBy ex:departmentMath .
+
+ex:course104 a ex:Course ;
+    ex:name "Linear Algebra" ;
+    ex:courseCode "MATH102" ;
+    ex:hasProfessor ex:professor002 ;
+    ex:offeredBy ex:departmentMath .
+
+ex:course105 a ex:Course ;
+    ex:name "Biology 101" ;
+    ex:courseCode "BIO101" ;
+    ex:hasProfessor ex:professor003 ;
+    ex:offeredBy ex:departmentBiology .
+
+ex:departmentCS a ex:Department ;
+    ex:name "Computer Science" ;
+    ex:offers ex:course101, ex:course102 .
+
+ex:departmentMath a ex:Department ;
+    ex:name "Mathematics" ;
+    ex:offers ex:course103, ex:course104 .
+
+ex:departmentBiology a ex:Department ;
+    ex:name "Biology" ;
+    ex:offers ex:course105 .
+
+ex:student005 a ex:Student ;
+    ex:name "Eve Martinez" ;
+    ex:age 20 ;
+    ex:enrolledIn ex:course101, ex:course103 .
+
+ex:student006 a ex:Student ;
+    ex:name "Frank Adams" ;
+    ex:age 22 ;
+    ex:enrolledIn ex:course102, ex:course104 .
+
+ex:professor004 a ex:Professor ;
+    ex:name "Dr. Peter Grey" ;
+    ex:teaches ex:course103 ;
+    ex:worksIn ex:departmentMath .
+
+ex:professor005 a ex:Professor ;
+    ex:name "Dr. Laura Brown" ;
+    ex:teaches ex:course101 ;
+    ex:worksIn ex:departmentCS .
+
+ex:course106 a ex:Course ;
+    ex:name "Machine Learning" ;
+    ex:courseCode "CS106" ;
+    ex:hasProfessor ex:professor005 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:departmentPhysics a ex:Department ;
+    ex:name "Physics" ;
+    ex:offers ex:course106 .
+
+ex:student007 a ex:Student ;
+    ex:name "Grace Williams" ;
+    ex:age 23 ;
+    ex:enrolledIn ex:course101, ex:course105 .
+
+ex:student008 a ex:Student ;
+    ex:name "Hannah Clark" ;
+    ex:age 21 ;
+    ex:enrolledIn ex:course102, ex:course104 .
+
+ex:student009 a ex:Student ;
+    ex:name "Ian Turner" ;
+    ex:age 24 ;
+    ex:enrolledIn ex:course103, ex:course105 .
