@@ -26,7 +26,7 @@ svg.call(d3.zoom()
 container.append('defs').append('marker')
     .attr('id', 'arrowhead')
     .attr('viewBox', [0, -5, 10, 10])
-    .attr('refX', 45)
+    .attr('refX', 0)
     .attr('refY', 0)
     .attr('markerWidth', 6)
     .attr('markerHeight', 6)
@@ -149,6 +149,19 @@ function ticked() {
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y);
+
+    link.each(function(d) {
+        const dynamicRadius = 8 + d.target.id.toString().length * 4;
+        const targetRadius = Math.max(20, dynamicRadius);
+        const refX = targetRadius + 10; 
+        
+        d3.select(this)
+            .attr("marker-end", `url(#arrowhead)`);
+    
+        d3.select("marker#arrowhead")
+            .attr("refX", refX);
+    });
+
     node
         .attr("transform", d => "translate(" + d.x + ", " + d.y + ")");
     mini_link
