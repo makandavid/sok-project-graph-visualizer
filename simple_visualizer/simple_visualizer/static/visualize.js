@@ -26,7 +26,7 @@ svg.call(d3.zoom()
 container.append('defs').append('marker')
     .attr('id', 'arrowhead')
     .attr('viewBox', [0, -5, 10, 10])
-    .attr('refX', 30)
+    .attr('refX', 45)
     .attr('refY', 0)
     .attr('markerWidth', 6)
     .attr('markerHeight', 6)
@@ -118,7 +118,12 @@ function update(links, nodes) {
         .attr("id", d => d.id)
 
     node.append("circle")
-        .attr("r", 15)
+        .attr("r", d => {
+            const dynamicRadius = 8 + d.id.toString().length * 4;
+      
+        const radius = Math.max(20, dynamicRadius);
+        return radius;
+        })
         .style("fill", "lightblue")
         .style("stroke", "black")
 
