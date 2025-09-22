@@ -1,0 +1,15 @@
+[project]
+name = "graph_explorer_core"
+version = "0.1"
+description = "Graph Explorer Core"
+dependencies = [
+    "graph_exploerer_api==0.1"
+]
+
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
