@@ -177,47 +177,57 @@ def cli_execute(request: HttpRequest, workspace_id: str):
     if request.method != "POST":
         return JsonResponse({"success": False, "error": "Invalid request method."}, status=405)
 
-    data = json.loads(request.body)
-    command_str = data.get("command", "")
-    
-    g = Graph.from_dict(workspace_data['filtered_graph_data'])
-    
-    try:
-        result = handle_command(g, command_str)
+    if request.method == "POST":
+        data = json.loads(request.body)
+        command_str = data.get("command", "")
+        app_config = get_config()
+        g = app_config.current_graph
+
+        data = json.loads(request.body)
+        command_str = data.get("command", "")
         
-        workspace_data['filtered_graph_data'] = g.to_dict()
-        request.session.modified = True
+        g = Graph.from_dict(workspace_data['filtered_graph_data'])
+        
+        try:
+            result = handle_command(g, command_str)
+            
+            workspace_data['filtered_graph_data'] = g.to_dict()
+            request.session.modified = True
 
-        vis_script = get_visualizer_script(workspace_data, g)
+            vis_script = get_visualizer_script(workspace_data, g)
 
-        return JsonResponse({
-            "success": True,
-            "result": result,
-            "visualization_script": vis_script
-        })
-    except Exception as e:
-        return JsonResponse({"success": False, "error": str(e)})
+            return JsonResponse({
+                "success": True,
+                "result": result,
+                "visualization_script": vis_script
+            })
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)})
+    
+    return JsonResponse({"success": False, "error": "Invalid request"})
+
+        
     
 
 def create_fallback_graph():
     """Create fallback graph data when no data source plugins are available"""
     g = Graph([], [])
-    g.add_node(0, {'a': 23, 'b': 56})
-    g.add_node(1, {'a': 65, 'b': 47})
-    g.add_node(2, {'a': 54, 'b': 45})
-    g.add_node(3, {'a': 21, 'b': 21})
-    g.add_node(4, {'a': 69, 'b': 56})
-    g.add_node(5, {'a': 99, 'b': 96, 'c': 23})
-    g.add_node(6, {'a': 100, 'b': 56, 'c': 200, 'd': 300, 'e': 267})
-    g.add_node(7, {'a': 3})
-    g.add_link(0, 1, 2)
-    g.add_link(1, 1, 4)
-    g.add_link(2, 1, 3)
-    g.add_link(3, 2, 4)
-    g.add_link(4, 3, 2)
-    g.add_link(5, 3, 6)
-    g.add_link(6, 3, 5)
-    g.add_link(7, 4, 0)
+    g.add_node("0", {'a': 23, 'b': 56})
+    g.add_node("1", {'a': 65, 'b': 47})
+    g.add_node("2", {'a': 54, 'b': 45})
+    g.add_node("3", {'a': 21, 'b': 21})
+    g.add_node("4", {'a': 69, 'b': 56})
+    g.add_node("5", {'a': 99, 'b': 96, 'c': 23})
+    g.add_node("6", {'a': 100, 'b': 56, 'c': 200, 'd': 300, 'e': 267})
+    g.add_node("7", {'a': 3})
+    g.add_link("0", "1", "2")
+    g.add_link("1", "1", "4")
+    g.add_link("2", "1", "3")
+    g.add_link("3", "2", "4")
+    g.add_link("4", "3", "2")
+    g.add_link("5", "3", "6")
+    g.add_link("6", "3", "5")
+    g.add_link("7", "4", "0")
     return g
 
 
