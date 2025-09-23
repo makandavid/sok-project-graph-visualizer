@@ -42,7 +42,8 @@ def index(request: HttpRequest):
     app_config.applied_filters = []
     
     if visualization_plugins:
-        visualization_script = visualization_plugins[0].visualize(g)
+        visualization_script = visualization_plugins[0].visualize(g) # in this case block visualier is the default
+        app_config.current_visualization_plugin = visualization_plugins[0]
     else:
         visualization_script = ""
     
@@ -77,7 +78,7 @@ def upload_graph(request):
                 app_config.filtered_graph = g
                 app_config.applied_filters = []
 
-                vis_script = app_config.visualization_plugins[0].visualize(g) if app_config.visualization_plugins else ""
+                vis_script = app_config.current_visualization_plugin.visualize(g) if app_config.visualization_plugins else ""
                 
                 # Clean up
                 os.unlink(temp_file_path)
@@ -109,7 +110,7 @@ def cli_execute(request: HttpRequest):
             # Refresh visualization after change
             vis_script = ""
             if app_config.visualization_plugins:
-                vis_script = app_config.visualization_plugins[0].visualize(g)
+                vis_script = app_config.current_visualization_plugin.visualize(g)
 
             return JsonResponse({
                 "success": True,
@@ -164,7 +165,7 @@ def search_filter(request: HttpRequest):
                 filter_str = f"{request.GET['attr']} {ops[request.GET['op']]} {request.GET['val']}"
 
             if visualization_plugins:
-                visualization_script = visualization_plugins[0].visualize(g)
+                visualization_script = app_config.current_visualization_plugin.visualize(g)
                 app_config.filtered_graph = g
                 applied_filters.append(filter_str)
         
@@ -186,7 +187,7 @@ def reset_filter(request: HttpRequest):
 
     visualization_script = ""
     if visualization_plugins:
-        visualization_script = visualization_plugins[0].visualize(app_config.current_graph)
+        visualization_script = app_config.current_visualization_plugin.visualize(app_config.current_graph)
         app_config.filtered_graph = app_config.current_graph
         app_config.applied_filters = []
            
@@ -210,6 +211,7 @@ def change_visualization_plugin(request: HttpRequest):
         viz_id = request.GET["id"]
         for viz in visualization_plugins:
             if viz.id() == viz_id and visualization_plugins:
+                app_config.current_visualization_plugin = viz
                 visualization_script = viz.visualize(app_config.filtered_graph)
                 break
 
