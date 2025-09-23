@@ -8,6 +8,7 @@ class GraphExplorerConfig(AppConfig):
     name = 'graph_explorer'
     label = 'graph_explorer'
     visualization_plugins = []
+    current_visualization_plugin = None
     data_source_plugins = []
     current_graph = Graph([], [])
     filtered_graph = Graph([], [])
