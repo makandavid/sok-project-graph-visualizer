@@ -1,4 +1,5 @@
 import json
+from api.utils.custom_json_encoder import CustomJSONEncoder
 
 class Node(object):
     def __init__(self, id: int, attributes: dict | None = None):
@@ -6,7 +7,7 @@ class Node(object):
         self.attributes = attributes
 
     def __str__(self):
-        return "Node ID: {}\nAttributes:\n{}\n".format(self.id, json.dumps(self.attribute, indent=4))
+        return "Node ID: {}\nAttributes:\n{}\n".format(self.id, json.dumps(self.attribute, indent=4, cls=CustomJSONEncoder))
     
     def to_dict(self):
         return {"id": self.id, "attributes": self.attributes}
