@@ -2,11 +2,12 @@ import json
 import os
 import tempfile
 import uuid
+from django.views.decorators.csrf import csrf_exempt
+from .cli import handle_command
 
 from django.apps.registry import apps
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_exempt
 
 from api.models.graph import Graph
 from api.services.search_filter import search, filter
@@ -99,41 +100,69 @@ def index(request: HttpRequest, workspace_id: str):
     
 
 @csrf_exempt
-def upload_graph(request: HttpRequest, workspace_id: str):
+def upload_graph(request):
     if request.method == 'POST':
         try:
-            # Load session data for current workspace
-            workspace_data = request.session.get('workspaces', {}).get(workspace_id)
-            if not workspace_data:
-                return JsonResponse({"success": False, "error": "Workspace not found"})
-
             data = json.loads(request.body)
             json_data = data.get('json_data')
             
-            # Convert JSON to graph object
-            g = Graph.from_dict(json_data)
-            
-            # Update graph data in selected workspace and save
-            workspace_data['graph_data'] = g.to_dict()
-            workspace_data['filtered_graph_data'] = g.to_dict()  # Reset filtered_graph_data
-            workspace_data['applied_filters'] = []
-            request.session.modified = True
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
+                temp_file.write(json.dumps(json_data))
+                temp_file_path = temp_file.name
             
             app_config = apps.get_app_config('graph_explorer')
-            visualization_plugins = app_config.visualization_plugins
-            current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
-            selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
-    
+            json_data_source = None
+            for plugin in app_config.data_source_plugins:
+                if plugin.id() == "json_data_source":
+                    json_data_source = plugin
+                    break
+
+            if json_data_source:
+                g = json_data_source.load_data(temp_file_path)
+                app_config.current_graph = g
+                app_config.filtered_graph = g
+                app_config.applied_filters = []
+
+                vis_script = app_config.current_visualization_plugin.visualize(g) if app_config.visualization_plugins else ""
+                
+                # Clean up
+                os.unlink(temp_file_path)
+                
+                return JsonResponse({
+                    "success": True,
+                    "visualization_script": vis_script,
+                    "node_count": len(g.nodes),
+                    "link_count": len(g.links)
+                })
+            else:
+                return JsonResponse({"success": False, "error": "JSON data source plugin not found"})
             
-            vis_script = selected_visualizer.visualize(g) if selected_visualizer else ""
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)})
+
+    return JsonResponse({"success": False, "error": "Invalid request"})
+
+
+@csrf_exempt
+def cli_execute(request: HttpRequest):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        command_str = data.get("command", "")
+        app_config = apps.get_app_config("graph_explorer")
+        g = app_config.current_graph
+
+        try:
+            result = handle_command(g, command_str)
+            # Refresh visualization after change
+            vis_script = ""
+            if app_config.visualization_plugins:
+                vis_script = app_config.current_visualization_plugin.visualize(g)
 
             return JsonResponse({
                 "success": True,
-                "visualization_script": vis_script,
-                "node_count": len(g.nodes),
-                "link_count": len(g.links)
+                "result": result,
+                "visualization_script": vis_script
             })
-            
         except Exception as e:
             return JsonResponse({"success": False, "error": str(e)})
 

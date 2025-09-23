@@ -28,5 +28,6 @@ urlpatterns = [
     path('reset/<str:workspace_id>/', views.reset_filter, name="reset"),
     path('change_visualization_plugin/<str:workspace_id>/', views.change_visualization_plugin, name='change_visualization_plugin'),
     path('rename/<str:workspace_id>/', views.rename_workspace, name='rename_workspace'),
+    path("cli/execute/", views.cli_execute, name="cli_execute"),
 
 ]

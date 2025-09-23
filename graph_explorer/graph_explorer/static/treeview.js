@@ -24,7 +24,7 @@ window.initializeTreeview = function(graph) {
             let span = document.createElement("span");
             span.setAttribute("class", "arrow");
             span.addEventListener("click", listener);
-            span.appendChild(document.createTextNode(child.attributes.name ? child.attributes.name : child.id));
+            span.appendChild(document.createTextNode(child.id));
             li.appendChild(span);
             ul.appendChild(li);
         });
