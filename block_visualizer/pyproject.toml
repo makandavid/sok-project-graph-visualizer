@@ -6,7 +6,7 @@ dependencies = [
     "graph_exploerer_api==0.1"
 ]
 
-[project.entry-points."visualizer"]
+[project.entry-points."core.visualizer"]
 block_visualizer = "block_visualizer.block_visualizer:BlockVisualizerPlugin"
 
 [tool.setuptools.data-files]

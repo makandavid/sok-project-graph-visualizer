@@ -1,0 +1,14 @@
+[project]
+name = 'data_source_rdf'
+version = '0.1'
+description = 'RDF data source'
+dependencies = [
+    "graph_exploerer_api==0.1",
+    "rdflib"
+]
+
+[project.entry-points."core.data_source"]
+rdf_data_source = "rdf_data_source:RdfDataSourcePlugin"
+
+[tool.setuptools]
+py-modules = ["rdf_data_source"]
