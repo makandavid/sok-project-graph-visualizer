@@ -184,7 +184,7 @@ def change_visualization_plugin(request: HttpRequest):
         viz_id = request.GET["id"]
         for viz in visualization_plugins:
             if viz.id() == viz_id and visualization_plugins:
-                visualization_script = visualization_plugins[0].visualize(app_config.filtered_graph)
+                visualization_script = viz.visualize(app_config.filtered_graph)
                 break
 
     return render(request, "index.html", {"data_source_plugins": data_source_plugins,
