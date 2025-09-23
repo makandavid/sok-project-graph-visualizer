@@ -38,20 +38,18 @@
                     <button type="submit" id="upload-button">Upload & Visualize</button>
                 </form>
             </div>
-
             <div class="workspace-controls">
-                <label>Workspaces:
-                    <select id="workspace-select">
+                <label for="workspace-select">Workspaces:</label>
+                   <select id="workspace-select">
                         {% for ws_id in available_workspaces %}
                             <option value="{{ ws_id }}" {% if ws_id == current_workspace_id %}selected{% endif %}>
                                 {{ ws_id|slice:":8" }}...
                             </option>
                         {% endfor %}
                     </select>
-                </label>
-                <a href="{% url 'new_workspace' %}">
-                    <button>Save current workspace</button>
-                </a>
+                    <a href="{% url 'new_workspace' %}">
+                <button>Save current workspace</button>
+            </a>
             </div>
 
             <div class="filter-controls">
