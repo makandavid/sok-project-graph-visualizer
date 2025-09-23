@@ -39,18 +39,18 @@
                 </form>
             </div>
             <div class="workspace-controls">
-                <label for="workspace-select">Workspaces:</label>
-                   <select id="workspace-select">
-                        {% for ws_id in available_workspaces %}
-                            <option value="{{ ws_id }}" {% if ws_id == current_workspace_id %}selected{% endif %}>
-                                {{ ws_id|slice:":8" }}...
-                            </option>
-                        {% endfor %}
-                    </select>
-                    <a href="{% url 'new_workspace' %}">
-                <button>Save current workspace</button>
-            </a>
-            </div>
+    <label for="workspace-select">Workspaces:</label>
+    <select id="workspace-select">
+        {% for ws_id, ws_name in available_workspaces %}
+            <option value="{{ ws_id }}" {% if ws_id == current_workspace_id %}selected{% endif %}>
+                {{ ws_name }}
+            </option>
+        {% endfor %}
+    </select>
+    <a href="{% url 'new_workspace' %}">
+        <button>Save current workspace</button>
+    </a>
+</div>
 
             <div class="filter-controls">
                 <form action="{% url 'search' workspace_id=current_workspace_id %}">

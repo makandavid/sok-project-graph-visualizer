@@ -12,8 +12,27 @@ from api.models.graph import Graph
 from api.services.search_filter import search, filter
 
 def new_workspace(request: HttpRequest):
-    """Creates new workspace and redirects to it"""
+    """Creates a new workspace with auto-generated name."""
     workspace_id = str(uuid.uuid4())
+
+    if 'workspaces' not in request.session:
+        request.session['workspaces'] = {}
+
+    # Generate default name 
+    count = len(request.session['workspaces']) + 1
+    workspace_name = f"Workspace #{count}"
+
+    g = create_fallback_graph() 
+
+    request.session['workspaces'][workspace_id] = {
+        'name': workspace_name,  
+        'graph_data': g.to_dict(),
+        'filtered_graph_data': g.to_dict(),
+        'applied_filters': [],
+        'current_data_source_id': 'json_data_source'
+    }
+    request.session.modified = True
+
     return redirect('index', workspace_id=workspace_id)
 
 def index(request: HttpRequest, workspace_id: str):
@@ -43,7 +62,9 @@ def index(request: HttpRequest, workspace_id: str):
             print(f"No plugin found for ID '{data_source_id}', using fallback data")
             g = create_fallback_graph()
 
+        count = len(request.session['workspaces']) + 1
         request.session['workspaces'][workspace_id] = {
+            'name': f"Workspace #{count}", # Default name
             'graph_data': g.to_dict(),
             'filtered_graph_data': g.to_dict(),  # add filtered_graph_data
             'applied_filters': [],
@@ -60,6 +81,9 @@ def index(request: HttpRequest, workspace_id: str):
     current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
     selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
 
+    # list of tuples (id, name)
+    available_workspaces = [(ws_id, data['name']) for ws_id, data in request.session['workspaces'].items()]
+
     if selected_visualizer:
         vis_script = selected_visualizer.visualize(g_filtered)
 
@@ -68,7 +92,7 @@ def index(request: HttpRequest, workspace_id: str):
         "visualization_script": vis_script,
         "data_source_plugins": app_config.data_source_plugins,
         "current_workspace_id": workspace_id,
-        "available_workspaces": request.session['workspaces'].keys(),
+        "available_workspaces": available_workspaces,
         "applied_filters": workspace_data['applied_filters'],
         "current_data_source_id": workspace_data.get('current_data_source_id', 'json_data_source') 
     })
@@ -176,6 +200,8 @@ def search_filter(request: HttpRequest, workspace_id: str):
         except Exception:
             error_message = "Filter error: Can't compare different types!"
             
+    available_workspaces = [(ws_id, data.get('name', ws_id[:8])) for ws_id, data in request.session['workspaces'].items()]
+
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
         "visualization_script": vis_script,
@@ -183,7 +209,7 @@ def search_filter(request: HttpRequest, workspace_id: str):
         "error_message": error_message,
         "applied_filters": workspace_data['applied_filters'],
         "current_workspace_id": workspace_id,
-        "available_workspaces": request.session['workspaces'].keys(),
+        "available_workspaces": available_workspaces,
     }) 
 
 # ---
@@ -211,13 +237,15 @@ def reset_filter(request: HttpRequest, workspace_id: str):
     if selected_visualizer:
         visualization_script = selected_visualizer.visualize(g_original)
             
+    available_workspaces = [(ws_id, data.get('name', ws_id[:8])) for ws_id, data in request.session['workspaces'].items()]
+
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
         "data_source_plugins": app_config.data_source_plugins,
         "applied_filters": [],
         "current_workspace_id": workspace_id,
-        "available_workspaces": request.session['workspaces'].keys(),
+        "available_workspaces": available_workspaces,
     }) 
 
 
@@ -245,11 +273,13 @@ def change_visualization_plugin(request: HttpRequest, workspace_id: str):
                 visualization_script = viz.visualize(g_filtered)
                 break
 
+    available_workspaces = [(ws_id, data['name']) for ws_id, data in request.session['workspaces'].items()]
+
     return render(request, "index.html", {
         "data_source_plugins": app_config.data_source_plugins,
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
         "applied_filters": workspace_data['applied_filters'],
         "current_workspace_id": workspace_id,
-        "available_workspaces": request.session['workspaces'].keys(),
+        "available_workspaces": available_workspaces,
     })
