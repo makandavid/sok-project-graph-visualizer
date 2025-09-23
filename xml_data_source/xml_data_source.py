@@ -84,6 +84,7 @@ class XmlDataSourcePlugin(DataSourcePlugin):
         id_field: str = kwargs.get("id_field", "id")
         ref_attributes = kwargs.get("ref_attributes", ["ref", "href", "link", "target"]) or []
         max_depth: int = int(kwargs.get("max_depth", 50))
+        directed: bool = bool(kwargs.get("directed", True))
         allow_cycles: bool = bool(kwargs.get("allow_cycles", True))
 
         # Load XML
@@ -98,6 +99,11 @@ class XmlDataSourcePlugin(DataSourcePlugin):
             tree = ET.parse(source)
 
         root = tree.getroot()
+
+        directed_attr = root.attrib.get("directed")
+        if directed_attr is not None:
+            directed = directed_attr.lower() == "true"
+
         graph = Graph()
 
         # Adjacency map for cycle and path existence checks
@@ -148,6 +154,13 @@ class XmlDataSourcePlugin(DataSourcePlugin):
             link_id = f"link_{link_counter}_{src}_to_{dst}"
             graph.add_link(link_id, src, dst)
             adjacency[src].add(dst)
+
+            # If undirected, also add the opposite direction
+            if not directed:
+                link_counter += 1
+                back_id = f"link_{link_counter}_{dst}_to_{src}"
+                graph.add_link(back_id, dst, src)
+                adjacency[dst].add(src)
 
             return True
 
@@ -232,6 +245,8 @@ class XmlDataSourcePlugin(DataSourcePlugin):
             "source": {"type": "string", "description": "Path to XML file or URL", "required": True},
             "id_field": {"type": "string", "description": "XML attribute to use as node ID (default=id)", "required": False},
             "ref_attributes": {"type": "list", "description": "List of attributes treated as references (default=[ref,href,link,target])", "required": False},
+            "directed": {"type": "boolean", "description": "Produce a directed graph (default=True)",
+                         "required": False},
             "allow_cycles": {"type": "boolean", "description": "Allow cycles in the produced graph (default=True)", "required": False},
             "max_depth": {"type": "integer", "description": "Maximum element nesting depth to parse (default=50)", "required": False},
         }
