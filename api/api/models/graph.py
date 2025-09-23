@@ -35,3 +35,20 @@ class Graph(object):
             "nodes": [n.to_dict() for n in self.nodes],
             "links": [e.to_dict() for e in self.links]
         }
+    
+    @staticmethod
+    def from_dict(json_data):
+        """Create Graph object from a dictionary."""
+        if not json_data:
+            return Graph([], [])
+        
+        nodes_data = json_data.get("nodes", [])
+        links_data = json_data.get("links", [])
+        
+        # Reconstruct Node objects
+        nodes = [Node.from_dict(n_data) for n_data in nodes_data]
+        
+        # Reconstruct Link objects
+        links = [Link.from_dict(l_data) for l_data in links_data]
+        
+        return Graph(nodes, links)
