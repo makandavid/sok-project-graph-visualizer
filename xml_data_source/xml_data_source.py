@@ -25,41 +25,32 @@ def parse_value(value: str) -> Any:
     # Integer
     if INT_RE.match(v):
         try:
-            result = int(v)
-            print(f"parse_value: '{v}' -> int({result})")
-            return result
+            return int(v)
         except Exception:
             pass
 
     # Float
     if FLOAT_RE.match(v):
         try:
-            result = float(v)
-            print(f"parse_value: '{v}' -> float({result})")
-            return result
+            return float(v)
         except Exception:
             pass
 
     # Date (ISO)
     try:
         dt = datetime.fromisoformat(v)
-        result = dt.date()
-        print(f"parse_value: '{v}' -> date({result})")
-        return result
+        return dt.date()
     except Exception:
         pass
 
     for fmt in ("%Y-%m-%d", "%d.%m.%Y.", "%d/%m/%Y"):
         try:
             dt = datetime.strptime(v, fmt)
-            result = dt.date()
-            print(f"parse_value: '{v}' -> date({result})")
-            return result
+            return dt.date()
         except Exception:
             continue
 
     # Fallback: string
-    print(f"parse_value: '{v}' -> str('{v}')")
     return v
 
 
