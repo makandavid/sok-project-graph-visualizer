@@ -121,15 +121,14 @@ def cli_execute(request: HttpRequest):
     if request.method == "POST":
         data = json.loads(request.body)
         command_str = data.get("command", "")
-        app_config = apps.get_app_config("graph_explorer")
+        app_config = get_config()
         g = app_config.current_graph
 
         try:
             result = handle_command(g, command_str)
             # Refresh visualization after change
             vis_script = ""
-            if app_config.visualization_plugins:
-                vis_script = app_config.current_visualization_plugin.visualize(g)
+            vis_script = app_config.current_visualization_plugin.visualize(g)
 
             return JsonResponse({
                 "success": True,
@@ -144,22 +143,22 @@ def cli_execute(request: HttpRequest):
 def create_fallback_graph():
     """Create fallback graph data when no data source plugins are available"""
     g = Graph([], [])
-    g.add_node(0, {'a': 23, 'b': 56})
-    g.add_node(1, {'a': 65, 'b': 47})
-    g.add_node(2, {'a': 54, 'b': 45})
-    g.add_node(3, {'a': 21, 'b': 21})
-    g.add_node(4, {'a': 69, 'b': 56})
-    g.add_node(5, {'a': 99, 'b': 96, 'c': 23})
-    g.add_node(6, {'a': 100, 'b': 56, 'c': 200, 'd': 300, 'e': 267})
-    g.add_node(7, {'a': 3})
-    g.add_link(0, 1, 2)
-    g.add_link(1, 1, 4)
-    g.add_link(2, 1, 3)
-    g.add_link(3, 2, 4)
-    g.add_link(4, 3, 2)
-    g.add_link(5, 3, 6)
-    g.add_link(6, 3, 5)
-    g.add_link(7, 4, 0)
+    g.add_node("0", {'a': 23, 'b': 56})
+    g.add_node("1", {'a': 65, 'b': 47})
+    g.add_node("2", {'a': 54, 'b': 45})
+    g.add_node("3", {'a': 21, 'b': 21})
+    g.add_node("4", {'a': 69, 'b': 56})
+    g.add_node("5", {'a': 99, 'b': 96, 'c': 23})
+    g.add_node("6", {'a': 100, 'b': 56, 'c': 200, 'd': 300, 'e': 267})
+    g.add_node("7", {'a': 3})
+    g.add_link("0", "1", "2")
+    g.add_link("1", "1", "4")
+    g.add_link("2", "1", "3")
+    g.add_link("3", "2", "4")
+    g.add_link("4", "3", "2")
+    g.add_link("5", "3", "6")
+    g.add_link("6", "3", "5")
+    g.add_link("7", "4", "0")
     return g
 
 def search_filter(request: HttpRequest):

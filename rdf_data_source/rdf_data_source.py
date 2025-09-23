@@ -60,7 +60,7 @@ class RdfDataSourcePlugin(DataSourcePlugin):
             nonlocal next_node
             if lex in lex2id:
                 return lex2id[lex]
-            nid = next_node; next_node += 1
+            nid = str(next_node); next_node += 1
             kind = "uri" if isinstance(term, URIRef) else "bnode" if isinstance(term, BNode) else "literal"
             attrs = {"original": lex, "type": type_map.get(lex, kind)}
             graph.add_node(nid, attrs)
@@ -85,7 +85,7 @@ class RdfDataSourcePlugin(DataSourcePlugin):
             obj_lex = str(o)
             oid = make_node(obj_lex, o)
 
-            graph.add_link(next_link, sid, oid)
+            graph.add_link(str(next_link), sid, oid)
             link = graph.links[-1]
             link.attributes = {
                 "predicate": self._short_label(str(p)),

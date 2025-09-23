@@ -59,16 +59,16 @@ def handle_create(graph, args):
                 except ValueError:
                     raise ValueError(f"Invalid property format: {arg}. Use --property=Key=Value")
             else:
-                node_ids.append(int(arg))
+                node_ids.append(arg)
         if len(node_ids) != 2:
             raise ValueError("Edge requires source and target node IDs")
-        graph.add_link(edge_id, str(node_ids[0]), str(node_ids[1]))
+        graph.add_link(str(edge_id), str(node_ids[0]), str(node_ids[1]))
         return f"Edge {edge_id} created between {node_ids} with {properties}"
 
 def handle_edit(graph, args):
     if args[0] == "node":
         node_id = args[1].split("=")[1]  # --id=2
-        node = next((n for n in graph.nodes if n.id == node_id), None)
+        node = next((n for n in graph.nodes if str(n.id) == str(node_id)), None)
         if not node:
             raise ValueError(f"Node {node_id} not found")
         for arg in args[2:]:
@@ -83,13 +83,13 @@ def handle_delete(graph, args):
         node_id = args[1].split("=")[1]
         # Ensure no edges use this node
         for link in graph.links:
-            if link.source == node_id or link.target == node_id:
+            if str(link.source) == str(node_id) or str(link.target) == str(node_id):
                 raise ValueError(f"Cannot delete node {node_id}, it still has edges")
-        graph.nodes = [n for n in graph.nodes if n.id != node_id]
+        graph.nodes = [n for n in graph.nodes if str(n.id) != str(node_id)]
         return f"Node {node_id} deleted"
     elif args[0] == "edge":
         edge_id = args[1].split("=")[1]
-        graph.links = [e for e in graph.links if e.id != edge_id]
+        graph.links = [e for e in graph.links if str(e.id) != str(edge_id)]
         return f"Edge {edge_id} deleted"
 
 
