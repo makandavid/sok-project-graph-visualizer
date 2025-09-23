@@ -24,6 +24,8 @@ urlpatterns = [
     path('upload-graph/', views.upload_graph, name='upload_graph'),
     path('search/', views.search_filter, name="search"),
     path('reset/', views.reset_filter, name="reset"),
-    path('change_visualization_plugin/', views.change_visualization_plugin, name='change_visualization_plugin')
+    path('change_visualization_plugin/', views.change_visualization_plugin, name='change_visualization_plugin'),
+    path("cli/execute/", views.cli_execute, name="cli_execute"),
+
 
 ]

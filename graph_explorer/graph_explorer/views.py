@@ -7,6 +7,7 @@ import tempfile
 import os
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from .cli import handle_command
 
 
 from api.models.graph import Graph
@@ -90,6 +91,31 @@ def upload_graph(request):
             else:
                 return JsonResponse({"success": False, "error": "JSON data source plugin not found"})
             
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)})
+
+    return JsonResponse({"success": False, "error": "Invalid request"})
+
+@csrf_exempt
+def cli_execute(request: HttpRequest):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        command_str = data.get("command", "")
+        app_config = apps.get_app_config("graph_explorer")
+        g = app_config.current_graph
+
+        try:
+            result = handle_command(g, command_str)
+            # Refresh visualization after change
+            vis_script = ""
+            if app_config.visualization_plugins:
+                vis_script = app_config.visualization_plugins[0].visualize(g)
+
+            return JsonResponse({
+                "success": True,
+                "result": result,
+                "visualization_script": vis_script
+            })
         except Exception as e:
             return JsonResponse({"success": False, "error": str(e)})
 
