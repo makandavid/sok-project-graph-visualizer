@@ -14,14 +14,15 @@
     <div class="header" id="header">
         <h1>Graph<br />Visualizer</h1>
 
-        <div class="controls">
+    <div class="controls">
+
             <div class="source-controls">
                 <label>Source:
                     <select class="source-select" id="source-select">
                         {% for plugin in data_source_plugins %}
                             <option value="{{ plugin.id }}">{{ plugin.name }}</option>
                         {% endfor %}
-                    </select>                  
+                    </select>
                     <button id="new-source-button">New</button>
                 </label>
             </div>
@@ -30,19 +31,35 @@
             <div class="upload-controls">
                 <form id="upload-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
+                    <input type="hidden" id="workspace-id" value="{{ current_workspace_id }}">
                     <label for="json-file">Upload JSON:
                         <input type="file" id="json-file" name="json_file" accept=".json" />
                     </label>
                     <button type="submit" id="upload-button">Upload & Visualize</button>
                 </form>
             </div>
-            
+
+            <div class="workspace-controls">
+                <label>Workspaces:
+                    <select id="workspace-select">
+                        {% for ws_id in available_workspaces %}
+                            <option value="{{ ws_id }}" {% if ws_id == current_workspace_id %}selected{% endif %}>
+                                {{ ws_id|slice:":8" }}...
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <a href="{% url 'new_workspace' %}">
+                    <button>Save current workspace</button>
+                </a>
+            </div>
+
             <div class="filter-controls">
-                <form action="/search">
+                <form action="{% url 'search' workspace_id=current_workspace_id %}">
                     <input type="text" name="search" placeholder="Search..." size="24" />
                     <button type="submit">Search</button>
                 </form>
-                <form action="/search">
+                <form action="{% url 'search' workspace_id=current_workspace_id %}" class="attribute-filter-form">
                     <input type="text" name="attr" placeholder="attr" size="5" />
                     <select name="op">
                         <option value="eq">==</option>
@@ -69,19 +86,18 @@
                         {% endif %}
                     </select>
                 </div>
-                <form action="/reset">
+                <form action="{% url 'reset' workspace_id=current_workspace_id %}">
                     <button type="submit">Reset Filters</button>
                 </form>
             </div>
             <div class="view-buttons">
-                <button id="simple-view-button">Simple View</button>
-                <button id="block-view-button">Block View</button>
+                <button id="simple-view-button" data-id="simple_visualizer">Simple View</button>
+                <button id="block-view-button" data-id="block_visualizer">Block View</button>
             </div>
-        </div>
     </div>
-
-    <div class="container">
-        <div class="sidebar">
+</div>
+     <div class="container">
+        <div class="sidebar"> 
             <div class="treeview">
                 <ul id="treeview"></ul>
             </div>
@@ -136,6 +152,7 @@
             
             const fileInput = document.getElementById('json-file');
             const file = fileInput.files[0];
+            const workspaceId = document.getElementById('workspace-id').value;
             
             if (!file) {
                 alert('Please select a JSON file to upload.');
@@ -159,8 +176,7 @@
                 try {
                     const jsonData = JSON.parse(event.target.result);
                     
-                    // Send JSON data to server for processing
-                    fetch('/upload-graph/', {
+                    fetch(`/upload-graph/${workspaceId}/`, {
                         method: 'POST',
                         body: JSON.stringify({
                             json_data: jsonData,
@@ -192,6 +208,8 @@
                                 }
                             }, 100);
                             }
+                        } else {
+                            alert('Error: ' + data.error);
                         }
                     })
                     .catch(error => {
@@ -204,7 +222,7 @@
                     });
                     
                 } catch (error) {
-                    showMessage('error', 'Invalid JSON format: ' + error.message);
+                    alert('Invalid JSON format: ' + error.message);
                     uploadButton.textContent = originalText;
                     uploadButton.disabled = false;
                 }
@@ -219,6 +237,20 @@
         });
 
     </script>
+    
+    <script>
+        document.getElementById("block-view-button").addEventListener("click", function() {
+            const workspaceId = document.getElementById('workspace-id').value;
+            window.location.href = `/change_visualization_plugin/${workspaceId}?id=block_visualizer`;
+        });
+    </script>
+
+    <script>
+        document.getElementById("simple-view-button").addEventListener("click", function() {
+            const workspaceId = document.getElementById('workspace-id').value;
+            window.location.href = `/change_visualization_plugin/${workspaceId}?id=simple_visualizer`;
+        });
+    </script>
 
     {% if error_message %}
     <script>
@@ -228,13 +260,33 @@
     </script>
     {% endif %}
 
-    
-    <script>
-        document.getElementById("block-view-button").addEventListener("click", function() {
-            window.location.href = "/change_visualization_plugin?id=block_visualizer";
-        });
-    </script>
 
+     <script type="text/javascript">
+         document.addEventListener('DOMContentLoaded', function() {
+        const sourceSelect = document.getElementById('source-select');
+        const workspaceSelect = document.getElementById('workspace-select');
+        if (workspaceSelect) {
+            workspaceSelect.addEventListener('change', function() {
+                const selectedWorkspaceId = this.value;
+                if (selectedWorkspaceId) {
+                    window.location.href = `/workspace/${selectedWorkspaceId}/`;
+                }
+            });
+        }
+
+        if (sourceSelect) {
+         sourceSelect.addEventListener('change', function() {
+                const selectedSourceId = this.value;
+                const currentWorkspaceId = document.getElementById('workspace-id').value;
+            
+                if (selectedSourceId === "{{ current_data_source_id }}") {
+                    return; 
+                }
+                window.location.href = `{% url 'index' current_workspace_id %}` + `?source=${selectedSourceId}`;
+            });
+        }
+    });
+    </script>
 
 </body>
 
