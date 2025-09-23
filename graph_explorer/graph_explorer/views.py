@@ -1,94 +1,114 @@
 import json
-from django.apps.registry import apps
-from django.http import HttpRequest
-from django.shortcuts import render, redirect
-from django.contrib import messages
-import tempfile
 import os
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+import tempfile
+import uuid
 
+from django.apps.registry import apps
+from django.http import HttpRequest, JsonResponse
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 
 from api.models.graph import Graph
 from api.services.search_filter import search, filter
 
-def index(request: HttpRequest):
+def new_workspace(request: HttpRequest):
+    """Creates new workspace and redirects to it"""
+    workspace_id = str(uuid.uuid4())
+    return redirect('index', workspace_id=workspace_id)
+
+def index(request: HttpRequest, workspace_id: str):
+    """Displays and manages chosen workspace"""
     app_config = apps.get_app_config('graph_explorer')
-    visualization_plugins = app_config.visualization_plugins
-    data_source_plugins = app_config.data_source_plugins
+
+    if 'workspaces' not in request.session:
+        request.session['workspaces'] = {}
     
-    g = Graph([], [])
-    json_data_source = None
-    
-    for plugin in data_source_plugins:
-        if plugin.id() == "json_data_source":
-            json_data_source = plugin
-            break
-    
-    if json_data_source:
-        try:
-            g = json_data_source.load_data("../json_data_source/data/test.json")
-            print(f"Loaded graph with {len(g.nodes)} nodes and {len(g.links)} links")
-        except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
-            print(f"Error loading JSON data: {e}")
+    if workspace_id not in request.session['workspaces']:
+        print(f"Creating new workspace: {workspace_id}")
+
+        data_source_id = request.GET.get('source', 'json_data_source')
+        data_source_plugin = next((p for p in app_config.data_source_plugins if p.id() == data_source_id), None)
+
+        if data_source_plugin:
+            try:
+                file_path = os.path.join(
+                    os.path.dirname(os.path.abspath(__file__)), 
+                    '..', data_source_plugin.id(), 'data', 'test.json'
+                )
+                g = data_source_plugin.load_data(file_path)
+            except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+                print(f"Error loading data from {data_source_id}: {e}")
+                g = create_fallback_graph()
+        else:
+            print(f"No plugin found for ID '{data_source_id}', using fallback data")
             g = create_fallback_graph()
-    else:
-        print("No JSON data source plugin found, using fallback data")
-        g = create_fallback_graph()
+
+        request.session['workspaces'][workspace_id] = {
+            'graph_data': g.to_dict(),
+            'filtered_graph_data': g.to_dict(),  # add filtered_graph_data
+            'applied_filters': [],
+            'current_data_source_id': data_source_id
+        }
+        request.session.modified = True
     
-    app_config.current_graph = g
-    app_config.filtered_graph = g
-    app_config.applied_filters = []
+    workspace_data = request.session['workspaces'][workspace_id]
+    g_filtered = Graph.from_dict(workspace_data['filtered_graph_data'])
     
-    if visualization_plugins:
-        visualization_script = visualization_plugins[0].visualize(g)
-    else:
-        visualization_script = ""
+    visualization_plugins = app_config.visualization_plugins
+    vis_script = ""
     
+    current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
+    selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
+
+    if selected_visualizer:
+        vis_script = selected_visualizer.visualize(g_filtered)
+
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
-        "visualization_script": visualization_script,
-        "data_source_plugins": data_source_plugins
+        "visualization_script": vis_script,
+        "data_source_plugins": app_config.data_source_plugins,
+        "current_workspace_id": workspace_id,
+        "available_workspaces": request.session['workspaces'].keys(),
+        "applied_filters": workspace_data['applied_filters'],
+        "current_data_source_id": workspace_data.get('current_data_source_id', 'json_data_source') 
     })
     
 
 @csrf_exempt
-def upload_graph(request):
+def upload_graph(request: HttpRequest, workspace_id: str):
     if request.method == 'POST':
         try:
+            # Load session data for current workspace
+            workspace_data = request.session.get('workspaces', {}).get(workspace_id)
+            if not workspace_data:
+                return JsonResponse({"success": False, "error": "Workspace not found"})
+
             data = json.loads(request.body)
             json_data = data.get('json_data')
             
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
-                temp_file.write(json.dumps(json_data))
-                temp_file_path = temp_file.name
+            # Convert JSON to graph object
+            g = Graph.from_dict(json_data)
+            
+            # Update graph data in selected workspace and save
+            workspace_data['graph_data'] = g.to_dict()
+            workspace_data['filtered_graph_data'] = g.to_dict()  # Reset filtered_graph_data
+            workspace_data['applied_filters'] = []
+            request.session.modified = True
             
             app_config = apps.get_app_config('graph_explorer')
-            json_data_source = None
-            for plugin in app_config.data_source_plugins:
-                if plugin.id() == "json_data_source":
-                    json_data_source = plugin
-                    break
+            visualization_plugins = app_config.visualization_plugins
+            current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
+            selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
+    
+            
+            vis_script = selected_visualizer.visualize(g) if selected_visualizer else ""
 
-            if json_data_source:
-                g = json_data_source.load_data(temp_file_path)
-                app_config.current_graph = g
-                app_config.filtered_graph = g
-                app_config.applied_filters = []
-
-                vis_script = app_config.visualization_plugins[0].visualize(g) if app_config.visualization_plugins else ""
-                
-                # Clean up
-                os.unlink(temp_file_path)
-                
-                return JsonResponse({
-                    "success": True,
-                    "visualization_script": vis_script,
-                    "node_count": len(g.nodes),
-                    "link_count": len(g.links)
-                })
-            else:
-                return JsonResponse({"success": False, "error": "JSON data source plugin not found"})
+            return JsonResponse({
+                "success": True,
+                "visualization_script": vis_script,
+                "node_count": len(g.nodes),
+                "link_count": len(g.links)
+            })
             
         except Exception as e:
             return JsonResponse({"success": False, "error": str(e)})
@@ -116,13 +136,17 @@ def create_fallback_graph():
     g.add_link(7, 4, 0)
     return g
 
-def search_filter(request: HttpRequest):
-    app_config = apps.get_app_config('graph_explorer')
-    visualization_plugins = app_config.visualization_plugins
-    data_source_plugins = app_config.data_source_plugins
-    applied_filters = app_config.applied_filters
 
-    visualization_script = ""
+def search_filter(request: HttpRequest, workspace_id: str):
+    app_config = apps.get_app_config('graph_explorer')
+    workspace_data = request.session.get('workspaces', {}).get(workspace_id)
+    if not workspace_data:
+        return redirect('new_workspace') # Redirect if there is no workspace
+
+    g = Graph.from_dict(workspace_data['filtered_graph_data'])
+    
+    visualization_plugins = app_config.visualization_plugins
+    vis_script = ""
     filter_str = ""
     error_message = None
     
@@ -130,64 +154,102 @@ def search_filter(request: HttpRequest):
         try:
             print(request.GET)
             if "search" in request.GET.keys():
-                g = search(app_config.filtered_graph, request.GET["search"])
+                g = search(g, request.GET["search"])
                 filter_str = request.GET["search"]
             else:
                 ops = {'eq': '==', 'le': '<=', 'ge': '>=', 'lt': '<', 'gt': '>', 'ne': '!='}
-                g = filter(app_config.filtered_graph, request.GET["attr"], ops[request.GET["op"]], request.GET["val"])
+                g = filter(g, request.GET["attr"], ops[request.GET["op"]], request.GET["val"])
                 filter_str = f"{request.GET['attr']} {ops[request.GET['op']]} {request.GET['val']}"
 
-            if visualization_plugins:
-                visualization_script = visualization_plugins[0].visualize(g)
-                app_config.filtered_graph = g
-                applied_filters.append(filter_str)
+            # Save new filtered graph and filter list to session
+            workspace_data['filtered_graph_data'] = g.to_dict()
+            workspace_data['applied_filters'].append(filter_str)
+            request.session.modified = True
+
+            # Visualise fltered graph
+            visualization_plugins = app_config.visualization_plugins
+            current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
+            selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
+            if selected_visualizer:
+                vis_script = selected_visualizer.visualize(g)
         
         except Exception:
             error_message = "Filter error: Can't compare different types!"
-           
+            
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
-        "visualization_script": visualization_script,
-        "data_source_plugins": data_source_plugins,
+        "visualization_script": vis_script,
+        "data_source_plugins": app_config.data_source_plugins,
         "error_message": error_message,
-        "applied_filters": applied_filters,
-    })  
+        "applied_filters": workspace_data['applied_filters'],
+        "current_workspace_id": workspace_id,
+        "available_workspaces": request.session['workspaces'].keys(),
+    }) 
 
-def reset_filter(request: HttpRequest):
+# ---
+
+def reset_filter(request: HttpRequest, workspace_id: str):
+    workspace_data = request.session.get('workspaces', {}).get(workspace_id)
+    if not workspace_data:
+        return redirect('new_workspace') # Redirect if there is no workspace
+
     app_config = apps.get_app_config('graph_explorer')
     visualization_plugins = app_config.visualization_plugins
-    data_source_plugins = app_config.data_source_plugins
+    
+    # Load original unfiltered graph from session
+    g_original = Graph.from_dict(workspace_data['graph_data'])
+
+    # Reset filtered_graph and filters in session
+    workspace_data['filtered_graph_data'] = g_original.to_dict()
+    workspace_data['applied_filters'] = []
+    request.session.modified = True
 
     visualization_script = ""
-    if visualization_plugins:
-        visualization_script = visualization_plugins[0].visualize(app_config.current_graph)
-        app_config.filtered_graph = app_config.current_graph
-        app_config.applied_filters = []
-           
+    visualization_plugins = app_config.visualization_plugins
+    current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
+    selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
+    if selected_visualizer:
+        visualization_script = selected_visualizer.visualize(g_original)
+            
     return render(request, "index.html", {
         "visualization_plugins": visualization_plugins,
         "visualization_script": visualization_script,
-        "data_source_plugins": data_source_plugins,
+        "data_source_plugins": app_config.data_source_plugins,
         "applied_filters": [],
-    })   
+        "current_workspace_id": workspace_id,
+        "available_workspaces": request.session['workspaces'].keys(),
+    }) 
 
-def change_visualization_plugin(request: HttpRequest):
+
+def change_visualization_plugin(request: HttpRequest, workspace_id: str):
+    workspace_data = request.session.get('workspaces', {}).get(workspace_id)
+    if not workspace_data:
+        return redirect('new_workspace') 
+
     app_config = apps.get_app_config('graph_explorer')
     visualization_plugins = app_config.visualization_plugins
-    data_source_plugins = app_config.data_source_plugins
-    applied_filters = app_config.applied_filters
-
+    
     visualization_script = ""
-
     if request.method == 'GET':
         print(request.GET)
         viz_id = request.GET["id"]
+        
+        # Update visualizer ID in session
+        workspace_data['current_visualizer_id'] = viz_id
+        request.session.modified = True
+    
+        g_filtered = Graph.from_dict(workspace_data['filtered_graph_data'])
+
         for viz in visualization_plugins:
-            if viz.id() == viz_id and visualization_plugins:
-                visualization_script = visualization_plugins[0].visualize(app_config.filtered_graph)
+            if viz.id() == viz_id:
+                visualization_script = viz.visualize(g_filtered)
                 break
 
-    return render(request, "index.html", {"data_source_plugins": data_source_plugins,
-                                          "visualization_plugins": visualization_plugins,
-                                          "visualization_script": visualization_script,
-                                          "applied_filters": applied_filters,})
+    return render(request, "index.html", {
+        "data_source_plugins": app_config.data_source_plugins,
+        "visualization_plugins": visualization_plugins,
+        "visualization_script": visualization_script,
+        "applied_filters": workspace_data['applied_filters'],
+        "current_workspace_id": workspace_id,
+        "available_workspaces": request.session['workspaces'].keys(),
+    })
