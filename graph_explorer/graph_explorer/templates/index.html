@@ -39,17 +39,19 @@
                 </form>
             </div>
             <div class="workspace-controls">
-    <label for="workspace-select">Workspaces:</label>
-    <select id="workspace-select">
-        {% for ws_id, ws_name in available_workspaces %}
-            <option value="{{ ws_id }}" {% if ws_id == current_workspace_id %}selected{% endif %}>
-                {{ ws_name }}
-            </option>
-        {% endfor %}
-    </select>
-    <a href="{% url 'new_workspace' %}">
-        <button>Save current workspace</button>
+            <label for="workspace-select">Workspaces:</label>
+            <select id="workspace-select">
+                {% for ws_id, ws_name in available_workspaces %}
+                    <option value="{{ ws_id }}" {% if ws_id == current_workspace_id %}selected{% endif %}>
+                        {{ ws_name }}
+                    </option>
+                {% endfor %}
+            </select>
+    <button onclick="openModal()">Save current workspace</button>
+     <a href="{% url 'new_workspace' %}">
+        <button type="button">Add new workspace</button>
     </a>
+
 </div>
 
             <div class="filter-controls">
@@ -116,6 +118,40 @@
     font-size: 14px; background: rgb(245, 247, 246); 
     border: 1px solid #ccc; border-radius: 8px; pointer-events: none; opacity: 0; 
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);"></div>
+
+    <div id="workspaceModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Name your workspace</h3>
+        <form method="post" action="{% url 'rename_workspace' workspace_id=current_workspace_id %}">
+                {% csrf_token %}
+            <input type="text" name="name" placeholder="Optional name..." style="width: 100%; padding: 0.5rem;" />
+            <div style="text-align: right; margin-top: 1rem;">
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+    function openModal() {
+            document.getElementById("workspaceModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("workspaceModal").style.display = "none";
+        }
+
+        // Zatvori modal kad klikneš van sadržaja
+        window.onclick = function(event) {
+            const modal = document.getElementById("workspaceModal");
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        </script>
+
+
 
     <!-- prettier-ignore -->
     <script type="text/javascript">

@@ -283,3 +283,18 @@ def change_visualization_plugin(request: HttpRequest, workspace_id: str):
         "current_workspace_id": workspace_id,
         "available_workspaces": available_workspaces,
     })
+
+def rename_workspace(request: HttpRequest, workspace_id: str):
+    if request.method == 'POST':
+        new_name = request.POST.get('name', '').strip()
+
+        if 'workspaces' in request.session and workspace_id in request.session['workspaces']:
+            if not new_name:
+                count = len(request.session['workspaces'])
+                new_name = f"Workspace #{count}"
+            
+            request.session['workspaces'][workspace_id]['name'] = new_name
+            request.session.modified = True
+            request.session['last_message'] = f"Workspace renamed to '{new_name}'."
+
+    return redirect('index', workspace_id=workspace_id)
