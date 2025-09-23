@@ -30,7 +30,8 @@ def new_workspace(request: HttpRequest):
         'graph_data': g.to_dict(),
         'filtered_graph_data': g.to_dict(),
         'applied_filters': [],
-        'current_data_source_id': 'json_data_source'
+        'current_data_source_id': 'json_data_source',
+        'current_visualizer_id': 'simple_visualizer'
     }
     request.session.modified = True
 
@@ -79,7 +80,7 @@ def index(request: HttpRequest, workspace_id: str):
     visualization_plugins = app_config.visualization_plugins
     vis_script = ""
     
-    current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
+    current_visualizer_id = workspace_data.get('current_visualizer_id', 'simple_visualizer')
     selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
 
     # list of tuples (id, name)
@@ -221,7 +222,7 @@ def search_filter(request: HttpRequest, workspace_id: str):
 
             # Visualise fltered graph
             visualization_plugins = app_config.visualization_plugins
-            current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
+            current_visualizer_id = workspace_data.get('current_visualizer_id', 'simple_visualizer')
             selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
             if selected_visualizer:
                 vis_script = selected_visualizer.visualize(g)
@@ -261,7 +262,7 @@ def reset_filter(request: HttpRequest, workspace_id: str):
 
     visualization_script = ""
     visualization_plugins = app_config.visualization_plugins
-    current_visualizer_id = request.session.get('current_visualizer_id', 'simple_visualizer')
+    current_visualizer_id = workspace_data.get('current_visualizer_id', 'simple_visualizer')
     selected_visualizer = next((p for p in visualization_plugins if p.id() == current_visualizer_id), None)
     if selected_visualizer:
         visualization_script = selected_visualizer.visualize(g_original)
