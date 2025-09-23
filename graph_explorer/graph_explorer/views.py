@@ -45,7 +45,6 @@ def index(request: HttpRequest, workspace_id: str):
         request.session['workspaces'] = {}
     
     if workspace_id not in request.session['workspaces']:
-        print(f"Creating new workspace: {workspace_id}")
 
         data_source_id = request.GET.get('source', 'json_data_source')
         data_source_plugin = next((p for p in app_config.data_source_plugins if p.id() == data_source_id), None)
@@ -101,43 +100,52 @@ def index(request: HttpRequest, workspace_id: str):
     
 
 @csrf_exempt
-def upload_graph(request):
+def upload_graph(request, workspace_id: str):
+
     if request.method == 'POST':
         try:
+            workspaces = request.session.get('workspaces', {})
+            workspace_data = workspaces.get(workspace_id)
+
+            if not workspace_data:
+                return JsonResponse({"success": False, "error": "Workspace not found"})
+
             data = json.loads(request.body)
             json_data = data.get('json_data')
+            if not json_data:
+                return JsonResponse({"success": False, "error": "'json_data' missing in request"})
             
             with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
                 temp_file.write(json.dumps(json_data))
                 temp_file_path = temp_file.name
-            
+
             app_config = apps.get_app_config('graph_explorer')
-            json_data_source = None
-            for plugin in app_config.data_source_plugins:
-                if plugin.id() == "json_data_source":
-                    json_data_source = plugin
-                    break
+            json_data_source = next((p for p in app_config.data_source_plugins if p.id() == "json_data_source"), None)
 
-            if json_data_source:
-                g = json_data_source.load_data(temp_file_path)
-                app_config.current_graph = g
-                app_config.filtered_graph = g
-                app_config.applied_filters = []
+            g = json_data_source.load_data(temp_file_path)
 
-                vis_script = app_config.current_visualization_plugin.visualize(g) if app_config.visualization_plugins else ""
-                
-                # Clean up
-                os.unlink(temp_file_path)
-                
-                return JsonResponse({
-                    "success": True,
-                    "visualization_script": vis_script,
-                    "node_count": len(g.nodes),
-                    "link_count": len(g.links)
-                })
+            os.unlink(temp_file_path)
+
+            workspace_data['graph_data'] = g.to_dict()
+            workspace_data['filtered_graph_data'] = g.to_dict()
+            workspace_data['applied_filters'] = []
+            request.session.modified = True
+
+            current_visualizer_id = workspace_data.get('current_visualizer_id', 'simple_visualizer')
+            selected_visualizer = next((p for p in app_config.visualization_plugins if p.id() == current_visualizer_id), None)
+
+            if selected_visualizer:
+                vis_script = selected_visualizer.visualize(g)
             else:
-                return JsonResponse({"success": False, "error": "JSON data source plugin not found"})
-            
+                vis_script = ""
+
+            return JsonResponse({
+                "success": True,
+                "visualization_script": vis_script,
+                "node_count": len(g.nodes),
+                "link_count": len(g.links)
+            })
+
         except Exception as e:
             return JsonResponse({"success": False, "error": str(e)})
 
