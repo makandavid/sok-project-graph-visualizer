@@ -237,8 +237,6 @@ var focusNode = function(nodeId, fromTreeView=false) {
     });
     container.select("#node"+nodeId).classed("selected", true);
     svgBirdView.select("#mini"+nodeId).classed("selected", true);
-    console.log(container.select("#node"+nodeId))
-    console.log(svgBirdView.select("#node"+nodeId))
     const path = getAncestorPath(nodeId);
 
     if (!fromTreeView) {
