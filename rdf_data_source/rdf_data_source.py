@@ -122,7 +122,7 @@ class RdfDataSourcePlugin(DataSourcePlugin):
             if data_type in {XSD.date, XSD.dateTime}:
                 py = literal.toPython()
                 if isinstance(py, (date, datetime)):
-                    return py.isoformat()
+                    return py
         except Exception as e:
             print(e)
 
