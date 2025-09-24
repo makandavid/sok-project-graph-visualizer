@@ -3,42 +3,39 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-    <link rel="stylesheet" href="{% static 'treeview-style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'treeview-style.css' %}"/>
     <title>Graph Explorer</title>
 </head>
 
 <body>
-    <div class="header" id="header">
-        <h1>Graph<br />Visualizer</h1>
+<div class="header" id="header">
+    <h1>Graph<br/>Visualizer</h1>
 
     <div class="controls">
+        <div class="source-controls">
+            <label>Source:
+                <select class="source-select" id="source-select">
+                    {% for plugin in data_source_plugins %}
+                        <option value="{{ plugin.id }}" {% if plugin.id == current_data_source_id %}selected{% endif %}>{{ plugin.name }}</option>
+                    {% endfor %}
+                </select>
+                <button id="new-source-button">New</button>
+            </label>
+        </div>
 
-            <div class="source-controls">
-                <label>Source:
-                    <select class="source-select" id="source-select">
-                        {% for plugin in data_source_plugins %}
-                            <option value="{{ plugin.id }}">{{ plugin.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <button id="new-source-button">New</button>
+        <div class="upload-controls">
+            <form id="upload-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="file-upload">Upload File:
+                    <input type="file" id="file-upload" name="file"/>
                 </label>
-            </div>
-            
-            <!-- File Upload Section -->
-            <div class="upload-controls">
-                <form id="upload-form" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="hidden" id="workspace-id" value="{{ current_workspace_id }}">
-                    <label for="json-file">Upload JSON:
-                        <input type="file" id="json-file" name="json_file" accept=".json" />
-                    </label>
-                    <button type="submit" id="upload-button">Upload & Visualize</button>
-                </form>
-            </div>
-            <div class="workspace-controls">
+                <button type="submit" id="upload-button">Upload & Visualize</button>
+            </form>
+        </div>
+        <div class="workspace-controls">
             <label for="workspace-select">Workspaces:</label>
             <select id="workspace-select">
                 {% for ws_id, ws_name in available_workspaces %}
@@ -53,89 +50,91 @@
     </a>
 
 </div>
+        <div class="filter-controls">
+            <form action="{% url 'search' workspace_id=current_workspace_id %}">
+                <input type="text" name="search" placeholder="Search..." size="24"/>
+                <button type="submit">Search</button>
+            </form>
+            <form action="{% url 'search' workspace_id=current_workspace_id %}">
+                <input type="text" name="attr" placeholder="attr" size="5"/>
+                <select name="op">
+                    <option value="eq">==</option>
+                    <option value="le">&le;</option>
+                    <option value="ge">&ge;</option>
+                    <option value="lt">&lt;</option>
+                    <option value="gt">&gt;</option>
+                    <option value="ne">!=</option>
+                </select>
+                <input type="text" name="val" placeholder="val" size="5"/>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+        
+        <div class="applied-filters">
+            <div>
+                <select style="width: 200px;">
+                    <option>Applied Filters</option>
+                    {% if applied_filters %}
+                        {% for f in applied_filters %}
+                            <option disabled>{{ f }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option disabled>No filters applied</option>
+                    {% endif %}
+                </select>
+            </div>
+            <form action="{% url 'reset' workspace_id=current_workspace_id %}">
+                <button type="submit">Reset Filters</button>
+            </form>
+        </div>
 
-            <div class="filter-controls">
-                <form action="{% url 'search' workspace_id=current_workspace_id %}">
-                    <input type="text" name="search" placeholder="Search..." size="24" />
-                    <button type="submit">Search</button>
-                </form>
-                <form action="{% url 'search' workspace_id=current_workspace_id %}" class="attribute-filter-form">
-                    <input type="text" name="attr" placeholder="attr" size="5" />
-                    <select name="op">
-                        <option value="eq">==</option>
-                        <option value="le">&le;</option>
-                        <option value="ge">&ge;</option>
-                        <option value="lt">&lt;</option>
-                        <option value="gt">&gt;</option>
-                        <option value="ne">!=</option>
-                    </select>
-                    <input type="text" name="val" placeholder="val" size="5" />
-                    <button type="submit">Filter</button>
-                </form>
-            </div>
-            <div class="applied-filters">
-                <div>
-                    <select style="width: 200px;">
-                        <option>Applied Filters</option>
-                        {% if applied_filters %}
-                            {% for f in applied_filters %}
-                                <option disabled>{{ f }}</option>
-                            {% endfor %}
-                        {% else %}
-                            <option disabled>No filters applied</option>
-                        {% endif %}
-                    </select>
-                </div>
-                <form action="{% url 'reset' workspace_id=current_workspace_id %}">
-                    <button type="submit">Reset Filters</button>
-                </form>
-            </div>
-            <div class="view-buttons">
-                <button id="simple-view-button" data-id="simple_visualizer">Simple View</button>
-                <button id="block-view-button" data-id="block_visualizer">Block View</button>
-            </div>
+        <div class="view-buttons">
+            <button id="simple-view-button" data-id="simple_visualizer">Simple View</button>
+            <button id="block-view-button" data-id="block_visualizer">Block View</button>
+        </div>
     </div>
 </div>
-     <div class="container">
-        <div class="sidebar"> 
-            <div class="treeview">
-                <ul id="treeview"></ul>
-            </div>
 
-            <div class="birdview">
-                <svg id="birdview" width="300" height="120">
-                    <rect width="100%" height="100%" fill="white" stroke="gray"></rect>
-                </svg>
-            </div>
+<div class="container">
+    <div class="sidebar">
+        <div class="treeview">
+            <ul id="treeview"></ul>
         </div>
-
-        <div class="mainview">
-            <svg id="mainview"></svg>
+        
+        <div class="birdview">
+            <svg id="birdview" width="300" height="120">
+                <rect width="100%" height="100%" fill="white" stroke="gray"></rect>
+            </svg>
         </div>
-
-        <div class="terminal-container">
-            <h3>Graph CLI</h3>
-            <div id="terminal-output"
-                style="border:1px solid #ccc; height:200px; width: 300px; overflow:auto; background:#111; color:#0f0; padding:5px; font-family:monospace;"></div>
-            <input id="terminal-input"
-                type="text"
-                placeholder="Enter command..."
-                style="width:100%; padding:5px; font-family:monospace;" />
-        </div>  
+    </div>
+    
+    <div class="mainview">
+        <svg id="mainview"></svg>
     </div>
 
-    <div id="tooltip" style="position: absolute; text-align: left; padding: 15px; 
-    font-size: 14px; background: rgb(245, 247, 246); 
-    border: 1px solid #ccc; border-radius: 8px; pointer-events: none; opacity: 0; 
+    <div class="terminal-container">
+        <h3>Graph CLI</h3>
+        <div id="terminal-output"
+             style="border:1px solid #ccc; height:200px; width: 300px; overflow:auto; background:#111; color:#0f0; padding:5px; font-family:monospace;"></div>
+        <input id="terminal-input"
+               type="text"
+               placeholder="Enter command..."
+               style="width:100%; padding:5px; font-family:monospace;"/>
+    </div>
+</div>
+
+<div id="tooltip" style="position: absolute; text-align: left; padding: 15px;
+    font-size: 14px; background: rgb(245, 247, 246);
+    border: 1px solid #ccc; border-radius: 8px; pointer-events: none; opacity: 0;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);"></div>
 
-    <div id="workspaceModal" class="modal" style="display: none;">
+<div id="workspaceModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <h3>Name your workspace</h3>
         <form method="post" action="{% url 'rename_workspace' workspace_id=current_workspace_id %}">
-                {% csrf_token %}
-            <input type="text" name="name" placeholder="Optional name..." style="width: 100%; padding: 0.5rem;" />
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Optional name..." style="width: 100%; padding: 0.5rem;"/>
             <div style="text-align: right; margin-top: 1rem;">
                 <button type="submit">Create</button>
             </div>
@@ -143,172 +142,145 @@
     </div>
 </div>
 
-    <script>
-    function openModal() {
-            document.getElementById("workspaceModal").style.display = "block";
-        }
+<script type="text/javascript">
+    const pluginExtensions = {{ plugin_extensions_json|safe }};
+    const selectedPluginId = "{{ current_data_source_id|default:'' }}";
+</script>
 
-        function closeModal() {
-            document.getElementById("workspaceModal").style.display = "none";
-        }
+<script type="text/javascript">
+    {{ visualization_script | safe }}
+</script>
+<script type="text/javascript" src="{% static 'treeview.js' %}"></script>
 
-        // Zatvori modal kad klikneš van sadržaja
-        window.onclick = function(event) {
-            const modal = document.getElementById("workspaceModal");
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-        </script>
-
-
-
-    <!-- prettier-ignore -->
-    <script type="text/javascript">
-        {{ visualization_script | safe }}
-    </script>
-    <script type="text/javascript" src="{% static 'treeview.js' %}"></script>
-    
-
-    <script type="text/javascript">
+<script type="text/javascript">
     // Wait for DOM and all scripts to be ready
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add a small delay to ensure everything is loaded
-            setTimeout(function() {
-                console.log('Checking for initial treeview initialization...');
-                console.log('initializeTreeview type:', typeof window.initializeTreeview);
-                console.log('graph available:', typeof graph !== 'undefined');
-                
-                if (typeof window.initializeTreeview === "function" && typeof graph !== 'undefined') {
-                    console.log('Initializing treeview with graph:', graph);
-                    window.initializeTreeview(graph);
-                } else {
-                    console.warn('Cannot initialize treeview - missing function or graph data');
-                }
-            }, 200);
-        });
-    </script>
-
-    <script type="text/javascript">
-        // Handle file upload form submission
-        document.getElementById('upload-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const fileInput = document.getElementById('json-file');
-            const file = fileInput.files[0];
-            const workspaceId = document.getElementById('workspace-id').value;
-            
-            if (!file) {
-                alert('Please select a JSON file to upload.');
-                return;
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add a small delay to ensure everything is loaded
+        setTimeout(function () {
+            if (typeof window.initializeTreeview === "function" && typeof graph !== 'undefined') {
+                window.initializeTreeview(graph);
             }
-            
-            if (!file.name.toLowerCase().endsWith('.json')) {
-                alert('Please select a valid JSON file.');
-                return;
-            }
-            
-            // Show loading state
-            const uploadButton = document.getElementById('upload-button');
-            const originalText = uploadButton.textContent;
-            uploadButton.textContent = 'Processing...';
-            uploadButton.disabled = true;
-            
-            // Read file and process client-side
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    const jsonData = JSON.parse(event.target.result);
-                    
-                    fetch(`/upload-graph/${workspaceId}/`, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            json_data: jsonData,
-                            filename: file.name
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            if (data.visualization_script) {
-                                const mainview = document.getElementById('mainview');
-                                const treeview = document.getElementById('treeview');
-                                const birdview = document.getElementById('birdview');
-                                mainview.innerHTML = '';
-                                treeview.innerHTML = '';
-                                birdview.innerHTML = '';
-                                
-                                eval(data.visualization_script);
+        }, 200);
+    });
+</script>
 
-                            setTimeout(() => {
-                                if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
-                                    window.initializeTreeview(graph);
-                                } else {
-                                    console.error('Graph or initializeTreeview not available');
-                                }
-                            }, 100);
-                            }
+<script type="text/javascript">
+    // update file accept attribute based on the selected data source plugin
+    const sourceSelect = document.getElementById('source-select');
+    const fileInput = document.getElementById('file-upload');
+
+    function updateFileAccept() {
+        const sel = sourceSelect.value;
+        const exts = pluginExtensions[sel] || [];
+        fileInput.accept = exts.join(',');
+    }
+
+    updateFileAccept();
+    sourceSelect.addEventListener('change', updateFileAccept);
+
+    // Handle file upload form submission
+    document.getElementById('upload-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const file = fileInput.files[0];
+        
+        if (!file) {
+            alert('Please select a file to upload.');
+            return;
+        }
+
+        const allowed = pluginExtensions[sourceSelect.value] || [];
+        const lowerName = file.name.toLowerCase();
+        const ok = allowed.some(ext => lowerName.endsWith(ext.toLowerCase()));
+        if (!ok) {
+            alert('Selected file type is not supported by the chosen data source plugin.');
+            return;
+        }
+
+        const uploadButton = document.getElementById('upload-button');
+        const originalText = uploadButton.textContent;
+        uploadButton.textContent = 'Processing...';
+        uploadButton.disabled = true;
+
+        const form = new FormData();
+        form.append('file', file);
+        form.append('plugin_id', sourceSelect.value);
+
+        fetch("/upload-graph/{{ current_workspace_id }}/", {
+            method: 'POST',
+            body: form,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (data.visualization_script) {
+                    document.getElementById('mainview').innerHTML = '';
+                    document.getElementById('treeview').innerHTML = '';
+                    document.getElementById('birdview').innerHTML = '';
+                    eval(data.visualization_script);
+                    setTimeout(() => {
+                        if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
+                            window.initializeTreeview(graph);
                         } else {
-                            alert('Error: ' + data.error);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Upload error:', error);
-                    })
-                    .finally(() => {
-                        uploadButton.textContent = originalText;
-                        uploadButton.disabled = false;
-                        fileInput.value = '';
-                    });
-                    
-                } catch (error) {
-                    alert('Invalid JSON format: ' + error.message);
-                    uploadButton.textContent = originalText;
-                    uploadButton.disabled = false;
+                                console.error('Graph or initializeTreeview not available');
+                            }
+                    }, 100);
                 }
-            };
-            
-            reader.onerror = function() {
-                uploadButton.textContent = originalText;
-                uploadButton.disabled = false;
-            };
-            
-            reader.readAsText(file);
+            } else {
+                alert('Upload failed: ' + (data.error || 'unknown error'));
+            }
+        })
+        .catch(error => {
+            alert('Upload error: ' + error.message);
+        })
+        .finally(() => {
+            uploadButton.textContent = originalText;
+            uploadButton.disabled = false;
+            fileInput.value = '';
         });
+    });
+</script>
 
-    </script>
-    
-    <script>
-        document.getElementById("block-view-button").addEventListener("click", function() {
-            const workspaceId = document.getElementById('workspace-id').value;
-            window.location.href = `/change_visualization_plugin/${workspaceId}?id=block_visualizer`;
-        });
-    </script>
+<script>
+    document.getElementById("block-view-button").addEventListener("click", function () {
+        window.location.href = `{% url 'change_visualization_plugin' workspace_id=current_workspace_id %}?id=block_visualizer`;
+    });
+    document.getElementById("simple-view-button").addEventListener("click", function () {
+        window.location.href = `{% url 'change_visualization_plugin' workspace_id=current_workspace_id %}?id=simple_visualizer`;
+    });
+</script>
 
+{% if error_message %}
     <script>
-        document.getElementById("simple-view-button").addEventListener("click", function() {
-            const workspaceId = document.getElementById('workspace-id').value;
-            window.location.href = `/change_visualization_plugin/${workspaceId}?id=simple_visualizer`;
-        });
-    </script>
-
-    {% if error_message %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             alert("Filter error: {{ error_message|escapejs }}");
         });
     </script>
-    {% endif %}
+{% endif %}
 
+<script type="text/javascript">
+    function openModal() {
+        document.getElementById("workspaceModal").style.display = "block";
+    }
 
-     <script type="text/javascript">
-         document.addEventListener('DOMContentLoaded', function() {
+    function closeModal() {
+        document.getElementById("workspaceModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById("workspaceModal");
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
         const sourceSelect = document.getElementById('source-select');
         const workspaceSelect = document.getElementById('workspace-select');
+        
         if (workspaceSelect) {
             workspaceSelect.addEventListener('change', function() {
                 const selectedWorkspaceId = this.value;
@@ -317,66 +289,52 @@
                 }
             });
         }
+    });
 
-        if (sourceSelect) {
-         sourceSelect.addEventListener('change', function() {
-                const selectedSourceId = this.value;
-                const currentWorkspaceId = document.getElementById('workspace-id').value;
+    document.getElementById("terminal-input").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            const command = this.value;
+            this.value = "";
+
+            const workspaceId = "{{ current_workspace_id }}";
+            const cliUrl = `/cli/execute/${workspaceId}/`;
             
-                if (selectedSourceId === "{{ current_data_source_id }}") {
-                    return; 
+            fetch(cliUrl, {
+                method: "POST",
+                body: JSON.stringify({ command }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
                 }
-                window.location.href = `{% url 'index' current_workspace_id %}` + `?source=${selectedSourceId}`;
+            })
+            .then(res => res.json())
+            .then(data => {
+                const outputDiv = document.getElementById("terminal-output");
+                if (data.success) {
+                    outputDiv.innerHTML += `> ${command}<br>${data.result}<br>`;
+                    if (data.visualization_script) {
+                        const mainview = document.getElementById('mainview');
+                        const treeview = document.getElementById('treeview');
+                        const birdview = document.getElementById('birdview');
+                        mainview.innerHTML = '';
+                        treeview.innerHTML = '';
+                        birdview.innerHTML = '';
+                        eval(data.visualization_script);
+
+                        setTimeout(() => {
+                            if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
+                                window.initializeTreeview(graph);
+                            }
+                        }, 100);
+                    }
+                } else {
+                    outputDiv.innerHTML += `> ${command}<br><span style="color:red">${data.error}</span><br>`;
+                }
+                outputDiv.scrollTop = outputDiv.scrollHeight;
             });
         }
     });
-    </script>
-    <script>
-        document.getElementById("terminal-input").addEventListener("keydown", function(e) {
-            if (e.key === "Enter") {
-                const command = this.value;
-                this.value = "";
-                fetch("/cli/execute/", {
-                    method: "POST",
-                    body: JSON.stringify({ command }),
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
-                    }
-                })
-                .then(res => res.json())
-                .then(data => {
-                    const outputDiv = document.getElementById("terminal-output");
-                    if (data.success) {
-                        outputDiv.innerHTML += `> ${command}<br>${data.result}<br>`;
-                        if (data.visualization_script) {
-                            const mainview = document.getElementById('mainview');
-                            const treeview = document.getElementById('treeview');
-                            const birdview = document.getElementById('birdview');
-                            mainview.innerHTML = '';
-                            treeview.innerHTML = '';
-                            birdview.innerHTML = '';
-                            eval(data.visualization_script);
-
-                            setTimeout(() => {
-                                if (typeof window.initializeTreeview === 'function' && typeof graph !== 'undefined') {
-                                    window.initializeTreeview(graph);
-                                } else {
-                                    console.error('Graph or initializeTreeview not available');
-                                }
-                            }, 100);
-                        }
-                    } else {
-                        outputDiv.innerHTML += `> ${command}<br><span style="color:red">${data.error}</span><br>`;
-                    }
-                    outputDiv.scrollTop = outputDiv.scrollHeight;
-                });
-            }
-        });
-        
-    </script>
-
+</script>
 
 </body>
-
 </html>

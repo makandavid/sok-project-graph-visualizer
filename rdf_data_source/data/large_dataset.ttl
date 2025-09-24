@@ -1,0 +1,642 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:student000 a ex:Student ;
+    ex:name "Alone Johnson" ;
+    ex:age 35 ;
+    ex:birthdate "1990-07-01"^^xsd:date ;
+    ex:enrolledIn ex:course000 .
+
+ex:course000 a ex:Course ;
+    ex:name "Useless course" ;
+    ex:courseCode "CS101" .
+
+ex:departmentUn a ex:Department ;
+    ex:name "Unknown" ;
+    ex:offers ex:course000 .
+
+ex:departmentEm a ex:Department ;
+    ex:name "Empty".
+
+ex:student001 a ex:Student ;
+    ex:name "Alice Johnson" ;
+    ex:age 22 ;
+    ex:birthdate "2003-01-01"^^xsd:date ;
+    ex:enrolledIn ex:course101, ex:course102 .
+
+ex:student002 a ex:Student ;
+    ex:name "Bob Smith" ;
+    ex:age 23 ;
+    ex:birthdate "2002-02-02"^^xsd:date ;
+    ex:enrolledIn ex:course102, ex:course103 .
+
+ex:student003 a ex:Student ;
+    ex:name "Charlie Lee" ;
+    ex:age 21 ;
+    ex:birthdate "2004-03-03"^^xsd:date ;
+    ex:enrolledIn ex:course101, ex:course104 .
+
+ex:student004 a ex:Student ;
+    ex:name "Diana Kim" ;
+    ex:age 24 ;
+    ex:birthdate "2001-04-04"^^xsd:date ;
+    ex:enrolledIn ex:course104, ex:course105 .
+
+ex:professor001 a ex:Professor ;
+    ex:name "Dr. Sarah White" ;
+    ex:teaches ex:course101, ex:course102 ;
+    ex:worksIn ex:departmentCS .
+
+ex:professor002 a ex:Professor ;
+    ex:name "Dr. John Black" ;
+    ex:teaches ex:course103, ex:course104 ;
+    ex:worksIn ex:departmentMath .
+
+ex:professor003 a ex:Professor ;
+    ex:name "Dr. Emily Green" ;
+    ex:teaches ex:course105 ;
+    ex:worksIn ex:departmentBiology .
+
+ex:course101 a ex:Course ;
+    ex:name "Introduction to Computer Science" ;
+    ex:courseCode "CS101" ;
+    ex:hasProfessor ex:professor001 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:course102 a ex:Course ;
+    ex:name "Data Structures" ;
+    ex:courseCode "CS102" ;
+    ex:hasProfessor ex:professor001 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:course103 a ex:Course ;
+    ex:name "Calculus I" ;
+    ex:courseCode "MATH101" ;
+    ex:hasProfessor ex:professor002 ;
+    ex:offeredBy ex:departmentMath .
+
+ex:course104 a ex:Course ;
+    ex:name "Linear Algebra" ;
+    ex:courseCode "MATH102" ;
+    ex:hasProfessor ex:professor002 ;
+    ex:offeredBy ex:departmentMath .
+
+ex:course105 a ex:Course ;
+    ex:name "Biology 101" ;
+    ex:courseCode "BIO101" ;
+    ex:hasProfessor ex:professor003 ;
+    ex:offeredBy ex:departmentBiology .
+
+ex:departmentCS a ex:Department ;
+    ex:name "Computer Science" ;
+    ex:offers ex:course101, ex:course102 .
+
+ex:departmentMath a ex:Department ;
+    ex:name "Mathematics" ;
+    ex:offers ex:course103, ex:course104 .
+
+ex:departmentBiology a ex:Department ;
+    ex:name "Biology" ;
+    ex:offers ex:course105 .
+
+ex:student005 a ex:Student ;
+    ex:name "Eve Martinez" ;
+    ex:age 20 ;
+    ex:birthdate "2005-05-05"^^xsd:date ;
+    ex:enrolledIn ex:course101, ex:course103 .
+
+ex:student006 a ex:Student ;
+    ex:name "Frank Adams" ;
+    ex:age 22 ;
+    ex:birthdate "2003-04-06"^^xsd:date ;
+    ex:enrolledIn ex:course102, ex:course104 .
+
+ex:professor004 a ex:Professor ;
+    ex:name "Dr. Peter Grey" ;
+    ex:teaches ex:course103 ;
+    ex:worksIn ex:departmentMath .
+
+ex:professor005 a ex:Professor ;
+    ex:name "Dr. Laura Brown" ;
+    ex:teaches ex:course101 ;
+    ex:worksIn ex:departmentCS .
+
+ex:course106 a ex:Course ;
+    ex:name "Machine Learning" ;
+    ex:courseCode "CS106" ;
+    ex:hasProfessor ex:professor005 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:departmentPhysics a ex:Department ;
+    ex:name "Physics" ;
+    ex:offers ex:course106 .
+
+ex:student007 a ex:Student ;
+    ex:name "Grace Williams" ;
+    ex:age 23 ;
+    ex:birthdate "2002-03-07"^^xsd:date ;
+    ex:enrolledIn ex:course101, ex:course105 .
+
+ex:student008 a ex:Student ;
+    ex:name "Hannah Clark" ;
+    ex:age 21 ;
+    ex:birthdate "2004-02-08"^^xsd:date ;
+    ex:enrolledIn ex:course102, ex:course104 .
+
+ex:student009 a ex:Student ;
+    ex:name "Ian Turner" ;
+    ex:age 24 ;
+    ex:birthdate "2001-02-09"^^xsd:date ;
+    ex:enrolledIn ex:course103, ex:course105 .
+
+ex:student010 a ex:Student ;
+    ex:name "Jack Evans" ;
+    ex:age 20 ;
+    ex:birthdate "2005-05-10"^^xsd:date ;
+    ex:enrolledIn ex:course101, ex:course106 .
+
+ex:student011 a ex:Student ;
+    ex:name "Kelly Scott" ;
+    ex:age 22 ;
+    ex:birthdate "2003-07-11"^^xsd:date ;
+    ex:enrolledIn ex:course102, ex:course106 .
+
+ex:professor006 a ex:Professor ;
+    ex:name "Dr. Olivia Blue" ;
+    ex:teaches ex:course105 ;
+    ex:worksIn ex:departmentBiology .
+
+ex:professor007 a ex:Professor ;
+    ex:name "Dr. Daniel Silver" ;
+    ex:teaches ex:course106 ;
+    ex:worksIn ex:departmentCS .
+
+ex:professor008 a ex:Professor ;
+    ex:name "Dr. Maria Green" ;
+    ex:teaches ex:course101 ;
+    ex:worksIn ex:departmentCS .
+
+ex:professor009 a ex:Professor ;
+    ex:name "Dr. Thomas White" ;
+    ex:teaches ex:course104 ;
+    ex:worksIn ex:departmentMath .
+
+ex:course107 a ex:Course ;
+    ex:name "Advanced Algorithms" ;
+    ex:courseCode "CS107" ;
+    ex:hasProfessor ex:professor007 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:course108 a ex:Course ;
+    ex:name "Discrete Mathematics" ;
+    ex:courseCode "MATH105" ;
+    ex:hasProfessor ex:professor009 ;
+    ex:offeredBy ex:departmentMath .
+
+ex:course109 a ex:Course ;
+    ex:name "Organic Chemistry" ;
+    ex:courseCode "BIO103" ;
+    ex:hasProfessor ex:professor006 ;
+    ex:offeredBy ex:departmentBiology .
+
+ex:course110 a ex:Course ;
+    ex:name "Quantum Mechanics" ;
+    ex:courseCode "PHYS101" ;
+    ex:hasProfessor ex:professor008 ;
+    ex:offeredBy ex:departmentPhysics .
+
+ex:departmentPhysics a ex:Department ;
+    ex:name "Physics" ;
+    ex:offers ex:course110 .
+
+ex:departmentChemistry a ex:Department ;
+    ex:name "Chemistry" ;
+    ex:offers ex:course109 .
+
+ex:student012 a ex:Student ;
+    ex:name "Liam Harris" ;
+    ex:age 22 ;
+    ex:birthdate "2003-08-15"^^xsd:date ;
+    ex:enrolledIn ex:course106, ex:course108 .
+
+ex:student013 a ex:Student ;
+    ex:name "Mia Walker" ;
+    ex:age 21 ;
+    ex:birthdate "2004-07-16"^^xsd:date ;
+    ex:enrolledIn ex:course107, ex:course109 .
+
+ex:student014 a ex:Student ;
+    ex:name "Noah Young" ;
+    ex:age 23 ;
+    ex:birthdate "2002-05-17"^^xsd:date ;
+    ex:enrolledIn ex:course108, ex:course110 .
+
+ex:student015 a ex:Student ;
+    ex:name "Olivia Hall" ;
+    ex:age 20 ;
+    ex:birthdate "2005-04-18"^^xsd:date ;
+    ex:enrolledIn ex:course107, ex:course110 .
+
+ex:student016 a ex:Student ;
+    ex:name "Peyton Allen" ;
+    ex:age 24 ;
+    ex:birthdate "2001-06-19"^^xsd:date ;
+    ex:enrolledIn ex:course106, ex:course108 .
+
+ex:professor010 a ex:Professor ;
+    ex:name "Dr. Michael Brown" ;
+    ex:teaches ex:course107 ;
+    ex:worksIn ex:departmentCS .
+
+ex:professor011 a ex:Professor ;
+    ex:name "Dr. Sophia Black" ;
+    ex:teaches ex:course108 ;
+    ex:worksIn ex:departmentMath .
+
+ex:professor012 a ex:Professor ;
+    ex:name "Dr. Lucas Grey" ;
+    ex:teaches ex:course109 ;
+    ex:worksIn ex:departmentChemistry .
+
+ex:professor013 a ex:Professor ;
+    ex:name "Dr. Isabel Blue" ;
+    ex:teaches ex:course110 ;
+    ex:worksIn ex:departmentPhysics .
+
+ex:course111 a ex:Course ;
+    ex:name "Deep Learning" ;
+    ex:courseCode "CS111" ;
+    ex:hasProfessor ex:professor010 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:course112 a ex:Course ;
+    ex:name "Advanced Calculus" ;
+    ex:courseCode "MATH106" ;
+    ex:hasProfessor ex:professor011 ;
+    ex:offeredBy ex:departmentMath .
+
+ex:course113 a ex:Course ;
+    ex:name "Physical Chemistry" ;
+    ex:courseCode "CHEM101" ;
+    ex:hasProfessor ex:professor012 ;
+    ex:offeredBy ex:departmentChemistry .
+
+ex:course114 a ex:Course ;
+    ex:name "Astrophysics" ;
+    ex:courseCode "PHYS102" ;
+    ex:hasProfessor ex:professor013 ;
+    ex:offeredBy ex:departmentPhysics .
+
+ex:departmentAstronomy a ex:Department ;
+    ex:name "Astronomy" ;
+    ex:offers ex:course114 .
+
+ex:student017 a ex:Student ;
+    ex:name "Quinn Morgan" ;
+    ex:age 21 ;
+    ex:birthdate "2004-03-21"^^xsd:date ;
+    ex:enrolledIn ex:course111, ex:course113 .
+
+ex:student018 a ex:Student ;
+    ex:name "Riley Carter" ;
+    ex:age 23 ;
+    ex:birthdate "2002-02-22"^^xsd:date ;
+    ex:enrolledIn ex:course112, ex:course114 .
+
+ex:professor014 a ex:Professor ;
+    ex:name "Dr. Chloe Silver" ;
+    ex:teaches ex:course111 ;
+    ex:worksIn ex:departmentCS .
+
+ex:professor015 a ex:Professor ;
+    ex:name "Dr. Adrian Green" ;
+    ex:teaches ex:course112 ;
+    ex:worksIn ex:departmentMath .
+
+
+ex:student019 a ex:Student ;
+    ex:name "Sarah Davis" ;
+    ex:age 22 ;
+    ex:birthdate "2003-01-23"^^xsd:date ;
+    ex:enrolledIn ex:course112, ex:course113 .
+
+ex:student020 a ex:Student ;
+    ex:name "Tyler Lewis" ;
+    ex:age 21 ;
+    ex:birthdate "2004-03-24"^^xsd:date ;
+    ex:enrolledIn ex:course111, ex:course114 .
+
+ex:student021 a ex:Student ;
+    ex:name "Uma Wilson" ;
+    ex:age 23 ;
+    ex:birthdate "2002-06-25"^^xsd:date ;
+    ex:enrolledIn ex:course106, ex:course108 .
+
+ex:student022 a ex:Student ;
+    ex:name "Victor Harris" ;
+    ex:age 24 ;
+    ex:birthdate "2001-04-26"^^xsd:date ;
+    ex:enrolledIn ex:course113, ex:course114 .
+
+ex:student023 a ex:Student ;
+    ex:name "Wendy Martin" ;
+    ex:age 20 ;
+    ex:birthdate "2005-07-27"^^xsd:date ;
+    ex:enrolledIn ex:course107, ex:course111 .
+
+
+ex:professor016 a ex:Professor ;
+    ex:name "Dr. Benjamin Red" ;
+    ex:teaches ex:course112 ;
+    ex:worksIn ex:departmentMath .
+
+ex:professor017 a ex:Professor ;
+    ex:name "Dr. Emily Black" ;
+    ex:teaches ex:course113 ;
+    ex:worksIn ex:departmentChemistry .
+
+ex:professor018 a ex:Professor ;
+    ex:name "Dr. Steven Gold" ;
+    ex:teaches ex:course114 ;
+    ex:worksIn ex:departmentPhysics .
+
+
+ex:course115 a ex:Course ;
+    ex:name "Computer Networks" ;
+    ex:courseCode "CS115" ;
+    ex:hasProfessor ex:professor016 ;
+    ex:offeredBy ex:departmentCS .
+
+ex:course116 a ex:Course ;
+    ex:name "Statistical Methods" ;
+    ex:courseCode "MATH107" ;
+    ex:hasProfessor ex:professor017 ;
+    ex:offeredBy ex:departmentMath .
+
+ex:course117 a ex:Course ;
+    ex:name "Inorganic Chemistry" ;
+    ex:courseCode "CHEM102" ;
+    ex:hasProfessor ex:professor017 ;
+    ex:offeredBy ex:departmentChemistry .
+
+ex:course118 a ex:Course ;
+    ex:name "Particle Physics" ;
+    ex:courseCode "PHYS103" ;
+    ex:hasProfessor ex:professor018 ;
+    ex:offeredBy ex:departmentPhysics .
+
+
+ex:departmentEngineering a ex:Department ;
+    ex:name "Engineering" ;
+    ex:offers ex:course115 .
+
+
+ex:student024 a ex:Student ;
+    ex:name "Xander Perez" ;
+    ex:age 20 ;
+    ex:birthdate "2005-08-19"^^xsd:date ;
+    ex:enrolledIn ex:course116, ex:course117 .
+
+ex:student025 a ex:Student ;
+    ex:name "Yasmine King" ;
+    ex:age 21 ;
+    ex:birthdate "2004-02-18"^^xsd:date ;
+    ex:enrolledIn ex:course115, ex:course118 .
+
+ex:student026 a ex:Student ;
+    ex:name "Zachary Thompson" ;
+    ex:age 22 ;
+    ex:birthdate "2003-02-17"^^xsd:date ;
+    ex:enrolledIn ex:course116, ex:course118 .
+
+ex:student027 a ex:Student ;
+    ex:name "Ava Roberts" ;
+    ex:age 23 ;
+    ex:birthdate "2002-04-27"^^xsd:date ;
+    ex:enrolledIn ex:course117, ex:course118 .
+
+
+ex:professor019 a ex:Professor ;
+    ex:name "Dr. Isaac Blue" ;
+    ex:teaches ex:course115 ;
+    ex:worksIn ex:departmentEngineering .
+
+
+ex:course119 a ex:Course ;
+    ex:name "Software Engineering" ;
+    ex:courseCode "CS119" ;
+    ex:hasProfessor ex:professor019 ;
+    ex:offeredBy ex:departmentEngineering .
+
+ex:student028 a ex:Student ;
+    ex:name "Bella Moore" ;
+    ex:age 22 ;
+    ex:birthdate "2003-06-20"^^xsd:date ;
+    ex:enrolledIn ex:course119, ex:course118 .
+
+ex:professor020 a ex:Professor ;
+    ex:name "Dr. Brian Green" ;
+    ex:teaches ex:course119 ;
+    ex:worksIn ex:departmentEngineering .
+
+ex:course120 a ex:Course ;
+    ex:name "Mobile Development" ;
+    ex:courseCode "CS120" ;
+    ex:hasProfessor ex:professor020 ;
+    ex:offeredBy ex:departmentEngineering .
+
+ex:student029 a ex:Student ;
+    ex:name "Charlie Anderson" ;
+    ex:age 20 ;
+    ex:birthdate "2005-06-26"^^xsd:date ;
+    ex:enrolledIn ex:course119, ex:course120 .
+
+ex:professor021 a ex:Professor ;
+    ex:name "Dr. David Brown" ;
+    ex:teaches ex:course120 ;
+    ex:worksIn ex:departmentEngineering .
+
+ex:course121 a ex:Course ;
+    ex:name "Cloud Computing" ;
+    ex:courseCode "CS121" ;
+    ex:hasProfessor ex:professor021 ;
+    ex:offeredBy ex:departmentEngineering .
+
+ex:student030 a ex:Student ;
+    ex:name "Dylan Walker" ;
+    ex:age 23 ;
+    ex:birthdate "2002-05-29"^^xsd:date ;
+    ex:enrolledIn ex:course121, ex:course120 .
+
+ex:professor022 a ex:Professor ;
+    ex:name "Dr. Emily Stone" ;
+    ex:teaches ex:course121 ;
+    ex:worksIn ex:departmentEngineering .
+
+ex:course122 a ex:Course ;
+    ex:name "Database Systems" ;
+    ex:courseCode "CS122" ;
+    ex:hasProfessor ex:professor022 ;
+    ex:offeredBy ex:departmentEngineering .
+
+ex:student031 a ex:Student ;
+    ex:name "Ethan Wright" ;
+    ex:age 24 ;
+    ex:birthdate "2001-08-08"^^xsd:date ;
+    ex:enrolledIn ex:course122, ex:course121 .
+
+ex:professor023 a ex:Professor ;
+    ex:name "Dr. Fiona Red" ;
+    ex:teaches ex:course122 ;
+    ex:worksIn ex:departmentEngineering .
+
+ex:course123 a ex:Course ;
+    ex:name "Artificial Intelligence" ;
+    ex:courseCode "CS123" ;
+    ex:hasProfessor ex:professor023 ;
+    ex:offeredBy ex:departmentEngineering .
+
+ex:student032 a ex:Student ;
+    ex:name "Gabriel Green" ;
+    ex:age 22 ;
+    ex:birthdate "2003-07-05"^^xsd:date ;
+    ex:enrolledIn ex:course123, ex:course122 .
+
+ex:departmentLaw a ex:Department ;
+    ex:name "Law" ;
+    ex:offers ex:course200 .
+
+ex:departmentMedicine a ex:Department ;
+    ex:name "Medicine" ;
+    ex:offers ex:course201, ex:course202 .
+
+ex:course200 a ex:Course ;
+    ex:name "Law 101" ;
+    ex:courseCode "LAW101" ;
+    ex:offeredBy ex:departmentLaw .
+
+ex:course201 a ex:Course ;
+    ex:name "Human Anatomy" ;
+    ex:courseCode "MED201" ;
+    ex:offeredBy ex:departmentMedicine .
+
+ex:course202 a ex:Course ;
+    ex:name "Pharmacology" ;
+    ex:courseCode "MED202" ;
+    ex:offeredBy ex:departmentMedicine .
+
+ex:professor024 a ex:Professor ; ex:name "Dr. Aiden North" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor025 a ex:Professor ; ex:name "Dr. Bella East" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor026 a ex:Professor ; ex:name "Dr. Carter West" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor027 a ex:Professor ; ex:name "Dr. Dana Stone" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor028 a ex:Professor ; ex:name "Dr. Evan Reed" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor029 a ex:Professor ; ex:name "Dr. Fiona Lake" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor030 a ex:Professor ; ex:name "Dr. George Hill" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor031 a ex:Professor ; ex:name "Dr. Hannah Cole" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor032 a ex:Professor ; ex:name "Dr. Ian Moss" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor033 a ex:Professor ; ex:name "Dr. Julia Park" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor034 a ex:Professor ; ex:name "Dr. Kevin Wood" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor035 a ex:Professor ; ex:name "Dr. Laura Finch" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor036 a ex:Professor ; ex:name "Dr. Mason Price" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor037 a ex:Professor ; ex:name "Dr. Nora Bell" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor038 a ex:Professor ; ex:name "Dr. Owen Gray" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor039 a ex:Professor ; ex:name "Dr. Paige Stone" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor040 a ex:Professor ; ex:name "Dr. Quinn Ray" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor041 a ex:Professor ; ex:name "Dr. Riley Fox" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor042 a ex:Professor ; ex:name "Dr. Stella Moon" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor043 a ex:Professor ; ex:name "Dr. Theo Marsh" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor044 a ex:Professor ; ex:name "Dr. Una Hart" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor045 a ex:Professor ; ex:name "Dr. Victor Lane" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor046 a ex:Professor ; ex:name "Dr. Wendy Snow" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor047 a ex:Professor ; ex:name "Dr. Xavier Dean" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor048 a ex:Professor ; ex:name "Dr. Yara Finch" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor049 a ex:Professor ; ex:name "Dr. Zach King" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor050 a ex:Professor ; ex:name "Dr. Amber Cole" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor051 a ex:Professor ; ex:name "Dr. Blake North" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor052 a ex:Professor ; ex:name "Dr. Cara Young" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor053 a ex:Professor ; ex:name "Dr. Derek Paul" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor054 a ex:Professor ; ex:name "Dr. Elise Grant" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor055 a ex:Professor ; ex:name "Dr. Felix Ray" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor056 a ex:Professor ; ex:name "Dr. Gina Lord" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor057 a ex:Professor ; ex:name "Dr. Hugo West" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+ex:professor058 a ex:Professor ; ex:name "Dr. Iris Bell" ; ex:teaches ex:course201 ; ex:worksIn ex:departmentMedicine .
+ex:professor059 a ex:Professor ; ex:name "Dr. Joel Lake" ; ex:teaches ex:course202 ; ex:worksIn ex:departmentMedicine .
+ex:professor060 a ex:Professor ; ex:name "Dr. Kara Moss" ; ex:teaches ex:course200 ; ex:worksIn ex:departmentLaw .
+
+ex:student033 a ex:Student ; ex:name "Lucas Adams" ; ex:age 20 ; ex:birthdate "2005-01-02"^^xsd:date ; ex:enrolledIn ex:course101 .
+ex:student034 a ex:Student ; ex:name "Zoe Bennett" ; ex:age 21 ; ex:birthdate "2004-02-03"^^xsd:date ; ex:enrolledIn ex:course102 .
+ex:student035 a ex:Student ; ex:name "Max Carter" ; ex:age 22 ; ex:birthdate "2003-03-04"^^xsd:date ; ex:enrolledIn ex:course103 .
+ex:student036 a ex:Student ; ex:name "Sophia Daniels" ; ex:age 23 ; ex:birthdate "2002-04-05"^^xsd:date ; ex:enrolledIn ex:course104 .
+ex:student037 a ex:Student ; ex:name "Oliver Evans" ; ex:age 20 ; ex:birthdate "2005-05-06"^^xsd:date ; ex:enrolledIn ex:course105 .
+ex:student038 a ex:Student ; ex:name "Ava Foster" ; ex:age 21 ; ex:birthdate "2004-06-07"^^xsd:date ; ex:enrolledIn ex:course106 .
+ex:student039 a ex:Student ; ex:name "Ethan Grant" ; ex:age 22 ; ex:birthdate "2003-07-08"^^xsd:date ; ex:enrolledIn ex:course107 .
+ex:student040 a ex:Student ; ex:name "Lily Harris" ; ex:age 23 ; ex:birthdate "2002-08-09"^^xsd:date ; ex:enrolledIn ex:course108 .
+ex:student041 a ex:Student ; ex:name "Nathaniel Johnson" ; ex:age 20 ; ex:birthdate "2005-09-10"^^xsd:date ; ex:enrolledIn ex:course109 .
+ex:student042 a ex:Student ; ex:name "Mia King" ; ex:age 21 ; ex:birthdate "2004-10-11"^^xsd:date ; ex:enrolledIn ex:course110 .
+ex:student043 a ex:Student ; ex:name "Samuel Lee" ; ex:age 22 ; ex:birthdate "2003-11-12"^^xsd:date ; ex:enrolledIn ex:course111 .
+ex:student044 a ex:Student ; ex:name "Chloe Martinez" ; ex:age 23 ; ex:birthdate "2002-12-13"^^xsd:date ; ex:enrolledIn ex:course112 .
+ex:student045 a ex:Student ; ex:name "Gabriel Nguyen" ; ex:age 20 ; ex:birthdate "2005-01-14"^^xsd:date ; ex:enrolledIn ex:course113 .
+ex:student046 a ex:Student ; ex:name "Isabelle O'Connor" ; ex:age 21 ; ex:birthdate "2004-02-15"^^xsd:date ; ex:enrolledIn ex:course114 .
+ex:student047 a ex:Student ; ex:name "Alexander Perez" ; ex:age 22 ; ex:birthdate "2003-03-16"^^xsd:date ; ex:enrolledIn ex:course115 .
+ex:student048 a ex:Student ; ex:name "Amelia Quinn" ; ex:age 23 ; ex:birthdate "2002-04-17"^^xsd:date ; ex:enrolledIn ex:course116 .
+ex:student049 a ex:Student ; ex:name "Benjamin Ross" ; ex:age 20 ; ex:birthdate "2005-05-18"^^xsd:date ; ex:enrolledIn ex:course117 .
+ex:student050 a ex:Student ; ex:name "Charlotte Smith" ; ex:age 21 ; ex:birthdate "2004-06-19"^^xsd:date ; ex:enrolledIn ex:course118 .
+ex:student051 a ex:Student ; ex:name "Daniel Turner" ; ex:age 22 ; ex:birthdate "2003-07-20"^^xsd:date ; ex:enrolledIn ex:course119 .
+ex:student052 a ex:Student ; ex:name "Ella Underwood" ; ex:age 23 ; ex:birthdate "2002-08-21"^^xsd:date ; ex:enrolledIn ex:course120 .
+ex:student053 a ex:Student ; ex:name "Elijah Vargas" ; ex:age 20 ; ex:birthdate "2005-09-22"^^xsd:date ; ex:enrolledIn ex:course121 .
+ex:student054 a ex:Student ; ex:name "Grace Walters" ; ex:age 21 ; ex:birthdate "2004-10-23"^^xsd:date ; ex:enrolledIn ex:course122 .
+ex:student055 a ex:Student ; ex:name "Henry Xu" ; ex:age 22 ; ex:birthdate "2003-11-24"^^xsd:date ; ex:enrolledIn ex:course123 .
+ex:student056 a ex:Student ; ex:name "Julia Young" ; ex:age 23 ; ex:birthdate "2002-12-25"^^xsd:date ; ex:enrolledIn ex:course101 .
+ex:student057 a ex:Student ; ex:name "Jack Zimmerman" ; ex:age 20 ; ex:birthdate "2005-01-26"^^xsd:date ; ex:enrolledIn ex:course102 .
+ex:student058 a ex:Student ; ex:name "Karen Allen" ; ex:age 21 ; ex:birthdate "2004-02-27"^^xsd:date ; ex:enrolledIn ex:course103 .
+ex:student059 a ex:Student ; ex:name "Liam Brooks" ; ex:age 22 ; ex:birthdate "2003-03-28"^^xsd:date ; ex:enrolledIn ex:course104 .
+ex:student060 a ex:Student ; ex:name "Olivia Cruz" ; ex:age 23 ; ex:birthdate "2002-04-29"^^xsd:date ; ex:enrolledIn ex:course105 .
+ex:student061 a ex:Student ; ex:name "Noah Diaz" ; ex:age 20 ; ex:birthdate "2005-05-30"^^xsd:date ; ex:enrolledIn ex:course106 .
+ex:student062 a ex:Student ; ex:name "Penelope Evans" ; ex:age 21 ; ex:birthdate "2004-06-01"^^xsd:date ; ex:enrolledIn ex:course107 .
+ex:student063 a ex:Student ; ex:name "Quinn Foster" ; ex:age 22 ; ex:birthdate "2003-07-02"^^xsd:date ; ex:enrolledIn ex:course108 .
+ex:student064 a ex:Student ; ex:name "Ruby Grant" ; ex:age 23 ; ex:birthdate "2002-08-03"^^xsd:date ; ex:enrolledIn ex:course109 .
+ex:student065 a ex:Student ; ex:name "Samuel Hwang" ; ex:age 20 ; ex:birthdate "2005-09-04"^^xsd:date ; ex:enrolledIn ex:course110 .
+ex:student066 a ex:Student ; ex:name "Tessa Ibarra" ; ex:age 21 ; ex:birthdate "2004-10-05"^^xsd:date ; ex:enrolledIn ex:course111 .
+ex:student067 a ex:Student ; ex:name "Ursula Johnson" ; ex:age 22 ; ex:birthdate "2003-11-06"^^xsd:date ; ex:enrolledIn ex:course112 .
+ex:student068 a ex:Student ; ex:name "Victor Kim" ; ex:age 23 ; ex:birthdate "2002-12-07"^^xsd:date ; ex:enrolledIn ex:course113 .
+ex:student069 a ex:Student ; ex:name "Wendy Liu" ; ex:age 20 ; ex:birthdate "2005-01-08"^^xsd:date ; ex:enrolledIn ex:course114 .
+ex:student070 a ex:Student ; ex:name "Xavier Moore" ; ex:age 21 ; ex:birthdate "2004-02-09"^^xsd:date ; ex:enrolledIn ex:course115 .
+ex:student071 a ex:Student ; ex:name "Yasmine Nguyen" ; ex:age 22 ; ex:birthdate "2003-03-10"^^xsd:date ; ex:enrolledIn ex:course116 .
+ex:student072 a ex:Student ; ex:name "Zackary Oliver" ; ex:age 23 ; ex:birthdate "2002-04-11"^^xsd:date ; ex:enrolledIn ex:course117 .
+ex:student073 a ex:Student ; ex:name "Amelia Patel" ; ex:age 20 ; ex:birthdate "2005-05-12"^^xsd:date ; ex:enrolledIn ex:course118 .
+ex:student074 a ex:Student ; ex:name "Blake Quinn" ; ex:age 21 ; ex:birthdate "2004-06-13"^^xsd:date ; ex:enrolledIn ex:course119 .
+ex:student075 a ex:Student ; ex:name "Caroline Rivera" ; ex:age 22 ; ex:birthdate "2003-07-14"^^xsd:date ; ex:enrolledIn ex:course120 .
+ex:student076 a ex:Student ; ex:name "Derek Sullivan" ; ex:age 23 ; ex:birthdate "2002-08-15"^^xsd:date ; ex:enrolledIn ex:course121 .
+ex:student077 a ex:Student ; ex:name "Eva Tan" ; ex:age 20 ; ex:birthdate "2005-09-16"^^xsd:date ; ex:enrolledIn ex:course122 .
+ex:student078 a ex:Student ; ex:name "Felix Uribe" ; ex:age 21 ; ex:birthdate "2004-10-17"^^xsd:date ; ex:enrolledIn ex:course123 .
+ex:student079 a ex:Student ; ex:name "Georgia Vance" ; ex:age 22 ; ex:birthdate "2003-11-18"^^xsd:date ; ex:enrolledIn ex:course101 .
+ex:student080 a ex:Student ; ex:name "Harrison White" ; ex:age 23 ; ex:birthdate "2002-12-19"^^xsd:date ; ex:enrolledIn ex:course102 .
+ex:student081 a ex:Student ; ex:name "Isla Xu" ; ex:age 20 ; ex:birthdate "2005-01-20"^^xsd:date ; ex:enrolledIn ex:course103 .
+ex:student082 a ex:Student ; ex:name "Julian Yates" ; ex:age 21 ; ex:birthdate "2004-02-21"^^xsd:date ; ex:enrolledIn ex:course104 .
+ex:student083 a ex:Student ; ex:name "Kaitlyn Zhang" ; ex:age 22 ; ex:birthdate "2003-03-22"^^xsd:date ; ex:enrolledIn ex:course105 .
+ex:student084 a ex:Student ; ex:name "Leo Adams" ; ex:age 23 ; ex:birthdate "2002-04-23"^^xsd:date ; ex:enrolledIn ex:course106 .
+ex:student085 a ex:Student ; ex:name "Maya Bishop" ; ex:age 20 ; ex:birthdate "2005-05-24"^^xsd:date ; ex:enrolledIn ex:course107 .
+ex:student086 a ex:Student ; ex:name "Nate Clark" ; ex:age 21 ; ex:birthdate "2004-06-25"^^xsd:date ; ex:enrolledIn ex:course108 .
+ex:student087 a ex:Student ; ex:name "Olivia Davis" ; ex:age 22 ; ex:birthdate "2003-07-26"^^xsd:date ; ex:enrolledIn ex:course109 .
+ex:student088 a ex:Student ; ex:name "Paul Evans" ; ex:age 23 ; ex:birthdate "2002-08-27"^^xsd:date ; ex:enrolledIn ex:course110 .
+ex:student089 a ex:Student ; ex:name "Quinn Foster" ; ex:age 20 ; ex:birthdate "2005-09-28"^^xsd:date ; ex:enrolledIn ex:course111 .
+ex:student090 a ex:Student ; ex:name "Rosa Garcia" ; ex:age 21 ; ex:birthdate "2004-10-29"^^xsd:date ; ex:enrolledIn ex:course112 .
+ex:student091 a ex:Student ; ex:name "Steve Harris" ; ex:age 22 ; ex:birthdate "2003-11-30"^^xsd:date ; ex:enrolledIn ex:course113 .
+ex:student092 a ex:Student ; ex:name "Tina Irwin" ; ex:age 23 ; ex:birthdate "2002-12-01"^^xsd:date ; ex:enrolledIn ex:course114 .
+ex:student093 a ex:Student ; ex:name "Ursula James" ; ex:age 20 ; ex:birthdate "2005-01-02"^^xsd:date ; ex:enrolledIn ex:course115 .
+ex:student094 a ex:Student ; ex:name "Victor King" ; ex:age 21 ; ex:birthdate "2004-02-03"^^xsd:date ; ex:enrolledIn ex:course116 .
+ex:student095 a ex:Student ; ex:name "Wanda Long" ; ex:age 22 ; ex:birthdate "2003-03-04"^^xsd:date ; ex:enrolledIn ex:course117 .
+ex:student096 a ex:Student ; ex:name "Xavier Matthews" ; ex:age 23 ; ex:birthdate "2002-04-05"^^xsd:date ; ex:enrolledIn ex:course118 .
+ex:student097 a ex:Student ; ex:name "Yara Newton" ; ex:age 20 ; ex:birthdate "2005-05-06"^^xsd:date ; ex:enrolledIn ex:course119 .
+ex:student098 a ex:Student ; ex:name "Zachary Ortiz" ; ex:age 21 ; ex:birthdate "2004-06-07"^^xsd:date ; ex:enrolledIn ex:course120 .
+ex:student099 a ex:Student ; ex:name "Alice Park" ; ex:age 22 ; ex:birthdate "2003-07-08"^^xsd:date ; ex:enrolledIn ex:course121 .
+ex:student100 a ex:Student ; ex:name "Nora Quinn" ; ex:age 23 ; ex:birthdate "2002-08-09"^^xsd:date ; ex:enrolledIn ex:course122 .
+ex:student101 a ex:Student ; ex:name "Owen Rogers" ; ex:age 20 ; ex:birthdate "2005-09-10"^^xsd:date ; ex:enrolledIn ex:course123 .
+ex:student102 a ex:Student ; ex:name "Piper Shaw" ; ex:age 21 ; ex:birthdate "2004-10-11"^^xsd:date ; ex:enrolledIn ex:course101 .
+ex:student103 a ex:Student ; ex:name "Quinn Taylor" ; ex:age 22 ; ex:birthdate "2003-11-12"^^xsd:date ; ex:enrolledIn ex:course102 .
+ex:student104 a ex:Student ; ex:name "Riley Underwood" ; ex:age 23 ; ex:birthdate "2002-12-13"^^xsd:date ; ex:enrolledIn ex:course103 .
+ex:student105 a ex:Student ; ex:name "Sarah Valdez" ; ex:age 20 ; ex:birthdate "2005-01-14"^^xsd:date ; ex:enrolledIn ex:course104 .
+ex:student106 a ex:Student ; ex:name "Thomas Wallace" ; ex:age 21 ; ex:birthdate "2004-02-15"^^xsd:date ; ex:enrolledIn ex:course105 .
+ex:student107 a ex:Student ; ex:name "Ursula Xavier" ; ex:age 22 ; ex:birthdate "2003-03-16"^^xsd:date ; ex:enrolledIn ex:course106 .
+ex:student108 a ex:Student ; ex:name "Vanessa Young" ; ex:age 23 ; ex:birthdate "2002-04-17"^^xsd:date ; ex:enrolledIn ex:course107 .
