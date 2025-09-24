@@ -4,6 +4,7 @@ import urllib.request
 import urllib.parse
 from api.interfaces.data_source_plugin import DataSourcePlugin
 from api.models.graph import Graph
+from dateutil import parser as dateparser
 
 
 class JsonDataSourcePlugin(DataSourcePlugin):
@@ -80,6 +81,11 @@ class JsonDataSourcePlugin(DataSourcePlugin):
             attributes = {}
             for key, value in node_data.items():
                 if key not in [id_field, children_field, parent_field]:
+                    if isinstance(value, str):
+                        try:
+                            value = dateparser.parse(value)
+                        except (ValueError, OverflowError):
+                            pass
                     attributes[key] = value
             
             # Add node to graph
