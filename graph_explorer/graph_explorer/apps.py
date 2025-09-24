@@ -12,10 +12,6 @@ class GraphExplorerConfig(AppConfig):
 
     plugin_service: PluginService
     workspace_service: WorkspaceService
-    current_visualization_plugin = None
-    current_graph = Graph([], [])
-    filtered_graph = Graph([], [])
-    applied_filters = []
 
     def ready(self):
         self.plugin_service = PluginService()
