@@ -22,7 +22,6 @@
                         <option value="{{ plugin.id }}" {% if plugin.id == current_data_source_id %}selected{% endif %}>{{ plugin.name }}</option>
                     {% endfor %}
                 </select>
-                <button id="new-source-button">New</button>
             </label>
         </div>
 
@@ -44,7 +43,7 @@
                     </option>
                 {% endfor %}
             </select>
-    <button onclick="openModal()">Save current workspace</button>
+    <button onclick="openModal()">Rename this workspace</button>
      <a href="{% url 'new_workspace' %}">
         <button type="button">Add new workspace</button>
     </a>
@@ -136,7 +135,7 @@
             {% csrf_token %}
             <input type="text" name="name" placeholder="Optional name..." style="width: 100%; padding: 0.5rem;"/>
             <div style="text-align: right; margin-top: 1rem;">
-                <button type="submit">Create</button>
+                <button type="submit">Rename</button>
             </div>
         </form>
     </div>
