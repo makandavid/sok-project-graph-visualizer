@@ -3,7 +3,8 @@ name = "json_data_source"
 version = "0.1"
 description = "JSON Data Source Plugin"
 dependencies = [
-    "graph_exploerer_api==0.1"
+    "graph_exploerer_api==0.1",
+    "python-dateutil"
 ]
 
 [project.entry-points."core.data_source"]
