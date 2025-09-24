@@ -9,10 +9,14 @@ def search(g: Graph, text: str) -> Graph:
         if text.strip().lower() in str(node.id).strip().lower():
             result.add_node(node.id, node.attributes)
             continue
-        for val in node.attributes.values():
+        for attr, val in node.attributes.items():
             if text.strip().lower() in str(val).strip().lower():
                 result.add_node(node.id, node.attributes)
                 break
+            elif text.strip().lower() in str(attr).strip().lower():
+                result.add_node(node.id, node.attributes)
+                break
+
     for link in g.links:
         result.add_link(link.id, link.source, link.target)
     
