@@ -66,7 +66,7 @@ class JsonDataSourcePlugin(DataSourcePlugin):
                 return
             
             # Extract node ID
-            node_id = node_data.get(id_field)
+            node_id = str(node_data.get(id_field))
             if not node_id:
                 return
             
