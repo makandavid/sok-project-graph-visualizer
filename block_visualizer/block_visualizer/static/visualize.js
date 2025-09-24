@@ -1,8 +1,8 @@
 var colors = d3.scaleOrdinal(d3.schemeCategory10);
-var svg = d3.select("svg#mainview");
+var svgMainView = d3.select("svg#mainview");
 var svgBirdView = d3.select("svg#birdview");
-var width = +svg.node().getBoundingClientRect().width;
-var height = +svg.node().getBoundingClientRect().height;
+var width = +svgMainView.node().getBoundingClientRect().width;
+var height = +svgMainView.node().getBoundingClientRect().height;
 
 var node, link, mini_node, mini_link;
 
@@ -12,10 +12,10 @@ var viewport = svgBirdView.append("rect")
     .attr("stroke", "red")
     .attr("stroke-width", 2);
 
-var container = svg.append("g")
+var container = svgMainView.append("g")
     .attr("transform", "translate(0,0)scale(1,1)");
 
-svg.call(d3.zoom()
+svgMainView.call(d3.zoom()
     .scaleExtent([1, 10])
     .on("zoom", function() {
         container.attr("transform", d3.event.transform)
@@ -87,7 +87,7 @@ function update(links, nodes) {
         .enter()
         .append("g")
         .attr("class", "node")
-        .attr('id', d => d.id)
+        .attr('id', d => "node"+d.id)
         .call(d3.drag().on("start", dragstarted).on("drag", dragged))
 
     mini_node = svgBirdView.selectAll(".node")
@@ -95,7 +95,7 @@ function update(links, nodes) {
         .enter()
         .append("g")
         .attr("class", "node")
-        .attr("id", d => d.id)
+        .attr("id", d => "mini"+d.id)
 
     node.append("rect")
         .style("fill", "lightblue")
@@ -177,6 +177,13 @@ function update(links, nodes) {
     simulation.force("link").links(links);
 
 
+    node.on("click", function(d) {
+        focusNode(d.id);
+    });
+
+    mini_node.on("click", function(d) {
+        focusNode(d.id);
+    });
 }
 
 function ticked() {
@@ -207,4 +214,52 @@ function dragstarted(d) {
 function dragged(d) {
     d.fx = d3.event.x;
     d.fy = d3.event.y;
+}
+
+var getAncestorPath = function(nodeId) {
+    let path = [];
+    let current = nodeId;
+    let parent;
+
+    while ((parent = TreeView.graph.links.find(l => l.target.id == current)?.source)) {
+        path.unshift(parent.id);
+        current = parent.id;
+    }
+    path.push(nodeId);
+    return path;
+}
+
+var focusNode = function(nodeId, fromTreeView=false) {
+    container.selectAll(".selected").classed("selected", false);
+    svgBirdView.selectAll(".selected").classed("selected", false);
+    document.querySelectorAll("#treeview .selected").forEach(el => {
+        el.classList.remove("selected");
+    });
+    container.select("#node"+nodeId).classed("selected", true);
+    svgBirdView.select("#mini"+nodeId).classed("selected", true);
+    console.log(container.select("#node"+nodeId))
+    console.log(svgBirdView.select("#node"+nodeId))
+    const path = getAncestorPath(nodeId);
+
+    if (!fromTreeView) {
+        path.forEach(id => {
+            const treeEl = document.getElementById("tree" + id);
+            if (treeEl) {
+                if (!treeEl.querySelector(".nested")) {
+                    TreeView.updateTree(treeEl); 
+                }
+                const nested = treeEl.querySelector(".nested");
+                if (nested) nested.classList.add("active");
+    
+                const arrow = treeEl.querySelector(".arrow");
+                if (arrow) arrow.classList.add("arrow-down");
+            }
+        });
+    }
+
+    const finalEl = document.getElementById("tree" + nodeId);
+    if (finalEl) {
+        finalEl.classList.add("selected");
+        finalEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
 }
