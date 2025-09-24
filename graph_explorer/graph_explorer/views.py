@@ -180,11 +180,6 @@ def cli_execute(request: HttpRequest, workspace_id: str):
     if request.method == "POST":
         data = json.loads(request.body)
         command_str = data.get("command", "")
-        app_config = get_config()
-        g = app_config.current_graph
-
-        data = json.loads(request.body)
-        command_str = data.get("command", "")
         
         g = Graph.from_dict(workspace_data['filtered_graph_data'])
         
