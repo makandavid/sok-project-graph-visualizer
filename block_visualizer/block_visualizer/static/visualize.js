@@ -219,15 +219,25 @@ function dragged(d) {
 var getAncestorPath = function(nodeId) {
     let path = [];
     let current = nodeId;
-    let parent;
+    let visited = new Set();
 
-    while ((parent = TreeView.graph.links.find(l => l.target.id == current)?.source)) {
+    while (true) {
+        if (visited.has(current)) {
+            break;
+        }
+        visited.add(current);
+
+        let link = TreeView.graph.links.find(l => l.target.id == current);
+        if (!link || !link.source) break;
+
+        let parent = link.source;
         path.unshift(parent.id);
         current = parent.id;
     }
+
     path.push(nodeId);
     return path;
-}
+};
 
 var focusNode = function(nodeId, fromTreeView=false) {
     container.selectAll(".selected").classed("selected", false);
@@ -237,9 +247,9 @@ var focusNode = function(nodeId, fromTreeView=false) {
     });
     container.select("#node"+nodeId).classed("selected", true);
     svgBirdView.select("#mini"+nodeId).classed("selected", true);
-    const path = getAncestorPath(nodeId);
-
+    
     if (!fromTreeView) {
+        const path = getAncestorPath(nodeId);
         path.forEach(id => {
             const treeEl = document.getElementById("tree" + id);
             if (treeEl) {
