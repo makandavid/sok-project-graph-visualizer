@@ -5,3 +5,4 @@ Django==5.1.3
 ./block_visualizer
 ./json_data_source
 ./rdf_data_source
+./xml_data_source

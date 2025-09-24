@@ -1,0 +1,13 @@
+[project]
+name = "xml_data_source"
+version = "0.1"
+description = "XML Data Source Plugin"
+dependencies = [
+    "graph_exploerer_api==0.1"
+]
+
+[project.entry-points."core.data_source"]
+xml_data_source = "xml_data_source:XmlDataSourcePlugin"
+
+[tool.setuptools]
+py-modules = ["xml_data_source"]
