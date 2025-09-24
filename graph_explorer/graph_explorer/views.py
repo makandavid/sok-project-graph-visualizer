@@ -7,7 +7,6 @@ from django.apps import apps
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 
-from api.models.graph import Graph
 from api.services.search_filter import search, filter
 from core.use_cases.const import VISUALIZER_GROUP, DATASOURCE_GROUP
 from .cli import handle_command
@@ -35,35 +34,13 @@ def new_workspace(request: HttpRequest):
     return redirect('index', workspace_id=ws.id)
 
 
-def create_fallback_graph():
-    """Create fallback graph data when no data source plugins are available"""
-    g = Graph([], [])
-    g.add_node("0", {'a': 23, 'b': 56})
-    g.add_node("1", {'a': 65, 'b': 47})
-    g.add_node("2", {'a': 54, 'b': 45})
-    g.add_node("3", {'a': 21, 'b': 21})
-    g.add_node("4", {'a': 69, 'b': 56})
-    g.add_node("5", {'a': 99, 'b': 96, 'c': 23})
-    g.add_node("6", {'a': 100, 'b': 56, 'c': 200, 'd': 300, 'e': 267})
-    g.add_node("7", {'a': 3})
-    g.add_link("0", "1", "2")
-    g.add_link("1", "1", "4")
-    g.add_link("2", "1", "3")
-    g.add_link("3", "2", "4")
-    g.add_link("4", "3", "2")
-    g.add_link("5", "3", "6")
-    g.add_link("6", "3", "5")
-    g.add_link("7", "4", "0")
-    return g
-
-
 def get_context_data(request: HttpRequest, workspace: 'Workspace'):
     """Prepares the context data for the index.html template."""
     plugins = get_plugins()
     current_visualizer_id = getattr(workspace, 'current_visualizer_id', 'simple_visualizer')
     selected_visualizer = next((p for p in plugins.get(VISUALIZER_GROUP, []) if p.id() == current_visualizer_id), None)
-    
-    g_filtered = Graph.from_dict(workspace.filtered_graph_data)
+    ws_service = get_workspace_service()
+    g_filtered = ws_service.get_graph_from_dict()
     vis_script = selected_visualizer.visualize(g_filtered) if selected_visualizer else ""
     
     plugin_extensions = {p.id(): p.get_supported_extensions() for p in plugins.get(DATASOURCE_GROUP, [])}
@@ -85,7 +62,7 @@ def index(request: HttpRequest, workspace_id: str = None):
     
     ws = ws_service.select_workspace(workspace_id) if workspace_id else ws_service.get_current_workspace()
     if not ws:
-        ws = ws_service.create_workspace(graph=create_fallback_graph(), name=f"Workspace #{len(ws_service.get_workspaces()) + 1}")
+        ws = ws_service.create_workspace(graph=ws_service.create_fallback_graph(), name=f"Workspace #{len(ws_service.get_workspaces()) + 1}")
     
     context = get_context_data(request, ws)
     return render(request, "index.html", context)
@@ -145,7 +122,7 @@ def search_filter(request: HttpRequest, workspace_id: str):
     if not ws:
         ws = ws_service.create_workspace(graph=create_fallback_graph())
 
-    g = Graph.from_dict(ws.filtered_graph_data)
+    g = ws_service.get_graph_from_dict()
     filter_str = ""
     error_message = None
 
@@ -208,7 +185,7 @@ def cli_execute(request: HttpRequest, workspace_id: str):
     data = json.loads(request.body)
     command_str = data.get("command", "")
     
-    g = Graph.from_dict(ws.filtered_graph_data)
+    g = ws_service.get_graph_from_dict()
     
     try:
         result = handle_command(g, command_str)
