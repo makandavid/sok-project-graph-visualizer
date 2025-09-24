@@ -1,6 +1,7 @@
 from typing import List, Optional
 from api.models.graph import Graph
 from api.models.workspace import Workspace
+from api.services.search_filter import search, filter
 
 class WorkspaceService:
     def __init__(self):
@@ -8,6 +9,10 @@ class WorkspaceService:
         self.current_workspace: Optional[Workspace] = None
 
     def create_workspace(self, graph: Optional[Graph] = None, name: Optional[str] = None) -> Workspace:
+        if graph is None:
+            graph = self.create_fallback_graph()
+        if name is None:
+            name = f"Workspace #{len(self.workspaces) + 1}"
         ws = Workspace(graph=graph, name=name)
         self.workspaces.append(ws)
         self.current_workspace = ws
@@ -34,6 +39,26 @@ class WorkspaceService:
 
     def get_graph_from_dict(self) -> Graph:
         return Graph.from_dict(self.current_workspace.filtered_graph_data)
+    
+
+    def search_graph(self, query: str) -> Graph:
+        g = self.get_graph_from_dict()
+        g = search(g, query)
+        self.current_workspace.filtered_graph_data = g.to_dict()
+        self.current_workspace.applied_filters.append(query)
+        return g
+
+    def filter_graph(self, attr: str, op: str, val: str) -> Graph:
+        g = self.get_graph_from_dict()
+        ops = {'eq': '==', 'le': '<=', 'ge': '>=', 'lt': '<', 'gt': '>', 'ne': '!='}
+        if op not in ops:
+            raise ValueError(f"Unknown operator: {op}")
+        g = filter(g, attr, ops[op], val)
+        filter_str = f"{attr} {ops[op]} {val}"
+        self.current_workspace.filtered_graph_data = g.to_dict()
+        self.current_workspace.applied_filters.append(filter_str)
+        return g
+
     
     def create_fallback_graph(self) -> Graph:
         g = Graph([], [])

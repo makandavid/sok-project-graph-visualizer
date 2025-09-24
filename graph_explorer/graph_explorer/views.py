@@ -7,7 +7,6 @@ from django.apps import apps
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 
-from api.services.search_filter import search, filter
 from core.use_cases.const import VISUALIZER_GROUP, DATASOURCE_GROUP
 from .cli import handle_command
 
@@ -29,8 +28,7 @@ def get_workspace_service():
 def new_workspace(request: HttpRequest):
     """Creates a new workspace with auto-generated name and redirects to it."""
     ws_service = get_workspace_service()
-    ws = ws_service.create_workspace(graph=create_fallback_graph(),
-                                     name=f"Workspace #{len(ws_service.get_workspaces()) + 1}")
+    ws = ws_service.create_workspace()
     return redirect('index', workspace_id=ws.id)
 
 
@@ -62,7 +60,7 @@ def index(request: HttpRequest, workspace_id: str = None):
     
     ws = ws_service.select_workspace(workspace_id) if workspace_id else ws_service.get_current_workspace()
     if not ws:
-        ws = ws_service.create_workspace(graph=ws_service.create_fallback_graph(), name=f"Workspace #{len(ws_service.get_workspaces()) + 1}")
+        ws = ws_service.create_workspace()
     
     context = get_context_data(request, ws)
     return render(request, "index.html", context)
@@ -120,7 +118,7 @@ def search_filter(request: HttpRequest, workspace_id: str):
     ws_service = get_workspace_service()
     ws = ws_service.select_workspace(workspace_id)
     if not ws:
-        ws = ws_service.create_workspace(graph=create_fallback_graph())
+        ws = ws_service.create_workspace()
 
     g = ws_service.get_graph_from_dict()
     filter_str = ""
@@ -128,14 +126,13 @@ def search_filter(request: HttpRequest, workspace_id: str):
 
     try:
         if "search" in request.GET:
-            g = search(g, request.GET["search"])
             filter_str = request.GET["search"]
+            ws_service.search_graph(filter_str)
         else:
-            ops = {'eq': '==', 'le': '<=', 'ge': '>=', 'lt': '<', 'gt': '>', 'ne': '!='}
-            g = filter(g, request.GET["attr"], ops[request.GET["op"]], request.GET["val"])
-            filter_str = f"{request.GET['attr']} {ops[request.GET['op']]} {request.GET['val']}"
-        ws.filtered_graph_data = g.to_dict()
-        ws.applied_filters.append(filter_str)
+            attr = request.GET["attr"]
+            op = request.GET["op"] 
+            val = request.GET["val"]
+            ws_service.filter_graph(attr, op, val)
     except Exception as e:
         error_message = f"Filter error: {e}"
 
@@ -207,14 +204,18 @@ def rename_workspace(request: HttpRequest, workspace_id: str):
         return JsonResponse({"success": False, "error": "Invalid request method."}, status=405)
 
     ws_service = get_workspace_service()
-    ws = ws_service.select_workspace(workspace_id)
-    if not ws:
-        return JsonResponse({"success": False, "error": "Workspace not found."}, status=404)
 
     new_name = request.POST.get('name', '').strip()
     if not new_name:
+        ws = ws_service.select_workspace(workspace_id)
+        if not ws:
+            return JsonResponse({"success": False, "error": "Workspace not found."}, status=404)
         count = len(ws_service.get_workspaces())
         new_name = f"Workspace #{count}"
-        
-    ws.name = new_name
+
+    success = ws_service.rename_workspace(workspace_id, new_name)
+    if not success:
+        return JsonResponse({"success": False, "error": "Workspace not found."}, status=404)
+
     return redirect('index', workspace_id=workspace_id)
+
