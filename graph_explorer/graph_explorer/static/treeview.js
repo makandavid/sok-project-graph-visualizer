@@ -1,4 +1,4 @@
-window.initializeTreeview = function(graph) {
+var initializeTreeview = function(graph) {
     const treeviewElement = document.getElementById("treeview");
     treeviewElement.innerHTML = ""; // clear old tree
 
@@ -42,10 +42,7 @@ window.initializeTreeview = function(graph) {
     }
 
     function listener() {
-        container.selectAll(".selected").attr("class", "node");
-        svgBirdView.selectAll(".selected").attr("class", "node");
-        document.getElementById(this.parentElement.id.substring(4)).setAttribute("class", "node selected");
-        svgBirdView.select("#mini" + this.parentElement.id.substring(4)).attr("class", "node selected");
+        focusNode(this.parentElement.id.substring(4), true)
         if (!this.parentElement.querySelector(".nested"))
             updateTree(this.parentElement);
         if (this.parentElement.querySelector(".nested")) {
@@ -71,4 +68,9 @@ window.initializeTreeview = function(graph) {
             ul.appendChild(li);
         });
     }
+
+    window.TreeView = {
+        updateTree,
+        graph
+    };
 }
