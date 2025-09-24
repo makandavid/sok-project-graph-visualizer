@@ -1,27 +1,21 @@
-from django.apps import AppConfig
-import pkg_resources
-
 from api.models.graph import Graph
+from django.apps import AppConfig
+
+from core.use_cases.const import VISUALIZER_GROUP, DATASOURCE_GROUP
+from core.use_cases.plugin_recognition import PluginService
 
 
 class GraphExplorerConfig(AppConfig):
     name = 'graph_explorer'
     label = 'graph_explorer'
-    visualization_plugins = []
-    data_source_plugins = []
+
+    plugin_service: PluginService
+    current_visualization_plugin = None
     current_graph = Graph([], [])
+    filtered_graph = Graph([], [])
+    applied_filters = []
 
     def ready(self):
-        print("Visualizer plugins:")
-        for ep in pkg_resources.iter_entry_points(group='visualizer'):
-            p = ep.load()
-            print("{} {}".format(ep.name, p))
-            plugin = p()
-            self.visualization_plugins.append(plugin)
-        
-        print("Data source plugins:")
-        for ep in pkg_resources.iter_entry_points(group='data_source'):
-            p = ep.load()
-            print("{} {}".format(ep.name, p))
-            plugin = p()
-            self.data_source_plugins.append(plugin)
+        self.plugin_service = PluginService()
+        self.plugin_service.load_plugins(VISUALIZER_GROUP)
+        self.plugin_service.load_plugins(DATASOURCE_GROUP)

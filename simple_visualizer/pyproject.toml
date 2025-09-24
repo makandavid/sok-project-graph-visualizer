@@ -5,3 +5,9 @@ description = "Simple Visualizer"
 dependencies = [
     "graph_exploerer_api==0.1"
 ]
+
+[project.entry-points."core.visualizer"]
+simple_visualizer = "simple_visualizer.simple_visualizer:SimpleVisualizerPlugin"
+
+[tool.setuptools.data-files]
+templates = ["simple_visualizer/static/*"]

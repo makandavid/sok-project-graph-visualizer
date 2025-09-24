@@ -20,7 +20,14 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name="index"),
-    path('upload-graph/', views.upload_graph, name='upload_graph'),
+    path('', views.new_workspace, name='new_workspace'),
+    path('workspace/<str:workspace_id>/', views.index, name='index'),
+
+    path('upload-graph/<str:workspace_id>/', views.upload_graph, name='upload_graph'),
+    path('search/<str:workspace_id>/', views.search_filter, name="search"),
+    path('reset/<str:workspace_id>/', views.reset_filter, name="reset"),
+    path('change_visualization_plugin/<str:workspace_id>/', views.change_visualization_plugin, name='change_visualization_plugin'),
+    path('rename/<str:workspace_id>/', views.rename_workspace, name='rename_workspace'),
+    path("cli/execute/<str:workspace_id>/", views.cli_execute, name="cli_execute"),
 
 ]

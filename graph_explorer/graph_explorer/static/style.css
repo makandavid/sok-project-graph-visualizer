@@ -7,55 +7,173 @@ html, body {
 }
 
 h1 {
-    text-align: center;
-    color: white;
-    margin: 0;
-    margin-left: 1em;
-  }
+  text-align: center;
+  color: white;
+  margin: 0;
+  margin-left: 1em;
+  font-size: 2rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
 
 .header {
   background-color: #3182bd;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  align-items: flex-start;
+  padding: 1.5rem 2rem;
   width: 100%;
+  gap: 2rem;
 }
 
 .controls {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-left: 5rem;  
 }
 
-button {
-  padding: 0.5em;
-}
 
-input, select {
-  padding: 0.5em;
-}
-
-.source-select {
-  width: 15em;
-}
-
-.filter-controls, .source-controls, .view-buttons {
+.upload-controls,
+.workspace-controls,
+.source-controls,
+.view-buttons,
+.applied-filters {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.5rem;
-  margin-left: 3em;
-  margin-right: 1em;
+  margin: 0;
+  min-width: 160px;
+  max-width: 200px;
+  flex: 0 0 auto;
 }
 
-.node {cursor: pointer; color: #3182bd;}
-.selected {stroke: gray; stroke-width: 2px;}
-.link {fill: none; stroke: #9ecae1; stroke-width: 2px; color: black}
+.filter-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  min-width: 180px;       
+  max-width: 220px;       
+  flex: 0 0 auto;
+}
 
+button, input, select {
+  font-family: inherit;
+  font-size: 13px;
+  padding: 0.5em 1em;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  max-width: 100%;
+}
+
+/* Buttons */
+button {
+  background-color: #ffffff;
+  color: #3182bd;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background-color: #e2e8f0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Input and select */
+input[type="text"], select {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #e2e8f0;
+  max-width: 160px;
+}
+
+input[type="file"] {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #e2e8f0;
+  max-width: 170px;
+}
+
+/* Focus */
+input[type="text"]:focus, select:focus {
+  outline: none;
+  border-color: #3182bd;
+  box-shadow: 0 0 0 3px rgba(49, 130, 189, 0.2);
+}
+
+/* File upload button */
+input[type="file"]::-webkit-file-upload-button {
+  background-color: #ffffff;
+  color: #3182bd;
+  border: 1px solid #3182bd;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #3182bd;
+  color: #ffffff;
+}
+.upload-controls input[type="file"] {
+  margin-bottom: 0.5rem; 
+}
+
+
+.attribute-filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  align-items: center;  
+  max-width: 100%;      
+}
+
+.attribute-filter-form input[name="attr"],
+.attribute-filter-form select[name="op"] {
+  width: calc(50% - 0.25em);
+  max-width: 70px;    
+}
+
+.attribute-filter-form input[name="val"],
+.attribute-filter-form button[type="submit"] {
+  width: calc(50% - 0.25em);
+  max-width: 70px;     
+}
+
+input[type="text"] {
+  max-width: none;      
+}
+
+
+
+
+.filter-controls form input[type="text"] {
+  width: 100px;
+}
+
+.filter-controls form select {
+  width: 70px;
+}
+
+/* Label */
+label {
+  color: white;
+}
+
+/* Sidebar / Tree / View */
 .container {
   display: flex;
-  height: calc(100vh - 106px); 
+  height: calc(100vh - 166px);
 }
 
 .sidebar {
@@ -74,7 +192,7 @@ input, select {
 }
 
 .mainview {
-  width: calc(100vw - 350px); 
+  width: calc(100vw - 350px);
   height: calc(100vh - 106px);
 }
 
@@ -88,4 +206,35 @@ svg {
   width: 100%;
   height: 100%;
   border: 1px solid gray;
+}
+
+.node {cursor: pointer; color: #3182bd;}
+.selected {stroke: gray; stroke-width: 2px;}
+.link {fill: none; stroke: #9ecae1; stroke-width: 2px; color: black}
+
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 1.5rem;
+    border: 1px solid #ccc;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
 }

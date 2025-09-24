@@ -7,7 +7,11 @@ class Node(object):
         self.attributes = attributes
 
     def __str__(self):
-        return "Node ID: {}\nAttributes:\n{}\n".format(self.id, json.dumps(self.attribute, indent=4, cls=CustomJSONEncoder))
+        return f"Node ID: {self.id}\nAttributes:\n{json.dumps(self.attributes, indent=4, cls=CustomJSONEncoder)}\n"
     
     def to_dict(self):
         return {"id": self.id, "attributes": self.attributes}
+
+    @staticmethod
+    def from_dict(data):
+        return Node(data['id'], data['attributes'])
