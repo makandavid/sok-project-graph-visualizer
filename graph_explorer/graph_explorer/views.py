@@ -25,7 +25,7 @@ def get_plugins():
 
 
 def get_workspace(request: HttpRequest, workspace_id: str):
-    """Retrieves a workspace or redirects to a new one if not found."""
+    """Retrieves a workspace or returns None if not found."""
     workspace_data = request.session.get('workspaces', {}).get(workspace_id)
     if not workspace_data:
         return None  
