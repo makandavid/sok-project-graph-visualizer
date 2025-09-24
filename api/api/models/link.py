@@ -9,3 +9,7 @@ class Link(object):
     
     def to_dict(self):
         return {"id": self.id, "source": self.source, "target": self.target}
+    
+    @staticmethod
+    def from_dict(data):
+        return Link(data['id'], data['source'], data['target'])

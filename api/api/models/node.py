@@ -10,3 +10,7 @@ class Node(object):
     
     def to_dict(self):
         return {"id": self.id, "attributes": self.attributes}
+    
+    @staticmethod
+    def from_dict(data):
+        return Node(data['id'], data['attributes'])
