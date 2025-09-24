@@ -20,9 +20,9 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.new_workspace, name='new_workspace'),
+    path('', views.index, name='index'),
     path('workspace/<str:workspace_id>/', views.index, name='index'),
-
+    path('workspace/new/', views.new_workspace, name='new_workspace'),
     path('upload-graph/<str:workspace_id>/', views.upload_graph, name='upload_graph'),
     path('search/<str:workspace_id>/', views.search_filter, name="search"),
     path('reset/<str:workspace_id>/', views.reset_filter, name="reset"),
