@@ -1,4 +1,4 @@
-<university id="U1" name="Generated University">
+<university id="U1" name="Generated University" directed="true">
 
   <faculty id="F1" name="Engineering">
     <department id="D1" name="Computer Engineering">
