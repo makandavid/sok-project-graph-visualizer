@@ -7,14 +7,58 @@
 - Andrea Trivunić SV57/2022
 - Nikolina Petronić SV59/2022
 
-## How to start the project
-1. Clone the repository
-2. Run `pip install -r requirements.txt`
-3. Run `pip install ./api ./platform ./simple-visualizer ./block/visualizer`
-4. cd /graph_explorer
-5. Run `python manage.py makemigrations`
-6. Run `python manage.py migrate`
-7. Run `python manage.py runserver`
 
-Alternative:
-sh ./run.sh
+## Prerequisites
+
+- Python 3.x
+- pip
+
+---
+
+## Getting Started
+
+1.  **Clone the repository:**
+    ```
+    git clone https://github.com/makandavid/sok-project-graph-visualizer.git
+    cd sok-project-graph-visualizer
+    ```
+
+2.  **(Optional, but recommended) Create a virtual environment:**
+    ```sh
+    # On macOS/Linux
+    python3 -m venv .venv
+    source .venv/bin/activate
+
+    # On Windows
+    python -m venv .venv
+    .\.venv\Scripts\activate
+    ```
+
+3.  **Install dependencies:**
+    Run `pip install -r requirements.txt`
+
+4.  **Run the development server:**
+    This script will start the Django server.
+
+    ```sh
+    # On macOS/Linux
+    python3 run.py
+
+    # On Windows
+    python run.py
+    ```
+
+---
+
+## Other Useful Commands
+
+-   **Cleanup:**
+    Remove build files, directories, and other temporary files.
+
+    ```sh
+    # On macOS/Linux
+    python3 clear.py
+
+    # On Windows
+    python clear.py
+    ```
