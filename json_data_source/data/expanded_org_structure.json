@@ -1,0 +1,4227 @@
+{
+  "@id": "root_001",
+  "name": "Root Organization",
+  "type": "organization",
+  "children": [
+    {
+      "@id": "dept_001",
+      "name": "Department 1",
+      "type": "department",
+      "parent": "root_001",
+      "children": [
+        {
+          "@id": "team_1001",
+          "name": "Team 1-1",
+          "type": "team",
+          "parent": "dept_001",
+          "children": [
+            {
+              "@id": "emp_11001",
+              "name": "Employee 1-1-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1001",
+              "children": [
+                {
+                  "@id": "proj_111001",
+                  "name": "Project 1-1-1-1",
+                  "type": "project",
+                  "parent": "emp_11001",
+                  "children": [
+                    {
+                      "@id": "task_1111001",
+                      "name": "Task 1-1-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_111001"
+                    },
+                    {
+                      "@id": "task_1111002",
+                      "name": "Task 1-1-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_111001"
+                    },
+                    {
+                      "@id": "task_1111003",
+                      "name": "Task 1-1-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_111001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_111002",
+                  "name": "Project 1-1-1-2",
+                  "type": "project",
+                  "parent": "emp_11001",
+                  "children": [
+                    {
+                      "@id": "task_1112001",
+                      "name": "Task 1-1-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_111002"
+                    },
+                    {
+                      "@id": "task_1112002",
+                      "name": "Task 1-1-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_111002"
+                    },
+                    {
+                      "@id": "task_1112003",
+                      "name": "Task 1-1-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_111002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_11002",
+              "name": "Employee 1-1-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1001",
+              "children": [
+                {
+                  "@id": "proj_112001",
+                  "name": "Project 1-1-2-1",
+                  "type": "project",
+                  "parent": "emp_11002",
+                  "children": [
+                    {
+                      "@id": "task_1121001",
+                      "name": "Task 1-1-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_112001"
+                    },
+                    {
+                      "@id": "task_1121002",
+                      "name": "Task 1-1-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_112001"
+                    },
+                    {
+                      "@id": "task_1121003",
+                      "name": "Task 1-1-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_112001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_112002",
+                  "name": "Project 1-1-2-2",
+                  "type": "project",
+                  "parent": "emp_11002",
+                  "children": [
+                    {
+                      "@id": "task_1122001",
+                      "name": "Task 1-1-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_112002"
+                    },
+                    {
+                      "@id": "task_1122002",
+                      "name": "Task 1-1-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_112002"
+                    },
+                    {
+                      "@id": "task_1122003",
+                      "name": "Task 1-1-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_112002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_11003",
+              "name": "Employee 1-1-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1001",
+              "children": [
+                {
+                  "@id": "proj_113001",
+                  "name": "Project 1-1-3-1",
+                  "type": "project",
+                  "parent": "emp_11003",
+                  "children": [
+                    {
+                      "@id": "task_1131001",
+                      "name": "Task 1-1-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_113001"
+                    },
+                    {
+                      "@id": "task_1131002",
+                      "name": "Task 1-1-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_113001"
+                    },
+                    {
+                      "@id": "task_1131003",
+                      "name": "Task 1-1-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_113001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_113002",
+                  "name": "Project 1-1-3-2",
+                  "type": "project",
+                  "parent": "emp_11003",
+                  "children": [
+                    {
+                      "@id": "task_1132001",
+                      "name": "Task 1-1-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_113002"
+                    },
+                    {
+                      "@id": "task_1132002",
+                      "name": "Task 1-1-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_113002"
+                    },
+                    {
+                      "@id": "task_1132003",
+                      "name": "Task 1-1-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_113002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_1002",
+          "name": "Team 1-2",
+          "type": "team",
+          "parent": "dept_001",
+          "children": [
+            {
+              "@id": "emp_12001",
+              "name": "Employee 1-2-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1002",
+              "children": [
+                {
+                  "@id": "proj_121001",
+                  "name": "Project 1-2-1-1",
+                  "type": "project",
+                  "parent": "emp_12001",
+                  "children": [
+                    {
+                      "@id": "task_1211001",
+                      "name": "Task 1-2-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_121001"
+                    },
+                    {
+                      "@id": "task_1211002",
+                      "name": "Task 1-2-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_121001"
+                    },
+                    {
+                      "@id": "task_1211003",
+                      "name": "Task 1-2-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_121001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_121002",
+                  "name": "Project 1-2-1-2",
+                  "type": "project",
+                  "parent": "emp_12001",
+                  "children": [
+                    {
+                      "@id": "task_1212001",
+                      "name": "Task 1-2-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_121002"
+                    },
+                    {
+                      "@id": "task_1212002",
+                      "name": "Task 1-2-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_121002"
+                    },
+                    {
+                      "@id": "task_1212003",
+                      "name": "Task 1-2-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_121002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_12002",
+              "name": "Employee 1-2-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1002",
+              "children": [
+                {
+                  "@id": "proj_122001",
+                  "name": "Project 1-2-2-1",
+                  "type": "project",
+                  "parent": "emp_12002",
+                  "children": [
+                    {
+                      "@id": "task_1221001",
+                      "name": "Task 1-2-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_122001"
+                    },
+                    {
+                      "@id": "task_1221002",
+                      "name": "Task 1-2-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_122001"
+                    },
+                    {
+                      "@id": "task_1221003",
+                      "name": "Task 1-2-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_122001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_122002",
+                  "name": "Project 1-2-2-2",
+                  "type": "project",
+                  "parent": "emp_12002",
+                  "children": [
+                    {
+                      "@id": "task_1222001",
+                      "name": "Task 1-2-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_122002"
+                    },
+                    {
+                      "@id": "task_1222002",
+                      "name": "Task 1-2-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_122002"
+                    },
+                    {
+                      "@id": "task_1222003",
+                      "name": "Task 1-2-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_122002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_12003",
+              "name": "Employee 1-2-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1002",
+              "children": [
+                {
+                  "@id": "proj_123001",
+                  "name": "Project 1-2-3-1",
+                  "type": "project",
+                  "parent": "emp_12003",
+                  "children": [
+                    {
+                      "@id": "task_1231001",
+                      "name": "Task 1-2-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_123001"
+                    },
+                    {
+                      "@id": "task_1231002",
+                      "name": "Task 1-2-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_123001"
+                    },
+                    {
+                      "@id": "task_1231003",
+                      "name": "Task 1-2-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_123001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_123002",
+                  "name": "Project 1-2-3-2",
+                  "type": "project",
+                  "parent": "emp_12003",
+                  "children": [
+                    {
+                      "@id": "task_1232001",
+                      "name": "Task 1-2-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_123002"
+                    },
+                    {
+                      "@id": "task_1232002",
+                      "name": "Task 1-2-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_123002"
+                    },
+                    {
+                      "@id": "task_1232003",
+                      "name": "Task 1-2-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_123002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_1003",
+          "name": "Team 1-3",
+          "type": "team",
+          "parent": "dept_001",
+          "children": [
+            {
+              "@id": "emp_13001",
+              "name": "Employee 1-3-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1003",
+              "children": [
+                {
+                  "@id": "proj_131001",
+                  "name": "Project 1-3-1-1",
+                  "type": "project",
+                  "parent": "emp_13001",
+                  "children": [
+                    {
+                      "@id": "task_1311001",
+                      "name": "Task 1-3-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_131001"
+                    },
+                    {
+                      "@id": "task_1311002",
+                      "name": "Task 1-3-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_131001"
+                    },
+                    {
+                      "@id": "task_1311003",
+                      "name": "Task 1-3-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_131001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_131002",
+                  "name": "Project 1-3-1-2",
+                  "type": "project",
+                  "parent": "emp_13001",
+                  "children": [
+                    {
+                      "@id": "task_1312001",
+                      "name": "Task 1-3-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_131002"
+                    },
+                    {
+                      "@id": "task_1312002",
+                      "name": "Task 1-3-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_131002"
+                    },
+                    {
+                      "@id": "task_1312003",
+                      "name": "Task 1-3-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_131002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_13002",
+              "name": "Employee 1-3-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1003",
+              "children": [
+                {
+                  "@id": "proj_132001",
+                  "name": "Project 1-3-2-1",
+                  "type": "project",
+                  "parent": "emp_13002",
+                  "children": [
+                    {
+                      "@id": "task_1321001",
+                      "name": "Task 1-3-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_132001"
+                    },
+                    {
+                      "@id": "task_1321002",
+                      "name": "Task 1-3-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_132001"
+                    },
+                    {
+                      "@id": "task_1321003",
+                      "name": "Task 1-3-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_132001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_132002",
+                  "name": "Project 1-3-2-2",
+                  "type": "project",
+                  "parent": "emp_13002",
+                  "children": [
+                    {
+                      "@id": "task_1322001",
+                      "name": "Task 1-3-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_132002"
+                    },
+                    {
+                      "@id": "task_1322002",
+                      "name": "Task 1-3-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_132002"
+                    },
+                    {
+                      "@id": "task_1322003",
+                      "name": "Task 1-3-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_132002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_13003",
+              "name": "Employee 1-3-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1003",
+              "children": [
+                {
+                  "@id": "proj_133001",
+                  "name": "Project 1-3-3-1",
+                  "type": "project",
+                  "parent": "emp_13003",
+                  "children": [
+                    {
+                      "@id": "task_1331001",
+                      "name": "Task 1-3-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_133001"
+                    },
+                    {
+                      "@id": "task_1331002",
+                      "name": "Task 1-3-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_133001"
+                    },
+                    {
+                      "@id": "task_1331003",
+                      "name": "Task 1-3-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_133001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_133002",
+                  "name": "Project 1-3-3-2",
+                  "type": "project",
+                  "parent": "emp_13003",
+                  "children": [
+                    {
+                      "@id": "task_1332001",
+                      "name": "Task 1-3-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_133002"
+                    },
+                    {
+                      "@id": "task_1332002",
+                      "name": "Task 1-3-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_133002"
+                    },
+                    {
+                      "@id": "task_1332003",
+                      "name": "Task 1-3-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_133002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_1004",
+          "name": "Team 1-4",
+          "type": "team",
+          "parent": "dept_001",
+          "children": [
+            {
+              "@id": "emp_14001",
+              "name": "Employee 1-4-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1004",
+              "children": [
+                {
+                  "@id": "proj_141001",
+                  "name": "Project 1-4-1-1",
+                  "type": "project",
+                  "parent": "emp_14001",
+                  "children": [
+                    {
+                      "@id": "task_1411001",
+                      "name": "Task 1-4-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_141001"
+                    },
+                    {
+                      "@id": "task_1411002",
+                      "name": "Task 1-4-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_141001"
+                    },
+                    {
+                      "@id": "task_1411003",
+                      "name": "Task 1-4-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_141001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_141002",
+                  "name": "Project 1-4-1-2",
+                  "type": "project",
+                  "parent": "emp_14001",
+                  "children": [
+                    {
+                      "@id": "task_1412001",
+                      "name": "Task 1-4-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_141002"
+                    },
+                    {
+                      "@id": "task_1412002",
+                      "name": "Task 1-4-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_141002"
+                    },
+                    {
+                      "@id": "task_1412003",
+                      "name": "Task 1-4-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_141002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_14002",
+              "name": "Employee 1-4-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1004",
+              "children": [
+                {
+                  "@id": "proj_142001",
+                  "name": "Project 1-4-2-1",
+                  "type": "project",
+                  "parent": "emp_14002",
+                  "children": [
+                    {
+                      "@id": "task_1421001",
+                      "name": "Task 1-4-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_142001"
+                    },
+                    {
+                      "@id": "task_1421002",
+                      "name": "Task 1-4-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_142001"
+                    },
+                    {
+                      "@id": "task_1421003",
+                      "name": "Task 1-4-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_142001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_142002",
+                  "name": "Project 1-4-2-2",
+                  "type": "project",
+                  "parent": "emp_14002",
+                  "children": [
+                    {
+                      "@id": "task_1422001",
+                      "name": "Task 1-4-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_142002"
+                    },
+                    {
+                      "@id": "task_1422002",
+                      "name": "Task 1-4-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_142002"
+                    },
+                    {
+                      "@id": "task_1422003",
+                      "name": "Task 1-4-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_142002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_14003",
+              "name": "Employee 1-4-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_1004",
+              "children": [
+                {
+                  "@id": "proj_143001",
+                  "name": "Project 1-4-3-1",
+                  "type": "project",
+                  "parent": "emp_14003",
+                  "children": [
+                    {
+                      "@id": "task_1431001",
+                      "name": "Task 1-4-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_143001"
+                    },
+                    {
+                      "@id": "task_1431002",
+                      "name": "Task 1-4-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_143001"
+                    },
+                    {
+                      "@id": "task_1431003",
+                      "name": "Task 1-4-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_143001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_143002",
+                  "name": "Project 1-4-3-2",
+                  "type": "project",
+                  "parent": "emp_14003",
+                  "children": [
+                    {
+                      "@id": "task_1432001",
+                      "name": "Task 1-4-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_143002"
+                    },
+                    {
+                      "@id": "task_1432002",
+                      "name": "Task 1-4-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_143002"
+                    },
+                    {
+                      "@id": "task_1432003",
+                      "name": "Task 1-4-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_143002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "dept_002",
+      "name": "Department 2",
+      "type": "department",
+      "parent": "root_001",
+      "children": [
+        {
+          "@id": "team_2001",
+          "name": "Team 2-1",
+          "type": "team",
+          "parent": "dept_002",
+          "children": [
+            {
+              "@id": "emp_21001",
+              "name": "Employee 2-1-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2001",
+              "children": [
+                {
+                  "@id": "proj_211001",
+                  "name": "Project 2-1-1-1",
+                  "type": "project",
+                  "parent": "emp_21001",
+                  "children": [
+                    {
+                      "@id": "task_2111001",
+                      "name": "Task 2-1-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_211001"
+                    },
+                    {
+                      "@id": "task_2111002",
+                      "name": "Task 2-1-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_211001"
+                    },
+                    {
+                      "@id": "task_2111003",
+                      "name": "Task 2-1-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_211001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_211002",
+                  "name": "Project 2-1-1-2",
+                  "type": "project",
+                  "parent": "emp_21001",
+                  "children": [
+                    {
+                      "@id": "task_2112001",
+                      "name": "Task 2-1-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_211002"
+                    },
+                    {
+                      "@id": "task_2112002",
+                      "name": "Task 2-1-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_211002"
+                    },
+                    {
+                      "@id": "task_2112003",
+                      "name": "Task 2-1-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_211002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_21002",
+              "name": "Employee 2-1-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2001",
+              "children": [
+                {
+                  "@id": "proj_212001",
+                  "name": "Project 2-1-2-1",
+                  "type": "project",
+                  "parent": "emp_21002",
+                  "children": [
+                    {
+                      "@id": "task_2121001",
+                      "name": "Task 2-1-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_212001"
+                    },
+                    {
+                      "@id": "task_2121002",
+                      "name": "Task 2-1-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_212001"
+                    },
+                    {
+                      "@id": "task_2121003",
+                      "name": "Task 2-1-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_212001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_212002",
+                  "name": "Project 2-1-2-2",
+                  "type": "project",
+                  "parent": "emp_21002",
+                  "children": [
+                    {
+                      "@id": "task_2122001",
+                      "name": "Task 2-1-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_212002"
+                    },
+                    {
+                      "@id": "task_2122002",
+                      "name": "Task 2-1-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_212002"
+                    },
+                    {
+                      "@id": "task_2122003",
+                      "name": "Task 2-1-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_212002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_21003",
+              "name": "Employee 2-1-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2001",
+              "children": [
+                {
+                  "@id": "proj_213001",
+                  "name": "Project 2-1-3-1",
+                  "type": "project",
+                  "parent": "emp_21003",
+                  "children": [
+                    {
+                      "@id": "task_2131001",
+                      "name": "Task 2-1-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_213001"
+                    },
+                    {
+                      "@id": "task_2131002",
+                      "name": "Task 2-1-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_213001"
+                    },
+                    {
+                      "@id": "task_2131003",
+                      "name": "Task 2-1-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_213001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_213002",
+                  "name": "Project 2-1-3-2",
+                  "type": "project",
+                  "parent": "emp_21003",
+                  "children": [
+                    {
+                      "@id": "task_2132001",
+                      "name": "Task 2-1-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_213002"
+                    },
+                    {
+                      "@id": "task_2132002",
+                      "name": "Task 2-1-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_213002"
+                    },
+                    {
+                      "@id": "task_2132003",
+                      "name": "Task 2-1-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_213002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_2002",
+          "name": "Team 2-2",
+          "type": "team",
+          "parent": "dept_002",
+          "children": [
+            {
+              "@id": "emp_22001",
+              "name": "Employee 2-2-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2002",
+              "children": [
+                {
+                  "@id": "proj_221001",
+                  "name": "Project 2-2-1-1",
+                  "type": "project",
+                  "parent": "emp_22001",
+                  "children": [
+                    {
+                      "@id": "task_2211001",
+                      "name": "Task 2-2-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_221001"
+                    },
+                    {
+                      "@id": "task_2211002",
+                      "name": "Task 2-2-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_221001"
+                    },
+                    {
+                      "@id": "task_2211003",
+                      "name": "Task 2-2-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_221001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_221002",
+                  "name": "Project 2-2-1-2",
+                  "type": "project",
+                  "parent": "emp_22001",
+                  "children": [
+                    {
+                      "@id": "task_2212001",
+                      "name": "Task 2-2-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_221002"
+                    },
+                    {
+                      "@id": "task_2212002",
+                      "name": "Task 2-2-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_221002"
+                    },
+                    {
+                      "@id": "task_2212003",
+                      "name": "Task 2-2-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_221002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_22002",
+              "name": "Employee 2-2-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2002",
+              "children": [
+                {
+                  "@id": "proj_222001",
+                  "name": "Project 2-2-2-1",
+                  "type": "project",
+                  "parent": "emp_22002",
+                  "children": [
+                    {
+                      "@id": "task_2221001",
+                      "name": "Task 2-2-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_222001"
+                    },
+                    {
+                      "@id": "task_2221002",
+                      "name": "Task 2-2-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_222001"
+                    },
+                    {
+                      "@id": "task_2221003",
+                      "name": "Task 2-2-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_222001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_222002",
+                  "name": "Project 2-2-2-2",
+                  "type": "project",
+                  "parent": "emp_22002",
+                  "children": [
+                    {
+                      "@id": "task_2222001",
+                      "name": "Task 2-2-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_222002"
+                    },
+                    {
+                      "@id": "task_2222002",
+                      "name": "Task 2-2-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_222002"
+                    },
+                    {
+                      "@id": "task_2222003",
+                      "name": "Task 2-2-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_222002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_22003",
+              "name": "Employee 2-2-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2002",
+              "children": [
+                {
+                  "@id": "proj_223001",
+                  "name": "Project 2-2-3-1",
+                  "type": "project",
+                  "parent": "emp_22003",
+                  "children": [
+                    {
+                      "@id": "task_2231001",
+                      "name": "Task 2-2-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_223001"
+                    },
+                    {
+                      "@id": "task_2231002",
+                      "name": "Task 2-2-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_223001"
+                    },
+                    {
+                      "@id": "task_2231003",
+                      "name": "Task 2-2-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_223001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_223002",
+                  "name": "Project 2-2-3-2",
+                  "type": "project",
+                  "parent": "emp_22003",
+                  "children": [
+                    {
+                      "@id": "task_2232001",
+                      "name": "Task 2-2-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_223002"
+                    },
+                    {
+                      "@id": "task_2232002",
+                      "name": "Task 2-2-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_223002"
+                    },
+                    {
+                      "@id": "task_2232003",
+                      "name": "Task 2-2-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_223002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_2003",
+          "name": "Team 2-3",
+          "type": "team",
+          "parent": "dept_002",
+          "children": [
+            {
+              "@id": "emp_23001",
+              "name": "Employee 2-3-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2003",
+              "children": [
+                {
+                  "@id": "proj_231001",
+                  "name": "Project 2-3-1-1",
+                  "type": "project",
+                  "parent": "emp_23001",
+                  "children": [
+                    {
+                      "@id": "task_2311001",
+                      "name": "Task 2-3-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_231001"
+                    },
+                    {
+                      "@id": "task_2311002",
+                      "name": "Task 2-3-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_231001"
+                    },
+                    {
+                      "@id": "task_2311003",
+                      "name": "Task 2-3-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_231001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_231002",
+                  "name": "Project 2-3-1-2",
+                  "type": "project",
+                  "parent": "emp_23001",
+                  "children": [
+                    {
+                      "@id": "task_2312001",
+                      "name": "Task 2-3-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_231002"
+                    },
+                    {
+                      "@id": "task_2312002",
+                      "name": "Task 2-3-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_231002"
+                    },
+                    {
+                      "@id": "task_2312003",
+                      "name": "Task 2-3-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_231002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_23002",
+              "name": "Employee 2-3-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2003",
+              "children": [
+                {
+                  "@id": "proj_232001",
+                  "name": "Project 2-3-2-1",
+                  "type": "project",
+                  "parent": "emp_23002",
+                  "children": [
+                    {
+                      "@id": "task_2321001",
+                      "name": "Task 2-3-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_232001"
+                    },
+                    {
+                      "@id": "task_2321002",
+                      "name": "Task 2-3-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_232001"
+                    },
+                    {
+                      "@id": "task_2321003",
+                      "name": "Task 2-3-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_232001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_232002",
+                  "name": "Project 2-3-2-2",
+                  "type": "project",
+                  "parent": "emp_23002",
+                  "children": [
+                    {
+                      "@id": "task_2322001",
+                      "name": "Task 2-3-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_232002"
+                    },
+                    {
+                      "@id": "task_2322002",
+                      "name": "Task 2-3-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_232002"
+                    },
+                    {
+                      "@id": "task_2322003",
+                      "name": "Task 2-3-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_232002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_23003",
+              "name": "Employee 2-3-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2003",
+              "children": [
+                {
+                  "@id": "proj_233001",
+                  "name": "Project 2-3-3-1",
+                  "type": "project",
+                  "parent": "emp_23003",
+                  "children": [
+                    {
+                      "@id": "task_2331001",
+                      "name": "Task 2-3-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_233001"
+                    },
+                    {
+                      "@id": "task_2331002",
+                      "name": "Task 2-3-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_233001"
+                    },
+                    {
+                      "@id": "task_2331003",
+                      "name": "Task 2-3-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_233001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_233002",
+                  "name": "Project 2-3-3-2",
+                  "type": "project",
+                  "parent": "emp_23003",
+                  "children": [
+                    {
+                      "@id": "task_2332001",
+                      "name": "Task 2-3-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_233002"
+                    },
+                    {
+                      "@id": "task_2332002",
+                      "name": "Task 2-3-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_233002"
+                    },
+                    {
+                      "@id": "task_2332003",
+                      "name": "Task 2-3-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_233002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_2004",
+          "name": "Team 2-4",
+          "type": "team",
+          "parent": "dept_002",
+          "children": [
+            {
+              "@id": "emp_24001",
+              "name": "Employee 2-4-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2004",
+              "children": [
+                {
+                  "@id": "proj_241001",
+                  "name": "Project 2-4-1-1",
+                  "type": "project",
+                  "parent": "emp_24001",
+                  "children": [
+                    {
+                      "@id": "task_2411001",
+                      "name": "Task 2-4-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_241001"
+                    },
+                    {
+                      "@id": "task_2411002",
+                      "name": "Task 2-4-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_241001"
+                    },
+                    {
+                      "@id": "task_2411003",
+                      "name": "Task 2-4-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_241001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_241002",
+                  "name": "Project 2-4-1-2",
+                  "type": "project",
+                  "parent": "emp_24001",
+                  "children": [
+                    {
+                      "@id": "task_2412001",
+                      "name": "Task 2-4-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_241002"
+                    },
+                    {
+                      "@id": "task_2412002",
+                      "name": "Task 2-4-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_241002"
+                    },
+                    {
+                      "@id": "task_2412003",
+                      "name": "Task 2-4-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_241002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_24002",
+              "name": "Employee 2-4-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2004",
+              "children": [
+                {
+                  "@id": "proj_242001",
+                  "name": "Project 2-4-2-1",
+                  "type": "project",
+                  "parent": "emp_24002",
+                  "children": [
+                    {
+                      "@id": "task_2421001",
+                      "name": "Task 2-4-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_242001"
+                    },
+                    {
+                      "@id": "task_2421002",
+                      "name": "Task 2-4-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_242001"
+                    },
+                    {
+                      "@id": "task_2421003",
+                      "name": "Task 2-4-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_242001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_242002",
+                  "name": "Project 2-4-2-2",
+                  "type": "project",
+                  "parent": "emp_24002",
+                  "children": [
+                    {
+                      "@id": "task_2422001",
+                      "name": "Task 2-4-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_242002"
+                    },
+                    {
+                      "@id": "task_2422002",
+                      "name": "Task 2-4-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_242002"
+                    },
+                    {
+                      "@id": "task_2422003",
+                      "name": "Task 2-4-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_242002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_24003",
+              "name": "Employee 2-4-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_2004",
+              "children": [
+                {
+                  "@id": "proj_243001",
+                  "name": "Project 2-4-3-1",
+                  "type": "project",
+                  "parent": "emp_24003",
+                  "children": [
+                    {
+                      "@id": "task_2431001",
+                      "name": "Task 2-4-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_243001"
+                    },
+                    {
+                      "@id": "task_2431002",
+                      "name": "Task 2-4-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_243001"
+                    },
+                    {
+                      "@id": "task_2431003",
+                      "name": "Task 2-4-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_243001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_243002",
+                  "name": "Project 2-4-3-2",
+                  "type": "project",
+                  "parent": "emp_24003",
+                  "children": [
+                    {
+                      "@id": "task_2432001",
+                      "name": "Task 2-4-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_243002"
+                    },
+                    {
+                      "@id": "task_2432002",
+                      "name": "Task 2-4-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_243002"
+                    },
+                    {
+                      "@id": "task_2432003",
+                      "name": "Task 2-4-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_243002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "dept_003",
+      "name": "Department 3",
+      "type": "department",
+      "parent": "root_001",
+      "children": [
+        {
+          "@id": "team_3001",
+          "name": "Team 3-1",
+          "type": "team",
+          "parent": "dept_003",
+          "children": [
+            {
+              "@id": "emp_31001",
+              "name": "Employee 3-1-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3001",
+              "children": [
+                {
+                  "@id": "proj_311001",
+                  "name": "Project 3-1-1-1",
+                  "type": "project",
+                  "parent": "emp_31001",
+                  "children": [
+                    {
+                      "@id": "task_3111001",
+                      "name": "Task 3-1-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_311001"
+                    },
+                    {
+                      "@id": "task_3111002",
+                      "name": "Task 3-1-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_311001"
+                    },
+                    {
+                      "@id": "task_3111003",
+                      "name": "Task 3-1-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_311001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_311002",
+                  "name": "Project 3-1-1-2",
+                  "type": "project",
+                  "parent": "emp_31001",
+                  "children": [
+                    {
+                      "@id": "task_3112001",
+                      "name": "Task 3-1-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_311002"
+                    },
+                    {
+                      "@id": "task_3112002",
+                      "name": "Task 3-1-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_311002"
+                    },
+                    {
+                      "@id": "task_3112003",
+                      "name": "Task 3-1-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_311002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_31002",
+              "name": "Employee 3-1-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3001",
+              "children": [
+                {
+                  "@id": "proj_312001",
+                  "name": "Project 3-1-2-1",
+                  "type": "project",
+                  "parent": "emp_31002",
+                  "children": [
+                    {
+                      "@id": "task_3121001",
+                      "name": "Task 3-1-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_312001"
+                    },
+                    {
+                      "@id": "task_3121002",
+                      "name": "Task 3-1-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_312001"
+                    },
+                    {
+                      "@id": "task_3121003",
+                      "name": "Task 3-1-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_312001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_312002",
+                  "name": "Project 3-1-2-2",
+                  "type": "project",
+                  "parent": "emp_31002",
+                  "children": [
+                    {
+                      "@id": "task_3122001",
+                      "name": "Task 3-1-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_312002"
+                    },
+                    {
+                      "@id": "task_3122002",
+                      "name": "Task 3-1-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_312002"
+                    },
+                    {
+                      "@id": "task_3122003",
+                      "name": "Task 3-1-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_312002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_31003",
+              "name": "Employee 3-1-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3001",
+              "children": [
+                {
+                  "@id": "proj_313001",
+                  "name": "Project 3-1-3-1",
+                  "type": "project",
+                  "parent": "emp_31003",
+                  "children": [
+                    {
+                      "@id": "task_3131001",
+                      "name": "Task 3-1-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_313001"
+                    },
+                    {
+                      "@id": "task_3131002",
+                      "name": "Task 3-1-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_313001"
+                    },
+                    {
+                      "@id": "task_3131003",
+                      "name": "Task 3-1-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_313001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_313002",
+                  "name": "Project 3-1-3-2",
+                  "type": "project",
+                  "parent": "emp_31003",
+                  "children": [
+                    {
+                      "@id": "task_3132001",
+                      "name": "Task 3-1-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_313002"
+                    },
+                    {
+                      "@id": "task_3132002",
+                      "name": "Task 3-1-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_313002"
+                    },
+                    {
+                      "@id": "task_3132003",
+                      "name": "Task 3-1-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_313002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_3002",
+          "name": "Team 3-2",
+          "type": "team",
+          "parent": "dept_003",
+          "children": [
+            {
+              "@id": "emp_32001",
+              "name": "Employee 3-2-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3002",
+              "children": [
+                {
+                  "@id": "proj_321001",
+                  "name": "Project 3-2-1-1",
+                  "type": "project",
+                  "parent": "emp_32001",
+                  "children": [
+                    {
+                      "@id": "task_3211001",
+                      "name": "Task 3-2-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_321001"
+                    },
+                    {
+                      "@id": "task_3211002",
+                      "name": "Task 3-2-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_321001"
+                    },
+                    {
+                      "@id": "task_3211003",
+                      "name": "Task 3-2-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_321001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_321002",
+                  "name": "Project 3-2-1-2",
+                  "type": "project",
+                  "parent": "emp_32001",
+                  "children": [
+                    {
+                      "@id": "task_3212001",
+                      "name": "Task 3-2-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_321002"
+                    },
+                    {
+                      "@id": "task_3212002",
+                      "name": "Task 3-2-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_321002"
+                    },
+                    {
+                      "@id": "task_3212003",
+                      "name": "Task 3-2-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_321002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_32002",
+              "name": "Employee 3-2-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3002",
+              "children": [
+                {
+                  "@id": "proj_322001",
+                  "name": "Project 3-2-2-1",
+                  "type": "project",
+                  "parent": "emp_32002",
+                  "children": [
+                    {
+                      "@id": "task_3221001",
+                      "name": "Task 3-2-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_322001"
+                    },
+                    {
+                      "@id": "task_3221002",
+                      "name": "Task 3-2-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_322001"
+                    },
+                    {
+                      "@id": "task_3221003",
+                      "name": "Task 3-2-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_322001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_322002",
+                  "name": "Project 3-2-2-2",
+                  "type": "project",
+                  "parent": "emp_32002",
+                  "children": [
+                    {
+                      "@id": "task_3222001",
+                      "name": "Task 3-2-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_322002"
+                    },
+                    {
+                      "@id": "task_3222002",
+                      "name": "Task 3-2-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_322002"
+                    },
+                    {
+                      "@id": "task_3222003",
+                      "name": "Task 3-2-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_322002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_32003",
+              "name": "Employee 3-2-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3002",
+              "children": [
+                {
+                  "@id": "proj_323001",
+                  "name": "Project 3-2-3-1",
+                  "type": "project",
+                  "parent": "emp_32003",
+                  "children": [
+                    {
+                      "@id": "task_3231001",
+                      "name": "Task 3-2-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_323001"
+                    },
+                    {
+                      "@id": "task_3231002",
+                      "name": "Task 3-2-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_323001"
+                    },
+                    {
+                      "@id": "task_3231003",
+                      "name": "Task 3-2-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_323001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_323002",
+                  "name": "Project 3-2-3-2",
+                  "type": "project",
+                  "parent": "emp_32003",
+                  "children": [
+                    {
+                      "@id": "task_3232001",
+                      "name": "Task 3-2-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_323002"
+                    },
+                    {
+                      "@id": "task_3232002",
+                      "name": "Task 3-2-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_323002"
+                    },
+                    {
+                      "@id": "task_3232003",
+                      "name": "Task 3-2-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_323002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_3003",
+          "name": "Team 3-3",
+          "type": "team",
+          "parent": "dept_003",
+          "children": [
+            {
+              "@id": "emp_33001",
+              "name": "Employee 3-3-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3003",
+              "children": [
+                {
+                  "@id": "proj_331001",
+                  "name": "Project 3-3-1-1",
+                  "type": "project",
+                  "parent": "emp_33001",
+                  "children": [
+                    {
+                      "@id": "task_3311001",
+                      "name": "Task 3-3-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_331001"
+                    },
+                    {
+                      "@id": "task_3311002",
+                      "name": "Task 3-3-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_331001"
+                    },
+                    {
+                      "@id": "task_3311003",
+                      "name": "Task 3-3-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_331001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_331002",
+                  "name": "Project 3-3-1-2",
+                  "type": "project",
+                  "parent": "emp_33001",
+                  "children": [
+                    {
+                      "@id": "task_3312001",
+                      "name": "Task 3-3-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_331002"
+                    },
+                    {
+                      "@id": "task_3312002",
+                      "name": "Task 3-3-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_331002"
+                    },
+                    {
+                      "@id": "task_3312003",
+                      "name": "Task 3-3-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_331002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_33002",
+              "name": "Employee 3-3-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3003",
+              "children": [
+                {
+                  "@id": "proj_332001",
+                  "name": "Project 3-3-2-1",
+                  "type": "project",
+                  "parent": "emp_33002",
+                  "children": [
+                    {
+                      "@id": "task_3321001",
+                      "name": "Task 3-3-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_332001"
+                    },
+                    {
+                      "@id": "task_3321002",
+                      "name": "Task 3-3-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_332001"
+                    },
+                    {
+                      "@id": "task_3321003",
+                      "name": "Task 3-3-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_332001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_332002",
+                  "name": "Project 3-3-2-2",
+                  "type": "project",
+                  "parent": "emp_33002",
+                  "children": [
+                    {
+                      "@id": "task_3322001",
+                      "name": "Task 3-3-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_332002"
+                    },
+                    {
+                      "@id": "task_3322002",
+                      "name": "Task 3-3-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_332002"
+                    },
+                    {
+                      "@id": "task_3322003",
+                      "name": "Task 3-3-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_332002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_33003",
+              "name": "Employee 3-3-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3003",
+              "children": [
+                {
+                  "@id": "proj_333001",
+                  "name": "Project 3-3-3-1",
+                  "type": "project",
+                  "parent": "emp_33003",
+                  "children": [
+                    {
+                      "@id": "task_3331001",
+                      "name": "Task 3-3-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_333001"
+                    },
+                    {
+                      "@id": "task_3331002",
+                      "name": "Task 3-3-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_333001"
+                    },
+                    {
+                      "@id": "task_3331003",
+                      "name": "Task 3-3-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_333001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_333002",
+                  "name": "Project 3-3-3-2",
+                  "type": "project",
+                  "parent": "emp_33003",
+                  "children": [
+                    {
+                      "@id": "task_3332001",
+                      "name": "Task 3-3-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_333002"
+                    },
+                    {
+                      "@id": "task_3332002",
+                      "name": "Task 3-3-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_333002"
+                    },
+                    {
+                      "@id": "task_3332003",
+                      "name": "Task 3-3-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_333002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_3004",
+          "name": "Team 3-4",
+          "type": "team",
+          "parent": "dept_003",
+          "children": [
+            {
+              "@id": "emp_34001",
+              "name": "Employee 3-4-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3004",
+              "children": [
+                {
+                  "@id": "proj_341001",
+                  "name": "Project 3-4-1-1",
+                  "type": "project",
+                  "parent": "emp_34001",
+                  "children": [
+                    {
+                      "@id": "task_3411001",
+                      "name": "Task 3-4-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_341001"
+                    },
+                    {
+                      "@id": "task_3411002",
+                      "name": "Task 3-4-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_341001"
+                    },
+                    {
+                      "@id": "task_3411003",
+                      "name": "Task 3-4-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_341001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_341002",
+                  "name": "Project 3-4-1-2",
+                  "type": "project",
+                  "parent": "emp_34001",
+                  "children": [
+                    {
+                      "@id": "task_3412001",
+                      "name": "Task 3-4-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_341002"
+                    },
+                    {
+                      "@id": "task_3412002",
+                      "name": "Task 3-4-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_341002"
+                    },
+                    {
+                      "@id": "task_3412003",
+                      "name": "Task 3-4-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_341002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_34002",
+              "name": "Employee 3-4-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3004",
+              "children": [
+                {
+                  "@id": "proj_342001",
+                  "name": "Project 3-4-2-1",
+                  "type": "project",
+                  "parent": "emp_34002",
+                  "children": [
+                    {
+                      "@id": "task_3421001",
+                      "name": "Task 3-4-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_342001"
+                    },
+                    {
+                      "@id": "task_3421002",
+                      "name": "Task 3-4-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_342001"
+                    },
+                    {
+                      "@id": "task_3421003",
+                      "name": "Task 3-4-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_342001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_342002",
+                  "name": "Project 3-4-2-2",
+                  "type": "project",
+                  "parent": "emp_34002",
+                  "children": [
+                    {
+                      "@id": "task_3422001",
+                      "name": "Task 3-4-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_342002"
+                    },
+                    {
+                      "@id": "task_3422002",
+                      "name": "Task 3-4-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_342002"
+                    },
+                    {
+                      "@id": "task_3422003",
+                      "name": "Task 3-4-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_342002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_34003",
+              "name": "Employee 3-4-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_3004",
+              "children": [
+                {
+                  "@id": "proj_343001",
+                  "name": "Project 3-4-3-1",
+                  "type": "project",
+                  "parent": "emp_34003",
+                  "children": [
+                    {
+                      "@id": "task_3431001",
+                      "name": "Task 3-4-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_343001"
+                    },
+                    {
+                      "@id": "task_3431002",
+                      "name": "Task 3-4-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_343001"
+                    },
+                    {
+                      "@id": "task_3431003",
+                      "name": "Task 3-4-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_343001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_343002",
+                  "name": "Project 3-4-3-2",
+                  "type": "project",
+                  "parent": "emp_34003",
+                  "children": [
+                    {
+                      "@id": "task_3432001",
+                      "name": "Task 3-4-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_343002"
+                    },
+                    {
+                      "@id": "task_3432002",
+                      "name": "Task 3-4-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_343002"
+                    },
+                    {
+                      "@id": "task_3432003",
+                      "name": "Task 3-4-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_343002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "dept_004",
+      "name": "Department 4",
+      "type": "department",
+      "parent": "root_001",
+      "children": [
+        {
+          "@id": "team_4001",
+          "name": "Team 4-1",
+          "type": "team",
+          "parent": "dept_004",
+          "children": [
+            {
+              "@id": "emp_41001",
+              "name": "Employee 4-1-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4001",
+              "children": [
+                {
+                  "@id": "proj_411001",
+                  "name": "Project 4-1-1-1",
+                  "type": "project",
+                  "parent": "emp_41001",
+                  "children": [
+                    {
+                      "@id": "task_4111001",
+                      "name": "Task 4-1-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_411001"
+                    },
+                    {
+                      "@id": "task_4111002",
+                      "name": "Task 4-1-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_411001"
+                    },
+                    {
+                      "@id": "task_4111003",
+                      "name": "Task 4-1-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_411001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_411002",
+                  "name": "Project 4-1-1-2",
+                  "type": "project",
+                  "parent": "emp_41001",
+                  "children": [
+                    {
+                      "@id": "task_4112001",
+                      "name": "Task 4-1-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_411002"
+                    },
+                    {
+                      "@id": "task_4112002",
+                      "name": "Task 4-1-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_411002"
+                    },
+                    {
+                      "@id": "task_4112003",
+                      "name": "Task 4-1-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_411002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_41002",
+              "name": "Employee 4-1-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4001",
+              "children": [
+                {
+                  "@id": "proj_412001",
+                  "name": "Project 4-1-2-1",
+                  "type": "project",
+                  "parent": "emp_41002",
+                  "children": [
+                    {
+                      "@id": "task_4121001",
+                      "name": "Task 4-1-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_412001"
+                    },
+                    {
+                      "@id": "task_4121002",
+                      "name": "Task 4-1-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_412001"
+                    },
+                    {
+                      "@id": "task_4121003",
+                      "name": "Task 4-1-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_412001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_412002",
+                  "name": "Project 4-1-2-2",
+                  "type": "project",
+                  "parent": "emp_41002",
+                  "children": [
+                    {
+                      "@id": "task_4122001",
+                      "name": "Task 4-1-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_412002"
+                    },
+                    {
+                      "@id": "task_4122002",
+                      "name": "Task 4-1-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_412002"
+                    },
+                    {
+                      "@id": "task_4122003",
+                      "name": "Task 4-1-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_412002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_41003",
+              "name": "Employee 4-1-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4001",
+              "children": [
+                {
+                  "@id": "proj_413001",
+                  "name": "Project 4-1-3-1",
+                  "type": "project",
+                  "parent": "emp_41003",
+                  "children": [
+                    {
+                      "@id": "task_4131001",
+                      "name": "Task 4-1-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_413001"
+                    },
+                    {
+                      "@id": "task_4131002",
+                      "name": "Task 4-1-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_413001"
+                    },
+                    {
+                      "@id": "task_4131003",
+                      "name": "Task 4-1-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_413001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_413002",
+                  "name": "Project 4-1-3-2",
+                  "type": "project",
+                  "parent": "emp_41003",
+                  "children": [
+                    {
+                      "@id": "task_4132001",
+                      "name": "Task 4-1-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_413002"
+                    },
+                    {
+                      "@id": "task_4132002",
+                      "name": "Task 4-1-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_413002"
+                    },
+                    {
+                      "@id": "task_4132003",
+                      "name": "Task 4-1-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_413002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_4002",
+          "name": "Team 4-2",
+          "type": "team",
+          "parent": "dept_004",
+          "children": [
+            {
+              "@id": "emp_42001",
+              "name": "Employee 4-2-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4002",
+              "children": [
+                {
+                  "@id": "proj_421001",
+                  "name": "Project 4-2-1-1",
+                  "type": "project",
+                  "parent": "emp_42001",
+                  "children": [
+                    {
+                      "@id": "task_4211001",
+                      "name": "Task 4-2-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_421001"
+                    },
+                    {
+                      "@id": "task_4211002",
+                      "name": "Task 4-2-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_421001"
+                    },
+                    {
+                      "@id": "task_4211003",
+                      "name": "Task 4-2-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_421001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_421002",
+                  "name": "Project 4-2-1-2",
+                  "type": "project",
+                  "parent": "emp_42001",
+                  "children": [
+                    {
+                      "@id": "task_4212001",
+                      "name": "Task 4-2-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_421002"
+                    },
+                    {
+                      "@id": "task_4212002",
+                      "name": "Task 4-2-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_421002"
+                    },
+                    {
+                      "@id": "task_4212003",
+                      "name": "Task 4-2-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_421002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_42002",
+              "name": "Employee 4-2-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4002",
+              "children": [
+                {
+                  "@id": "proj_422001",
+                  "name": "Project 4-2-2-1",
+                  "type": "project",
+                  "parent": "emp_42002",
+                  "children": [
+                    {
+                      "@id": "task_4221001",
+                      "name": "Task 4-2-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_422001"
+                    },
+                    {
+                      "@id": "task_4221002",
+                      "name": "Task 4-2-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_422001"
+                    },
+                    {
+                      "@id": "task_4221003",
+                      "name": "Task 4-2-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_422001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_422002",
+                  "name": "Project 4-2-2-2",
+                  "type": "project",
+                  "parent": "emp_42002",
+                  "children": [
+                    {
+                      "@id": "task_4222001",
+                      "name": "Task 4-2-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_422002"
+                    },
+                    {
+                      "@id": "task_4222002",
+                      "name": "Task 4-2-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_422002"
+                    },
+                    {
+                      "@id": "task_4222003",
+                      "name": "Task 4-2-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_422002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_42003",
+              "name": "Employee 4-2-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4002",
+              "children": [
+                {
+                  "@id": "proj_423001",
+                  "name": "Project 4-2-3-1",
+                  "type": "project",
+                  "parent": "emp_42003",
+                  "children": [
+                    {
+                      "@id": "task_4231001",
+                      "name": "Task 4-2-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_423001"
+                    },
+                    {
+                      "@id": "task_4231002",
+                      "name": "Task 4-2-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_423001"
+                    },
+                    {
+                      "@id": "task_4231003",
+                      "name": "Task 4-2-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_423001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_423002",
+                  "name": "Project 4-2-3-2",
+                  "type": "project",
+                  "parent": "emp_42003",
+                  "children": [
+                    {
+                      "@id": "task_4232001",
+                      "name": "Task 4-2-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_423002"
+                    },
+                    {
+                      "@id": "task_4232002",
+                      "name": "Task 4-2-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_423002"
+                    },
+                    {
+                      "@id": "task_4232003",
+                      "name": "Task 4-2-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_423002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_4003",
+          "name": "Team 4-3",
+          "type": "team",
+          "parent": "dept_004",
+          "children": [
+            {
+              "@id": "emp_43001",
+              "name": "Employee 4-3-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4003",
+              "children": [
+                {
+                  "@id": "proj_431001",
+                  "name": "Project 4-3-1-1",
+                  "type": "project",
+                  "parent": "emp_43001",
+                  "children": [
+                    {
+                      "@id": "task_4311001",
+                      "name": "Task 4-3-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_431001"
+                    },
+                    {
+                      "@id": "task_4311002",
+                      "name": "Task 4-3-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_431001"
+                    },
+                    {
+                      "@id": "task_4311003",
+                      "name": "Task 4-3-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_431001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_431002",
+                  "name": "Project 4-3-1-2",
+                  "type": "project",
+                  "parent": "emp_43001",
+                  "children": [
+                    {
+                      "@id": "task_4312001",
+                      "name": "Task 4-3-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_431002"
+                    },
+                    {
+                      "@id": "task_4312002",
+                      "name": "Task 4-3-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_431002"
+                    },
+                    {
+                      "@id": "task_4312003",
+                      "name": "Task 4-3-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_431002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_43002",
+              "name": "Employee 4-3-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4003",
+              "children": [
+                {
+                  "@id": "proj_432001",
+                  "name": "Project 4-3-2-1",
+                  "type": "project",
+                  "parent": "emp_43002",
+                  "children": [
+                    {
+                      "@id": "task_4321001",
+                      "name": "Task 4-3-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_432001"
+                    },
+                    {
+                      "@id": "task_4321002",
+                      "name": "Task 4-3-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_432001"
+                    },
+                    {
+                      "@id": "task_4321003",
+                      "name": "Task 4-3-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_432001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_432002",
+                  "name": "Project 4-3-2-2",
+                  "type": "project",
+                  "parent": "emp_43002",
+                  "children": [
+                    {
+                      "@id": "task_4322001",
+                      "name": "Task 4-3-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_432002"
+                    },
+                    {
+                      "@id": "task_4322002",
+                      "name": "Task 4-3-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_432002"
+                    },
+                    {
+                      "@id": "task_4322003",
+                      "name": "Task 4-3-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_432002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_43003",
+              "name": "Employee 4-3-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4003",
+              "children": [
+                {
+                  "@id": "proj_433001",
+                  "name": "Project 4-3-3-1",
+                  "type": "project",
+                  "parent": "emp_43003",
+                  "children": [
+                    {
+                      "@id": "task_4331001",
+                      "name": "Task 4-3-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_433001"
+                    },
+                    {
+                      "@id": "task_4331002",
+                      "name": "Task 4-3-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_433001"
+                    },
+                    {
+                      "@id": "task_4331003",
+                      "name": "Task 4-3-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_433001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_433002",
+                  "name": "Project 4-3-3-2",
+                  "type": "project",
+                  "parent": "emp_43003",
+                  "children": [
+                    {
+                      "@id": "task_4332001",
+                      "name": "Task 4-3-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_433002"
+                    },
+                    {
+                      "@id": "task_4332002",
+                      "name": "Task 4-3-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_433002"
+                    },
+                    {
+                      "@id": "task_4332003",
+                      "name": "Task 4-3-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_433002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_4004",
+          "name": "Team 4-4",
+          "type": "team",
+          "parent": "dept_004",
+          "children": [
+            {
+              "@id": "emp_44001",
+              "name": "Employee 4-4-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4004",
+              "children": [
+                {
+                  "@id": "proj_441001",
+                  "name": "Project 4-4-1-1",
+                  "type": "project",
+                  "parent": "emp_44001",
+                  "children": [
+                    {
+                      "@id": "task_4411001",
+                      "name": "Task 4-4-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_441001"
+                    },
+                    {
+                      "@id": "task_4411002",
+                      "name": "Task 4-4-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_441001"
+                    },
+                    {
+                      "@id": "task_4411003",
+                      "name": "Task 4-4-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_441001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_441002",
+                  "name": "Project 4-4-1-2",
+                  "type": "project",
+                  "parent": "emp_44001",
+                  "children": [
+                    {
+                      "@id": "task_4412001",
+                      "name": "Task 4-4-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_441002"
+                    },
+                    {
+                      "@id": "task_4412002",
+                      "name": "Task 4-4-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_441002"
+                    },
+                    {
+                      "@id": "task_4412003",
+                      "name": "Task 4-4-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_441002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_44002",
+              "name": "Employee 4-4-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4004",
+              "children": [
+                {
+                  "@id": "proj_442001",
+                  "name": "Project 4-4-2-1",
+                  "type": "project",
+                  "parent": "emp_44002",
+                  "children": [
+                    {
+                      "@id": "task_4421001",
+                      "name": "Task 4-4-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_442001"
+                    },
+                    {
+                      "@id": "task_4421002",
+                      "name": "Task 4-4-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_442001"
+                    },
+                    {
+                      "@id": "task_4421003",
+                      "name": "Task 4-4-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_442001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_442002",
+                  "name": "Project 4-4-2-2",
+                  "type": "project",
+                  "parent": "emp_44002",
+                  "children": [
+                    {
+                      "@id": "task_4422001",
+                      "name": "Task 4-4-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_442002"
+                    },
+                    {
+                      "@id": "task_4422002",
+                      "name": "Task 4-4-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_442002"
+                    },
+                    {
+                      "@id": "task_4422003",
+                      "name": "Task 4-4-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_442002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_44003",
+              "name": "Employee 4-4-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_4004",
+              "children": [
+                {
+                  "@id": "proj_443001",
+                  "name": "Project 4-4-3-1",
+                  "type": "project",
+                  "parent": "emp_44003",
+                  "children": [
+                    {
+                      "@id": "task_4431001",
+                      "name": "Task 4-4-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_443001"
+                    },
+                    {
+                      "@id": "task_4431002",
+                      "name": "Task 4-4-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_443001"
+                    },
+                    {
+                      "@id": "task_4431003",
+                      "name": "Task 4-4-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_443001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_443002",
+                  "name": "Project 4-4-3-2",
+                  "type": "project",
+                  "parent": "emp_44003",
+                  "children": [
+                    {
+                      "@id": "task_4432001",
+                      "name": "Task 4-4-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_443002"
+                    },
+                    {
+                      "@id": "task_4432002",
+                      "name": "Task 4-4-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_443002"
+                    },
+                    {
+                      "@id": "task_4432003",
+                      "name": "Task 4-4-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_443002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "dept_005",
+      "name": "Department 5",
+      "type": "department",
+      "parent": "root_001",
+      "children": [
+        {
+          "@id": "team_5001",
+          "name": "Team 5-1",
+          "type": "team",
+          "parent": "dept_005",
+          "children": [
+            {
+              "@id": "emp_51001",
+              "name": "Employee 5-1-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5001",
+              "children": [
+                {
+                  "@id": "proj_511001",
+                  "name": "Project 5-1-1-1",
+                  "type": "project",
+                  "parent": "emp_51001",
+                  "children": [
+                    {
+                      "@id": "task_5111001",
+                      "name": "Task 5-1-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_511001"
+                    },
+                    {
+                      "@id": "task_5111002",
+                      "name": "Task 5-1-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_511001"
+                    },
+                    {
+                      "@id": "task_5111003",
+                      "name": "Task 5-1-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_511001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_511002",
+                  "name": "Project 5-1-1-2",
+                  "type": "project",
+                  "parent": "emp_51001",
+                  "children": [
+                    {
+                      "@id": "task_5112001",
+                      "name": "Task 5-1-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_511002"
+                    },
+                    {
+                      "@id": "task_5112002",
+                      "name": "Task 5-1-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_511002"
+                    },
+                    {
+                      "@id": "task_5112003",
+                      "name": "Task 5-1-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_511002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_51002",
+              "name": "Employee 5-1-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5001",
+              "children": [
+                {
+                  "@id": "proj_512001",
+                  "name": "Project 5-1-2-1",
+                  "type": "project",
+                  "parent": "emp_51002",
+                  "children": [
+                    {
+                      "@id": "task_5121001",
+                      "name": "Task 5-1-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_512001"
+                    },
+                    {
+                      "@id": "task_5121002",
+                      "name": "Task 5-1-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_512001"
+                    },
+                    {
+                      "@id": "task_5121003",
+                      "name": "Task 5-1-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_512001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_512002",
+                  "name": "Project 5-1-2-2",
+                  "type": "project",
+                  "parent": "emp_51002",
+                  "children": [
+                    {
+                      "@id": "task_5122001",
+                      "name": "Task 5-1-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_512002"
+                    },
+                    {
+                      "@id": "task_5122002",
+                      "name": "Task 5-1-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_512002"
+                    },
+                    {
+                      "@id": "task_5122003",
+                      "name": "Task 5-1-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_512002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_51003",
+              "name": "Employee 5-1-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5001",
+              "children": [
+                {
+                  "@id": "proj_513001",
+                  "name": "Project 5-1-3-1",
+                  "type": "project",
+                  "parent": "emp_51003",
+                  "children": [
+                    {
+                      "@id": "task_5131001",
+                      "name": "Task 5-1-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_513001"
+                    },
+                    {
+                      "@id": "task_5131002",
+                      "name": "Task 5-1-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_513001"
+                    },
+                    {
+                      "@id": "task_5131003",
+                      "name": "Task 5-1-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_513001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_513002",
+                  "name": "Project 5-1-3-2",
+                  "type": "project",
+                  "parent": "emp_51003",
+                  "children": [
+                    {
+                      "@id": "task_5132001",
+                      "name": "Task 5-1-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_513002"
+                    },
+                    {
+                      "@id": "task_5132002",
+                      "name": "Task 5-1-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_513002"
+                    },
+                    {
+                      "@id": "task_5132003",
+                      "name": "Task 5-1-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_513002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_5002",
+          "name": "Team 5-2",
+          "type": "team",
+          "parent": "dept_005",
+          "children": [
+            {
+              "@id": "emp_52001",
+              "name": "Employee 5-2-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5002",
+              "children": [
+                {
+                  "@id": "proj_521001",
+                  "name": "Project 5-2-1-1",
+                  "type": "project",
+                  "parent": "emp_52001",
+                  "children": [
+                    {
+                      "@id": "task_5211001",
+                      "name": "Task 5-2-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_521001"
+                    },
+                    {
+                      "@id": "task_5211002",
+                      "name": "Task 5-2-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_521001"
+                    },
+                    {
+                      "@id": "task_5211003",
+                      "name": "Task 5-2-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_521001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_521002",
+                  "name": "Project 5-2-1-2",
+                  "type": "project",
+                  "parent": "emp_52001",
+                  "children": [
+                    {
+                      "@id": "task_5212001",
+                      "name": "Task 5-2-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_521002"
+                    },
+                    {
+                      "@id": "task_5212002",
+                      "name": "Task 5-2-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_521002"
+                    },
+                    {
+                      "@id": "task_5212003",
+                      "name": "Task 5-2-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_521002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_52002",
+              "name": "Employee 5-2-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5002",
+              "children": [
+                {
+                  "@id": "proj_522001",
+                  "name": "Project 5-2-2-1",
+                  "type": "project",
+                  "parent": "emp_52002",
+                  "children": [
+                    {
+                      "@id": "task_5221001",
+                      "name": "Task 5-2-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_522001"
+                    },
+                    {
+                      "@id": "task_5221002",
+                      "name": "Task 5-2-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_522001"
+                    },
+                    {
+                      "@id": "task_5221003",
+                      "name": "Task 5-2-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_522001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_522002",
+                  "name": "Project 5-2-2-2",
+                  "type": "project",
+                  "parent": "emp_52002",
+                  "children": [
+                    {
+                      "@id": "task_5222001",
+                      "name": "Task 5-2-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_522002"
+                    },
+                    {
+                      "@id": "task_5222002",
+                      "name": "Task 5-2-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_522002"
+                    },
+                    {
+                      "@id": "task_5222003",
+                      "name": "Task 5-2-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_522002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_52003",
+              "name": "Employee 5-2-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5002",
+              "children": [
+                {
+                  "@id": "proj_523001",
+                  "name": "Project 5-2-3-1",
+                  "type": "project",
+                  "parent": "emp_52003",
+                  "children": [
+                    {
+                      "@id": "task_5231001",
+                      "name": "Task 5-2-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_523001"
+                    },
+                    {
+                      "@id": "task_5231002",
+                      "name": "Task 5-2-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_523001"
+                    },
+                    {
+                      "@id": "task_5231003",
+                      "name": "Task 5-2-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_523001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_523002",
+                  "name": "Project 5-2-3-2",
+                  "type": "project",
+                  "parent": "emp_52003",
+                  "children": [
+                    {
+                      "@id": "task_5232001",
+                      "name": "Task 5-2-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_523002"
+                    },
+                    {
+                      "@id": "task_5232002",
+                      "name": "Task 5-2-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_523002"
+                    },
+                    {
+                      "@id": "task_5232003",
+                      "name": "Task 5-2-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_523002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_5003",
+          "name": "Team 5-3",
+          "type": "team",
+          "parent": "dept_005",
+          "children": [
+            {
+              "@id": "emp_53001",
+              "name": "Employee 5-3-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5003",
+              "children": [
+                {
+                  "@id": "proj_531001",
+                  "name": "Project 5-3-1-1",
+                  "type": "project",
+                  "parent": "emp_53001",
+                  "children": [
+                    {
+                      "@id": "task_5311001",
+                      "name": "Task 5-3-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_531001"
+                    },
+                    {
+                      "@id": "task_5311002",
+                      "name": "Task 5-3-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_531001"
+                    },
+                    {
+                      "@id": "task_5311003",
+                      "name": "Task 5-3-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_531001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_531002",
+                  "name": "Project 5-3-1-2",
+                  "type": "project",
+                  "parent": "emp_53001",
+                  "children": [
+                    {
+                      "@id": "task_5312001",
+                      "name": "Task 5-3-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_531002"
+                    },
+                    {
+                      "@id": "task_5312002",
+                      "name": "Task 5-3-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_531002"
+                    },
+                    {
+                      "@id": "task_5312003",
+                      "name": "Task 5-3-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_531002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_53002",
+              "name": "Employee 5-3-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5003",
+              "children": [
+                {
+                  "@id": "proj_532001",
+                  "name": "Project 5-3-2-1",
+                  "type": "project",
+                  "parent": "emp_53002",
+                  "children": [
+                    {
+                      "@id": "task_5321001",
+                      "name": "Task 5-3-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_532001"
+                    },
+                    {
+                      "@id": "task_5321002",
+                      "name": "Task 5-3-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_532001"
+                    },
+                    {
+                      "@id": "task_5321003",
+                      "name": "Task 5-3-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_532001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_532002",
+                  "name": "Project 5-3-2-2",
+                  "type": "project",
+                  "parent": "emp_53002",
+                  "children": [
+                    {
+                      "@id": "task_5322001",
+                      "name": "Task 5-3-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_532002"
+                    },
+                    {
+                      "@id": "task_5322002",
+                      "name": "Task 5-3-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_532002"
+                    },
+                    {
+                      "@id": "task_5322003",
+                      "name": "Task 5-3-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_532002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_53003",
+              "name": "Employee 5-3-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5003",
+              "children": [
+                {
+                  "@id": "proj_533001",
+                  "name": "Project 5-3-3-1",
+                  "type": "project",
+                  "parent": "emp_53003",
+                  "children": [
+                    {
+                      "@id": "task_5331001",
+                      "name": "Task 5-3-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_533001"
+                    },
+                    {
+                      "@id": "task_5331002",
+                      "name": "Task 5-3-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_533001"
+                    },
+                    {
+                      "@id": "task_5331003",
+                      "name": "Task 5-3-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_533001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_533002",
+                  "name": "Project 5-3-3-2",
+                  "type": "project",
+                  "parent": "emp_53003",
+                  "children": [
+                    {
+                      "@id": "task_5332001",
+                      "name": "Task 5-3-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_533002"
+                    },
+                    {
+                      "@id": "task_5332002",
+                      "name": "Task 5-3-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_533002"
+                    },
+                    {
+                      "@id": "task_5332003",
+                      "name": "Task 5-3-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_533002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@id": "team_5004",
+          "name": "Team 5-4",
+          "type": "team",
+          "parent": "dept_005",
+          "children": [
+            {
+              "@id": "emp_54001",
+              "name": "Employee 5-4-1",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5004",
+              "children": [
+                {
+                  "@id": "proj_541001",
+                  "name": "Project 5-4-1-1",
+                  "type": "project",
+                  "parent": "emp_54001",
+                  "children": [
+                    {
+                      "@id": "task_5411001",
+                      "name": "Task 5-4-1-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_541001"
+                    },
+                    {
+                      "@id": "task_5411002",
+                      "name": "Task 5-4-1-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_541001"
+                    },
+                    {
+                      "@id": "task_5411003",
+                      "name": "Task 5-4-1-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_541001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_541002",
+                  "name": "Project 5-4-1-2",
+                  "type": "project",
+                  "parent": "emp_54001",
+                  "children": [
+                    {
+                      "@id": "task_5412001",
+                      "name": "Task 5-4-1-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_541002"
+                    },
+                    {
+                      "@id": "task_5412002",
+                      "name": "Task 5-4-1-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_541002"
+                    },
+                    {
+                      "@id": "task_5412003",
+                      "name": "Task 5-4-1-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_541002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_54002",
+              "name": "Employee 5-4-2",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5004",
+              "children": [
+                {
+                  "@id": "proj_542001",
+                  "name": "Project 5-4-2-1",
+                  "type": "project",
+                  "parent": "emp_54002",
+                  "children": [
+                    {
+                      "@id": "task_5421001",
+                      "name": "Task 5-4-2-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_542001"
+                    },
+                    {
+                      "@id": "task_5421002",
+                      "name": "Task 5-4-2-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_542001"
+                    },
+                    {
+                      "@id": "task_5421003",
+                      "name": "Task 5-4-2-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_542001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_542002",
+                  "name": "Project 5-4-2-2",
+                  "type": "project",
+                  "parent": "emp_54002",
+                  "children": [
+                    {
+                      "@id": "task_5422001",
+                      "name": "Task 5-4-2-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_542002"
+                    },
+                    {
+                      "@id": "task_5422002",
+                      "name": "Task 5-4-2-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_542002"
+                    },
+                    {
+                      "@id": "task_5422003",
+                      "name": "Task 5-4-2-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_542002"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "emp_54003",
+              "name": "Employee 5-4-3",
+              "type": "employee",
+              "role": "Developer",
+              "parent": "team_5004",
+              "children": [
+                {
+                  "@id": "proj_543001",
+                  "name": "Project 5-4-3-1",
+                  "type": "project",
+                  "parent": "emp_54003",
+                  "children": [
+                    {
+                      "@id": "task_5431001",
+                      "name": "Task 5-4-3-1-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_543001"
+                    },
+                    {
+                      "@id": "task_5431002",
+                      "name": "Task 5-4-3-1-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_543001"
+                    },
+                    {
+                      "@id": "task_5431003",
+                      "name": "Task 5-4-3-1-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_543001"
+                    }
+                  ]
+                },
+                {
+                  "@id": "proj_543002",
+                  "name": "Project 5-4-3-2",
+                  "type": "project",
+                  "parent": "emp_54003",
+                  "children": [
+                    {
+                      "@id": "task_5432001",
+                      "name": "Task 5-4-3-2-1",
+                      "type": "task",
+                      "status": "in_progress",
+                      "parent": "proj_543002"
+                    },
+                    {
+                      "@id": "task_5432002",
+                      "name": "Task 5-4-3-2-2",
+                      "type": "task",
+                      "status": "completed",
+                      "parent": "proj_543002"
+                    },
+                    {
+                      "@id": "task_5432003",
+                      "name": "Task 5-4-3-2-3",
+                      "type": "task",
+                      "status": "pending",
+                      "parent": "proj_543002"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

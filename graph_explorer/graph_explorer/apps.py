@@ -1,4 +1,3 @@
-from api.models.graph import Graph
 from django.apps import AppConfig
 
 from core.use_cases.const import VISUALIZER_GROUP, DATASOURCE_GROUP

@@ -8,7 +8,7 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 
 from core.use_cases.const import VISUALIZER_GROUP, DATASOURCE_GROUP
-from .cli import handle_command
+from core.use_cases.cli import handle_command
 
 
 def get_config():
